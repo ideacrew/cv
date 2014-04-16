@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/1/base_types" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://dchealthlink.com/vocabularies/1/base_types" elementFormDefault="qualified" version="0.2">
+<xs:schema xmlns="http://dchealthlink.com/vocabularies/1.1/base_types" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://dchealthlink.com/vocabularies/1.1/base_types" elementFormDefault="qualified" version="0.2">
+	<xs:complexType name="PersonType">
+		<xs:sequence>
+			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_first" type="xs:string"/>
+			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_last" type="xs:string"/>
+			<xs:element name="name_suffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_full" type="xs:string" minOccurs="0"/>
+			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
+			<xs:element name="department" type="xs:string" minOccurs="0"/>
+			<xs:element name="addresses" type="AddressType" maxOccurs="unbounded"/>
+			<xs:element name="emails" type="EmailType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="phones" type="PhoneType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="AddressType">
 		<xs:sequence>
 			<xs:element name="address_type">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="work"/>
 						<xs:enumeration value="billing"/>
+						<xs:enumeration value="home"/>
+						<xs:enumeration value="work"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -60,6 +76,7 @@
 			<xs:element name="x" type="xs:float"/>
 			<xs:element name="y" type="xs:float"/>
 			<xs:element name="z" type="xs:float" minOccurs="0"/>
+			<xs:element name="coordinate_system_reference" type="xs:anyURI" default=" urn:ogc:def:crs:EPSG::4326"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SimpleDateRangeType">
@@ -100,4 +117,10 @@
 			<xs:fractionDigits value="2"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:group name="HbxIdentifierGroup">
+		<xs:sequence>
+			<xs:element name="hbx_uri" type="xs:anyURI"/>
+			<xs:element name="hbx_id" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
 </xs:schema>
