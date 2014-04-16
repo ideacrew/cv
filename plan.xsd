@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/1.1/plan" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" targetNamespace="http://dchealthlink.com/vocabularies/1.1/plan" elementFormDefault="qualified" version="0.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/1.1/plan" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" targetNamespace="http://dchealthlink.com/vocabularies/1.1/plan" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
 	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
 	<xs:element name="plan">
 		<xs:annotation>
@@ -15,6 +15,8 @@
 	<xs:complexType name="PlanType">
 		<xs:sequence>
 			<xs:element name="id" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="is_dental_only" type="xs:boolean"/>
 			<xs:element name="issuer" type="IssuerType"/>
 			<xs:element name="market">
 				<xs:simpleType>
@@ -24,13 +26,18 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="maximums" type="MaximumType"/>
-			<xs:element name="is_dental_only" type="xs:boolean"/>
+			<xs:element name="coverages" type="CoverageType" maxOccurs="unbounded"/>
 			<xs:element name="cost_structure" type="CostStructureType"/>
+			<xs:element name="maximums">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="MaximumType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="deductables" type="DeductableType"/>
 			<xs:element name="metadata" type="MetadataType"/>
 			<xs:element name="rates" type="RateType"/>
-			<xs:element name="coverages" type="CoverageType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RateType">
@@ -56,25 +63,52 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="custom_scenarios" type="MaxCostsByNetworkType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="custom_scenarios" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="networks" type="CostByNetworkType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CoverageType">
 		<xs:sequence>
-			<xs:element name="procedure" type="xs:string"/>
-			<xs:element name="is_covered" type="xs:boolean"/>
-			<xs:element name="ehb_variance_reason" type="xs:string"/>
-			<xs:element name="excluded_from_in_network_moop" type="xs:boolean"/>
-			<xs:element name="excluded_from_out_of_network_moop" type="xs:boolean"/>
-			<xs:element name="exclusions" type="xs:string"/>
-			<xs:element name="quantitative_limit" type="xs:boolean"/>
-			<xs:element name="subject_to_deductable_t1" type="xs:boolean"/>
-			<xs:element name="subject_to_deductable_t2" type="xs:boolean"/>
-			<xs:element name="costs" type="CoverageCostType"/>
+			<xs:element name="name">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="is_covered" type="xs:boolean"/>
+						<xs:element name="ehb_variance_reason" type="xs:string" minOccurs="0"/>
+						<xs:element name="excluded_from_in_network_moop" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="excluded_from_out_of_network_moop" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="exclusions" type="xs:string" minOccurs="0"/>
+						<xs:element name="quantitative_limit" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="subject_to_deductable_t1" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="subject_to_deductable_t2" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="costs" type="CoverageCostType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="DeductableType"/>
-	<xs:complexType name="MaximumType"/>
+	<xs:complexType name="DeductableType">
+		<xs:sequence>
+			<xs:element name="name"/>
+			<xs:element name="networks" type="CostByNetworkType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaximumType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="networks" type="CostByNetworkType"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="MetadataType">
 		<xs:sequence>
 			<xs:element name="brochure_url" type="xs:anyURI"/>
@@ -123,7 +157,7 @@
 			<xs:element name="name"/>
 			<xs:group ref="bt:HbxIdentifierGroup"/>
 			<xs:element name="fein" type="bt:FederalTaxIdType"/>
-			<xs:element name="issuer_state"/>
+			<xs:element name="issuer_state" default='"DC"'/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CoverageCostType">
@@ -132,19 +166,12 @@
 			<xs:element name="copay" type="CostByNetworkType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="MaxCostsByNetworkType">
-		<xs:sequence>
-			<xs:element name="name"/>
-			<xs:element name="in_network" type="MaxCostByCoverageCategoryType"/>
-			<xs:element name="out_of_network" type="MaxCostByCoverageCategoryType"/>
-			<xs:element name="in_network_tier_2" type="MaxCostByCoverageCategoryType"/>
-			<xs:element name="combined_in_out_network" type="MaxCostByCoverageCategoryType"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="CostByNetworkType">
 		<xs:sequence>
-			<xs:element name="in_network_t1" type="xs:string"/>
-			<xs:element name="out_of_network" type="xs:string"/>
+			<xs:element name="in_network_tier" type="MaxCostByCoverageCategoryType"/>
+			<xs:element name="out_of_network" type="MaxCostByCoverageCategoryType"/>
+			<xs:element name="in_network_tier_2" type="MaxCostByCoverageCategoryType" minOccurs="0"/>
+			<xs:element name="combined_in_out_network" type="MaxCostByCoverageCategoryType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ProcedureType">
@@ -155,8 +182,10 @@
 	</xs:complexType>
 	<xs:complexType name="MaxCostByCoverageCategoryType">
 		<xs:sequence>
-			<xs:element name="Family" type="xs:integer"/>
-			<xs:element name="Individual" type="xs:integer"/>
+			<xs:element name="family" type="xs:integer"/>
+			<xs:element name="individual" type="xs:integer"/>
+			<xs:element name="default_coinsurance" type="xs:integer"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="Deductables"/>
 </xs:schema>
