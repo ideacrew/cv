@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/1.1/plan" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" targetNamespace="http://dchealthlink.com/vocabularies/1.1/plan" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/1.1/plan" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" xmlns:org="http://dchealthlink.com/vocabularies/1.1/organization" targetNamespace="http://dchealthlink.com/vocabularies/1.1/plan" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
 	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
+	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/organization" schemaLocation="organization.xsd"/>
 	<xs:element name="plan">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
@@ -188,4 +189,21 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Deductables"/>
+	<xs:complexType name="PlanReferenceType">
+		<xs:sequence>
+			<xs:element name="hios_plan_id" type="xs:string"/>
+			<xs:element name="coverage_type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="health"/>
+						<xs:enumeration value="dental"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:group ref="bt:HbxIdentifierGroup"/>
+			<xs:element name="csr" type="xs:float"/>
+			<xs:element name="ehb" type="xs:float"/>
+			<xs:element name="carrier" type="org:CarrierReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
