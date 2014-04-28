@@ -1,5 +1,4 @@
-Canonical Vocabulary
-DC Health Benefit Authority
+HBX Canonical Vocabulary
 ==
 
 Canonical Vocabulary defining enrollment and premium payment message content and structure for a Health Benefit Exchange
