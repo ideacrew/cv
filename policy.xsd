@@ -17,7 +17,7 @@
 			<xs:element name="broker" type="org:BrokerType" minOccurs="0"/>
 			<xs:group ref="bt:HbxIdentifierGroup"/>
 			<xs:element name="total_responsible_amount" type="bt:CurrencyType"/>
-			<xs:element name="total_employer_responsible_amount" type="bt:CurrencyType"/>
+			<xs:element name="total_employer_responsible_amount" type="bt:CurrencyType" minOccurs="0"/>
 			<xs:element name="carrier_to_bill" type="xs:boolean"/>
 			<xs:element name="plan" type="plan:PlanReferenceType"/>
 			<xs:element name="allocated_aptc" type="bt:CurrencyType"/>
