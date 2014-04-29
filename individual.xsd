@@ -2,17 +2,17 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns="http://dchealthlink.com/vocabularies/1.1/individual" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" targetNamespace="http://dchealthlink.com/vocabularies/1.1/individual" elementFormDefault="qualified" version="0.2">
 	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
-	<xs:complexType name="MemberRoleType">
-		<xs:sequence>
-			<xs:element name="gender">
-				<xs:simpleType>
+				<xs:simpleType name="GenderType">
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="male"/>
 						<xs:enumeration value="female"/>
 						<xs:enumeration value="unknown"/>
 					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+				</xs:simpleType>  
+  
+	<xs:complexType name="MemberRoleType">
+		<xs:sequence>
+			<xs:element name="gender" type="GenderType"/>
 			<xs:element name="dob" type="bt:SimpleDateType"/>
 			<xs:element name="ssn" type="bt:FederalTaxIdType" minOccurs="0"/>
 			<xs:element name="tobacco_use" default="unknown">
@@ -138,4 +138,5 @@
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
+  <xs:element name="Individual" type="IndividualType"/>
 </xs:schema>
