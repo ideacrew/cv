@@ -11,6 +11,9 @@
   <xs:simpleType name="UpdateKindType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="address_change"/>
+      <xs:enumeration value="email_change"/>
+      <xs:enumeration value="phone_change"/>
+      <xs:enumeration value="employment_change"/>
       <xs:enumeration value="change_of_identifying_information"/>
     </xs:restriction>
   </xs:simpleType>
@@ -37,7 +40,7 @@
   </xs:complexType>
   <xs:complexType name="UpdateType">
     <xs:sequence>
-      <xs:element name="change_type" type="UpdateKindType"/>
+      <xs:element name="change_type" type="UpdateKindType" minOccurs="1" maxOccurs="unbounded"/>
       <xs:element ref="ind:individual"/>
       <xs:element name="previous_information" type="PreviousIndividualType"/>
     </xs:sequence>
