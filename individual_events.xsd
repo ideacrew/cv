@@ -10,11 +10,12 @@
   
   <xs:simpleType name="UpdateKindType">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="name_change"/>
       <xs:enumeration value="address_change"/>
       <xs:enumeration value="email_change"/>
       <xs:enumeration value="phone_change"/>
       <xs:enumeration value="employment_change"/>
-      <xs:enumeration value="change_of_identifying_information"/>
+      <xs:enumeration value="member_change"/>
     </xs:restriction>
   </xs:simpleType>
   
