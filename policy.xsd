@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/1.1/policy" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" xmlns:indv="http://dchealthlink.com/vocabularies/1.1/individual" xmlns:org="http://dchealthlink.com/vocabularies/1.1/organization" xmlns:plan="http://dchealthlink.com/vocabularies/1.1/plan" targetNamespace="http://dchealthlink.com/vocabularies/1.1/policy" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/individual" schemaLocation="individual.xsd"/>
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/organization" schemaLocation="organization.xsd"/>
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/plan" schemaLocation="plan.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/2.0/policy" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" xmlns:indv="http://dchealthlink.com/vocabularies/2.0/individual" xmlns:org="http://dchealthlink.com/vocabularies/2.0/organization" xmlns:plan="http://dchealthlink.com/vocabularies/2.0/plan" targetNamespace="http://dchealthlink.com/vocabularies/2.0/policy" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/individual" schemaLocation="individual.xsd"/>
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/organization" schemaLocation="organization.xsd"/>
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/plan" schemaLocation="plan.xsd"/>
 	<xs:element name="policy">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>

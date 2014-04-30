@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/1.1/individual/events"
-           xmlns:ind="http://dchealthlink.com/vocabularies/1.1/individual"
+<xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/individual/events"
+           xmlns:ind="http://dchealthlink.com/vocabularies/2.0/individual"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types"
-           targetNamespace="http://dchealthlink.com/vocabularies/1.1/individual/events"
-           elementFormDefault="qualified" version="0.2">
-  <xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
-  <xs:import namespace="http://dchealthlink.com/vocabularies/1.1/individual" schemaLocation="individual.xsd"/>
+           xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types"
+           targetNamespace="http://dchealthlink.com/vocabularies/2.0/individual/events"
+           elementFormDefault="qualified" version="2.0">
+  <xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
+  <xs:import namespace="http://dchealthlink.com/vocabularies/2.0/individual" schemaLocation="individual.xsd"/>
   
   <xs:simpleType name="UpdateKindType">
     <xs:restriction base="xs:string">

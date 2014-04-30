@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/1.1/individual" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" targetNamespace="http://dchealthlink.com/vocabularies/1.1/individual" elementFormDefault="qualified" version="0.2">
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
+<xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/individual" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" targetNamespace="http://dchealthlink.com/vocabularies/2.0/individual" elementFormDefault="qualified" version="0.2">
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
 				<xs:simpleType name="GenderType">
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="male"/>

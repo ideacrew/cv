@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/1.1/organization" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:indv="http://dchealthlink.com/vocabularies/1.1/individual" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" targetNamespace="http://dchealthlink.com/vocabularies/1.1/organization" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/individual" schemaLocation="individual.xsd"/>
+<xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/organization" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:indv="http://dchealthlink.com/vocabularies/2.0/individual" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" targetNamespace="http://dchealthlink.com/vocabularies/2.0/organization" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/individual" schemaLocation="individual.xsd"/>
 	<xs:element name="organization">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>

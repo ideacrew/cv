@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/1.1/plan" xmlns:bt="http://dchealthlink.com/vocabularies/1.1/base_types" xmlns:org="http://dchealthlink.com/vocabularies/1.1/organization" targetNamespace="http://dchealthlink.com/vocabularies/1.1/plan" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/base_types" schemaLocation="base_types.xsd"/>
-	<xs:import namespace="http://dchealthlink.com/vocabularies/1.1/organization" schemaLocation="organization.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://dchealthlink.com/vocabularies/2.0/plan" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" xmlns:org="http://dchealthlink.com/vocabularies/2.0/organization" targetNamespace="http://dchealthlink.com/vocabularies/2.0/plan" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="0.2">
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
+	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/organization" schemaLocation="organization.xsd"/>
 	<xs:element name="plan">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
