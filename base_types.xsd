@@ -40,8 +40,6 @@
 			<xs:element name="phone_type">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="primary"/>
-						<xs:enumeration value="secondary"/>
 						<xs:enumeration value="home"/>
 						<xs:enumeration value="work"/>
 						<xs:enumeration value="mobile"/>
