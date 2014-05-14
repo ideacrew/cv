@@ -159,4 +159,29 @@
 			<xs:enumeration value="unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="EventType">
+		<xs:sequence>
+			<xs:element name="hbx_id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:dc0:events:individual#added</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="time_stamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>When event occured in UTC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sender" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Uniform Resource Name (URN) for service or source that raised event, e.g. urn:dc0:services:connecture</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="headers" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
