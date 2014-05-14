@@ -45,18 +45,20 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="birth"/>
-						<xs:enumeration value="adoption"/>
 						<xs:enumeration value="death"/>
+						<xs:enumeration value="adoption"/>
 						<xs:enumeration value="marraige"/>
+						<xs:enumeration value="legal_separation"/>
 						<xs:enumeration value="divorce"/>
+						<xs:enumeration value="retirement"/>
+						<xs:enumeration value="employment_termination"/>
+						<xs:enumeration value="reenrollment"/>
+						<xs:enumeration value="location_change"/>
 						<xs:enumeration value="initial_enrollment"/>
 						<xs:enumeration value="termination_of_benefits"/>
 						<xs:enumeration value="plan_change"/>
-						<xs:enumeration value="change_of_location"/>
 						<xs:enumeration value="change_in_identifying_data_elements"/>
-						<xs:enumeration value="reenrollment"/>
 						<xs:enumeration value="non_payment"/>
-						<xs:enumeration value="no_reason_given"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
