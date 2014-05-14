@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/1/employer" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://dchealthlink.com/vocabularies/1/employer" elementFormDefault="qualified" version="0.1" attributeFormDefault="unqualified" vc:minVersion="1.1">
+<xs:schema xmlns="http://dchealthlink.com/vocabularies/1/employer" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://dchealthlink.com/vocabularies/1/employer" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1" vc:minVersion="1.1">
 	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
-		<xs:element name="employer" type="EmployerType">
+	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer</xs:documentation>
 		</xs:annotation>
@@ -11,7 +11,7 @@
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="exchange_employer_id" type="xs:string"/>
 			<xs:choice>
-				<xs:element name="fein" type="bt:FederalTaxIdType" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types"/>
+				<xs:element name="fein" type="bt:FederalTaxIdType"/>
 				<xs:element name="carrier_employer_group_id" type="xs:string"/>
 			</xs:choice>
 		</xs:sequence>
