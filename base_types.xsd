@@ -2,6 +2,9 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/base_types" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://dchealthlink.com/vocabularies/2.0/base_types" elementFormDefault="qualified" version="2.0">
 	<xs:complexType name="PersonType">
+		<xs:annotation>
+			<xs:documentation>Name and contact information for an individual</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_first" type="xs:string"/>
@@ -17,6 +20,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AddressType">
+		<xs:annotation>
+			<xs:documentation>Street or mailing address</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="address_type">
 				<xs:simpleType>
@@ -36,6 +42,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PhoneType">
+		<xs:annotation>
+			<xs:documentation>Telephone communication number and kind</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="phone_type">
 				<xs:simpleType>
@@ -50,10 +59,13 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="phone_number" type="TelephoneNumberType"/>
-			<xs:element name="extension" type="xs:string"/>
+			<xs:element name="extension" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmailType">
+		<xs:annotation>
+			<xs:documentation>Email communication address and kind</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="email_type">
 				<xs:simpleType>
@@ -68,7 +80,7 @@
 	</xs:complexType>
 	<xs:complexType name="PositionPointType">
 		<xs:annotation>
-			<xs:documentation>GeoJSON Point.  See: http://www.geojson.org/geojson-spec.html#positions</xs:documentation>
+			<xs:documentation>Location cooordinate expressed as a GeoJSON Point.  See: http://www.geojson.org/geojson-spec.html#positions</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="x" type="xs:float"/>
@@ -78,11 +90,27 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SimpleDateRangeType">
+		<xs:annotation>
+			<xs:documentation>Time period expressed in SimpleDateType format</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="start" type="SimpleDateType"/>
 			<xs:element name="end" type="SimpleDateType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:group name="HbxIdentifierGroup">
+		<xs:annotation>
+			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hbx_uri" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Enterprise/globally unique identifier for this resource</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hbx_id" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
 	<xs:simpleType name="TelephoneNumberType">
 		<xs:annotation>
 			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
@@ -93,7 +121,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="SimpleDateType">
 		<xs:annotation>
-			<xs:documentation>A simple date with no timezone context.</xs:documentation>
+			<xs:documentation>A simple date format: CCYYMMDD, e.g. 20140601</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="([1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])"/>
@@ -101,7 +129,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="FederalTaxIdType">
 		<xs:annotation>
-			<xs:documentation>IRS-assigned ID. Matches: 01-1234567, 011234567, 123-45-6789</xs:documentation>
+			<xs:documentation>IRS-assigned Identifier for an individual or organization. Matches: 01-1234567, 011234567, 123-45-6789</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="([0-9]{3}-[0-9]{2}-[0-9]{4})|([0-9]{9})|([0-9]{2}-[0-9]{7})"/>
@@ -109,16 +137,26 @@
 	</xs:simpleType>
 	<xs:simpleType name="CurrencyType">
 		<xs:annotation>
-			<xs:documentation>Money amount. As this can be transactional, we allow negative values.</xs:documentation>
+			<xs:documentation>Monetary value. Positive and negative values are valid</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:decimal">
 			<xs:fractionDigits value="2"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:group name="HbxIdentifierGroup">
-		<xs:sequence>
-			<xs:element name="hbx_uri" type="xs:anyURI"/>
-			<xs:element name="hbx_id" type="xs:string" minOccurs="0"/>
-		</xs:sequence>
-	</xs:group>
+	<xs:simpleType name="LanguageType">
+		<xs:annotation>
+			<xs:documentation>Language expressed in ISO 639-1 standard, e.g. en = English, es = Spanish</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="GenderType">
+		<xs:annotation>
+			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="male"/>
+			<xs:enumeration value="female"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

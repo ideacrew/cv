@@ -2,31 +2,38 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/individual" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" targetNamespace="http://dchealthlink.com/vocabularies/2.0/individual" elementFormDefault="qualified" version="2.0">
 	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
-				<xs:simpleType name="GenderType">
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="male"/>
-						<xs:enumeration value="female"/>
-						<xs:enumeration value="unknown"/>
-					</xs:restriction>
-				</xs:simpleType>  
-  
+	<xs:element name="individual" type="IndividualType"/>
+	<xs:element name="member" type="MemberRoleType"/>
+	<xs:element name="ApplicationGroup">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="member" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:complexType name="MemberRoleType">
 		<xs:sequence>
-			<xs:element name="gender" type="GenderType"/>
-			<xs:element name="dob" type="bt:SimpleDateType"/>
-			<xs:element name="ssn" type="bt:FederalTaxIdType" minOccurs="0"/>
-			<xs:element name="tobacco_use" default="unknown">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="unknown"/>
-						<xs:enumeration value=""/>
-					</xs:restriction>
-				</xs:simpleType>
+			<xs:element name="gender" type="bt:GenderType"/>
+			<xs:element name="dob" type="bt:SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>Date of Birth</xs:documentation>
+				</xs:annotation>
 			</xs:element>
-			<xs:element name="language" minOccurs="0"/>
+			<xs:element name="ssn" type="bt:FederalTaxIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Social Security Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tobacco_user" type="TobaccoUseType" default="unknown"/>
+			<xs:element name="language" type="bt:LanguageType" minOccurs="0"/>
 			<xs:group ref="bt:HbxIdentifierGroup"/>
-			<xs:element name="carrier_member_id" type="xs:string"/>
+			<xs:element name="carrier_member_id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Carrier-assigned identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="person" type="bt:PersonType"/>
+			<xs:element name="relationship" type="RelationshipType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployeeRoleType">
@@ -37,11 +44,12 @@
 				<xs:simpleType>
 					<xs:annotation>
 						<xs:documentation>Required for subscriber. For SHOP market, use employment
-                  status code. For individual market, use only AC=Active or
-                  TE=Terminated.</xs:documentation>
+                  status code. For individual market, use only active or
+                  terminated</xs:documentation>
 					</xs:annotation>
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="active"/>
+						<xs:enumeration value="terminated"/>
 						<xs:enumeration value="active military overseas"/>
 						<xs:enumeration value="active military usa"/>
 						<xs:enumeration value="full time"/>
@@ -93,7 +101,6 @@
 			<xs:element name="responsibilities" type="ResponsiblePartyRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="members" type="MemberRoleType"/>
 	<xs:complexType name="EnrolleeType">
 		<xs:sequence>
 			<xs:element name="premium_amount" type="bt:CurrencyType"/>
@@ -119,17 +126,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="relationship">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="self"/>
-						<xs:enumeration value="spouse"/>
-						<xs:enumeration value="child"/>
-						<xs:enumeration value="ward"/>
-						<xs:enumeration value="life partner"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="relationship" type="RelationshipType"/>
 			<xs:element name="carrier_member_id" type="xs:string"/>
 			<xs:element name="carrier_policy_id"/>
 			<xs:element name="coverage_start_date" type="bt:SimpleDateType"/>
@@ -138,5 +135,69 @@
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
-  <xs:element name="Individual" type="IndividualType"/>
-</xs:schema>
+<xs:simpleType name="RelationshipType">
+		<xs:annotation>
+			<xs:documentation>The way or state in which two individuals are connected</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="spouse"/>
+			<xs:enumeration value="father"/>
+			<xs:enumeration value="mother"/>
+			<xs:enumeration value="grandfather"/>
+			<xs:enumeration value="grandmother"/>
+			<xs:enumeration value="grandson"/>
+			<xs:enumeration value="granddaughter"/>
+			<xs:enumeration value="uncle"/>
+			<xs:enumeration value="aunt"/>
+			<xs:enumeration value="nephew"/>
+			<xs:enumeration value="niece"/>
+			<xs:enumeration value="cousin"/>
+			<xs:enumeration value="adopted child"/>
+			<xs:enumeration value="foster child"/>
+			<xs:enumeration value="son-in-law"/>
+			<xs:enumeration value="daughter-in-law"/>
+			<xs:enumeration value="brother-in-law"/>
+			<xs:enumeration value="sister-in-law"/>
+			<xs:enumeration value="father-in-law"/>
+			<xs:enumeration value="mother-in-law"/>
+			<xs:enumeration value="brother"/>
+			<xs:enumeration value="sister"/>
+			<xs:enumeration value="ward"/>
+			<xs:enumeration value="stepparent"/>
+			<xs:enumeration value="stepson"/>
+			<xs:enumeration value="stepdaughter"/>
+			<xs:enumeration value="child"/>
+			<xs:enumeration value="sponsored dependent"/>
+			<xs:enumeration value="dependent of a minor dependent"/>
+			<xs:enumeration value="ex-spouse"/>
+			<xs:enumeration value="guardian"/>
+			<xs:enumeration value="court appointed guardian"/>
+			<xs:enumeration value="collateral dependent"/>
+			<xs:enumeration value="life partner"/>
+			<xs:enumeration value="female"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+		</xs:simpleType>
+			<xs:simpleType name="MaritalStatusType">
+		<xs:annotation>
+			<xs:documentation>An individual's state of interpersonal relationship with another</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="single"/>
+			<xs:enumeration value="married"/>
+			<xs:enumeration value="domestic partnership"/>
+			<xs:enumeration value="separated"/>
+			<xs:enumeration value="legally seperated"/>
+			<xs:enumeration value="divorced"/>
+			<xs:enumeration value="widowed"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TobaccoUseType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	
+	</xs:simpleType></xs:schema>
