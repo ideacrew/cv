@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns="http://dchealthlink.com/vocabularies/2.0/employer/events"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types"
+  targetNamespace="http://dchealthlink.com/vocabularies/2.0/employer/events"
+  xmlns:ev="http://dchealthlink.com/vocabularies/2.0/events"
+  elementFormDefault="qualified" version="2.0">
+  <xs:import namespace="http://dchealthlink.com/vocabularies/2.0/events" schemaLocation="events.xsd"/> 
+  
+  
+  <xs:complexType name="EmployeeQhpPlanSelectedType">
+    <xs:complexContent>
+      <xs:extension base="ev:BaseEventType">
+        <xs:sequence>
+          <xs:element name="event">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="employee_qhp_plan_selected"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="employer_id" type="xs:string"/>
+          <xs:element name="employer_uri" type="xs:anyuri"/>
+          <xs:element name="employee_id" type="xs:string"/>
+          <xs:element name="employee_uri" type="xs:anyuri"/>
+          <xs:element name="enrollment_group_id" type="xs:string"/>
+          <xs:element name="enrollment_group_uri" type="xs:anyuri"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="employee_qhp_plan_selected" type="EmployeeQhpPlaneSlectedType"/>
+</xs:schema>
