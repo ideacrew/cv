@@ -7,17 +7,18 @@
 			<xs:complexContent>
 				<xs:extension base="bt:EventType">
 					<xs:sequence>
-						<xs:element name="employer">
+						<xs:element name="employer_employee">
+							<xs:annotation>
+								<xs:documentation>urn:dc0:terms:employer:_id:employee:_id</xs:documentation>
+							</xs:annotation>
 							<xs:complexType>
 								<xs:group ref="bt:HbxIdentifierGroup"/>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="employee">
-							<xs:complexType>
-								<xs:group ref="bt:HbxIdentifierGroup"/>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="policy">
+						<xs:element name="enrollment_group">
+							<xs:annotation>
+								<xs:documentation>urn:dc0:terms:enrollment_group:_id</xs:documentation>
+							</xs:annotation>
 							<xs:complexType>
 								<xs:group ref="bt:HbxIdentifierGroup"/>
 							</xs:complexType>
