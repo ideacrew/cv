@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/base_types" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://dchealthlink.com/vocabularies/2.0/base_types" elementFormDefault="qualified" version="2.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/vocabularies/1.0/base_types" targetNamespace="http://openhbx.org/api/vocabularies/1.0/base_types" elementFormDefault="qualified" version="1.0">
 	<xs:complexType name="PersonType">
 		<xs:annotation>
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
@@ -54,6 +54,7 @@
 						<xs:enumeration value="mobile"/>
 						<xs:enumeration value="pager"/>
 						<xs:enumeration value="main"/>
+						<xs:enumeration value="extension"/>
 						<xs:enumeration value="other"/>
 					</xs:restriction>
 				</xs:simpleType>
@@ -98,6 +99,23 @@
 			<xs:element name="end" type="SimpleDateType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="KeyValuePairType">
+		<xs:annotation>
+			<xs:documentation>Data structure that includes a label and associated attribute value</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="key" type="xs:string"/>
+			<xs:element name="value" type="xs:anyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HashType">
+		<xs:annotation>
+			<xs:documentation>An array of one or more KeyValueType pairs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="key_value_pair" type="KeyValuePairType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:group name="HbxIdentifierGroup">
 		<xs:annotation>
 			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
@@ -111,7 +129,15 @@
 			<xs:element name="hbx_id" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
+	<xs:element name="resource_instance_uri" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Unique identifier for a resource, formatted to include network service endpoint where it may be accessed</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:complexType name="EventType">
+		<xs:annotation>
+			<xs:documentation>Base type for publishing resource events to message system topics</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="hbx_id" type="xs:string">
 				<xs:annotation>
@@ -123,7 +149,8 @@
 					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:dc0:events:individual#added</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="time_stamp" type="xs:dateTime">
+			<xs:element ref="resource_instance_uri"/>
+			<xs:element name="submitted_timestamp" type="xs:dateTime">
 				<xs:annotation>
 					<xs:documentation>When event occured in UTC</xs:documentation>
 				</xs:annotation>
@@ -133,9 +160,9 @@
 					<xs:documentation>Uniform Resource Name (URN) for service or source that raised event, e.g. urn:dc0:services:connecture</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="properties" type="xs:anyType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="header_properties" type="KeyValuePairType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Application-specific header properties (key/value pairs)</xs:documentation>
+					<xs:documentation>Application-specific header key/value pairs</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
