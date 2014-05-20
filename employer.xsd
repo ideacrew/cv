@@ -17,25 +17,17 @@
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="employer_event" type="EmployerEventType"/>
-	<xs:complexType name="EmployerEventType">
-		<xs:complexContent>
-			<xs:extension base="EventType"/>
-		</xs:complexContent>
-	</xs:complexType>
 	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType"/>
 	<xs:complexType name="EmployerEmployeeEventType">
 		<xs:complexContent>
 			<xs:extension base="EventType">
+				<xs:sequence>
+					<xs:element ref="enrollment_group_uri"/>
+				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:element name="employer_uri" substitutionGroup="resource_instance_uri">
-		<xs:annotation>
-			<xs:documentation>Dereferenceable identifier for employer instance, e.g. urn:dc0:employer:_id</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="other_resource_instance_uri">
+	<xs:element name="enrollment_group_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g.urn:dc0:enrollment_group:_id</xs:documentation>
 		</xs:annotation>
