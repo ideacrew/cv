@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://openhbx.org/api/vocabularies/1.0" targetNamespace="http://openhbx.org/api/vocabularies/1.0" elementFormDefault="qualified" version="1.0" vc:minVersion="1.1">
+<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0" vc:minVersion="1.1">
 	<xs:complexType name="PersonType">
 		<xs:annotation>
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
@@ -131,17 +132,17 @@
 	</xs:group>
 	<xs:element name="resource_instance_uri" abstract="true">
 		<xs:annotation>
-			<xs:documentation>Dereferencable resource identifier</xs:documentation>
+			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="other_resource_instance_uri" abstract="true">
 		<xs:annotation>
-			<xs:documentation>Optional, additional dereferencable resource identifier(s)</xs:documentation>
+			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="EventType">
 		<xs:annotation>
-			<xs:documentation>Base type for publishing resource events to message system topics</xs:documentation>
+			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
 		</xs:annotation>
 		<xs:openContent mode="suffix">
 			<xs:any namespace="##other" processContents="lax"/>
@@ -172,6 +173,35 @@
 			<xs:element name="application_header_properties" type="KeyValuePairType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Application-specific header key/value pairs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnrollmentStatusType">
+		<xs:annotation>
+			<xs:documentation>An Application Group's enrollment status at a given period of time</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="event_id">
+				<xs:annotation>
+					<xs:documentation>Dereferenceable event identifier that triggered enrollment state</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="state">
+				<xs:annotation>
+					<xs:documentation>Status of enrollment</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="open"/>
+						<xs:enumeration value="closed"/>
+						<xs:enumeration value="special enrollment period"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="time_period">
+				<xs:annotation>
+					<xs:documentation>Enrollment state start and end dates</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -224,4 +254,143 @@
 			<xs:enumeration value="unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="EntityIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="case manager"/>
+			<xs:enumeration value="key person"/>
+			<xs:enumeration value="parent"/>
+			<xs:enumeration value="responsible party"/>
+			<xs:enumeration value="guardian"/>
+			<xs:enumeration value="ex-spouse"/>
+			<xs:enumeration value="significant other"/>
+			<xs:enumeration value="legal representative"/>
+			<xs:enumeration value="power of attorney"/>
+			<xs:enumeration value="other insured"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmploymentStatusType">
+		<xs:annotation>
+			<xs:documentation>Required for subscriber. For SHOP market, use employment status code. For individual market, use only active or terminated</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="active"/>
+			<xs:enumeration value="full time"/>
+			<xs:enumeration value="part time"/>
+			<xs:enumeration value="terminated"/>
+			<xs:enumeration value="leave of absence"/>
+			<xs:enumeration value="retired"/>
+			<xs:enumeration value="active military overseas"/>
+			<xs:enumeration value="active military usa"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BenefitStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="active"/>
+			<xs:enumeration value="cobra"/>
+			<xs:enumeration value="surviing insured"/>
+			<xs:enumeration value="tefra"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaritalStatusType">
+		<xs:annotation>
+			<xs:documentation>Matrimonial relationship state between two individuals</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="single"/>
+			<xs:enumeration value="married"/>
+			<xs:enumeration value="domestic partnership"/>
+			<xs:enumeration value="separated"/>
+			<xs:enumeration value="legally seperated"/>
+			<xs:enumeration value="divorced"/>
+			<xs:enumeration value="widowed"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RelationshipType">
+		<xs:annotation>
+			<xs:documentation>Interpersonal relationship state between connected individuals</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="head of household"/>
+			<xs:enumeration value="self"/>
+			<xs:enumeration value="spouse"/>
+			<xs:enumeration value="father"/>
+			<xs:enumeration value="mother"/>
+			<xs:enumeration value="grandfather"/>
+			<xs:enumeration value="grandmother"/>
+			<xs:enumeration value="grandson"/>
+			<xs:enumeration value="granddaughter"/>
+			<xs:enumeration value="uncle"/>
+			<xs:enumeration value="aunt"/>
+			<xs:enumeration value="nephew"/>
+			<xs:enumeration value="niece"/>
+			<xs:enumeration value="cousin"/>
+			<xs:enumeration value="adopted child"/>
+			<xs:enumeration value="foster child"/>
+			<xs:enumeration value="son-in-law"/>
+			<xs:enumeration value="daughter-in-law"/>
+			<xs:enumeration value="brother-in-law"/>
+			<xs:enumeration value="sister-in-law"/>
+			<xs:enumeration value="father-in-law"/>
+			<xs:enumeration value="mother-in-law"/>
+			<xs:enumeration value="brother"/>
+			<xs:enumeration value="sister"/>
+			<xs:enumeration value="ward"/>
+			<xs:enumeration value="stepparent"/>
+			<xs:enumeration value="stepson"/>
+			<xs:enumeration value="stepdaughter"/>
+			<xs:enumeration value="child"/>
+			<xs:enumeration value="sponsored dependent"/>
+			<xs:enumeration value="dependent of a minor dependent"/>
+			<xs:enumeration value="ex-spouse"/>
+			<xs:enumeration value="guardian"/>
+			<xs:enumeration value="court appointed guardian"/>
+			<xs:enumeration value="collateral dependent"/>
+			<xs:enumeration value="life partner"/>
+			<xs:enumeration value="female"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+					<xs:simpleType name="SpecialEnrollmentPeriodType">
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="initial enrollment"/>
+						<xs:enumeration value="birth"/>
+						<xs:enumeration value="death"/>
+						<xs:enumeration value="adoption"/>
+						<xs:enumeration value="marriage"/>
+						<xs:enumeration value="location change"/>
+						<xs:enumeration value="termination of benefits"/>
+						<xs:enumeration value="non payment"/>
+						<xs:enumeration value="employment termination"/>
+						<xs:enumeration value="citizenship granted"/>
+						<xs:enumeration value="enrollment error"/>
+						<xs:enumeration value="contract violation"/>
+						<xs:enumeration value="eligibility change"/>
+						<xs:enumeration value="qualified native american"/>
+						<xs:enumeration value="non-hbx misconduct"/>
+						<xs:enumeration value="enrollment grace period"/>
+						<xs:enumeration value="medicaid ineligible"/>
+
+						<xs:enumeration value="legal separation"/>
+						<xs:enumeration value="surviving spouse"/>
+						<xs:enumeration value="divorce"/>
+						<xs:enumeration value="retirement"/>
+						<xs:enumeration value="re-enrollment"/>
+					</xs:restriction>
+				</xs:simpleType>
+									<xs:simpleType name="MaintenanceReasonType">
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="initial enrollment"/>
+						<xs:enumeration value="benefit selection"/>
+						<xs:enumeration value="plan change"/>
+						<xs:enumeration value="change in identifying data elements"/>
+												<xs:enumeration value="birth"/>
+						<xs:enumeration value="death"/>
+						<xs:enumeration value="adoption"/>
+						<xs:enumeration value="marriage"/>
+						<xs:enumeration value="location change"/>
+						<xs:enumeration value="termination of benefits"/>
+						<xs:enumeration value="non payment"/>
+						<xs:enumeration value="employment termination"/>
+</xs:restriction></xs:simpleType>
 </xs:schema>
