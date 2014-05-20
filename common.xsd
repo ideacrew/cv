@@ -140,24 +140,22 @@
 			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+  <xs:element name="event_name" type="xs:anyURI">
+	  <xs:annotation>
+		  <xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:dc0:events:individual#added</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:complexType name="EventType">
 		<xs:annotation>
 			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
 		</xs:annotation>
-		<xs:openContent mode="suffix">
-			<xs:any namespace="##other" processContents="lax"/>
-		</xs:openContent>
 		<xs:sequence>
 			<xs:element name="hbx_id" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="name" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:dc0:events:individual#added</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element ref="event_name"/>
 			<xs:element ref="resource_instance_uri"/>
 			<xs:element ref="other_resource_instance_uri" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="sender_uri" type="xs:anyURI">

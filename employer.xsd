@@ -49,4 +49,6 @@
 			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
+  
+  <xs:element name="employer_employee_event_type" type="EmployerEmployeeEventNameType" substitutionGroup="event_name"/>
 </xs:schema>
