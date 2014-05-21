@@ -24,7 +24,7 @@
 				<xs:sequence>
 					<xs:element name="hbx_id" type="xs:string"/>
 					<xs:element name="event_name" type="EmployerEmployeeEventNameType"/>
-					<xs:element name="qualifying_reason" type="MaintenanceReasonType"/>
+					<xs:element name="qualifying_reason" type="SpecialEnrollmentPeriodType"/>
 					<xs:element ref="employer_employee_uri"/>
 					<xs:element ref="enrollment_group_uri"/>
 					<xs:element name="sender_uri" type="xs:anyURI"/>
@@ -33,15 +33,25 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+	<xs:element name="enrollment_group_uri" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ResourceType"/>
+			</xs:simpleContent>
+		</xs:complexType>
 	</xs:element>
-	<xs:element name="employer_employee_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+	<xs:element name="employer_employee_uri" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
 		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ResourceType"/>
+			</xs:simpleContent>
+		</xs:complexType>
 	</xs:element>
 	<xs:simpleType name="EmployerEmployeeEventNameType">
 		<xs:restriction base="xs:anyURI">
