@@ -25,15 +25,15 @@
 					<xs:element name="hbx_id" type="xs:string"/>
 					<xs:element name="event_name" type="EmployerEmployeeEventNameType"/>
 					<xs:element name="qualifying_reason" type="MaintenanceReasonType"/>
-					<xs:element ref="employer_employee_uri" minOccurs="1"/>
-					<xs:element ref="enrollment_group_uri" minOccurs="1"/>
+					<xs:element ref="employer_employee_uri"/>
+					<xs:element ref="enrollment_group_uri"/>
 					<xs:element name="sender_uri" type="xs:anyURI"/>
 					<xs:element name="submitted_timestamp" type="xs:dateTime"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="other_resource_instance_uri">
+	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
