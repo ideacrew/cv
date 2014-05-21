@@ -160,12 +160,12 @@
 					<xs:documentation>Uniform Resource Name (URN) for this change event, e.g.; urn:dc0:events:individual#added</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="qualifying_reason" type="xs:anyURI">
+			<xs:element name="qualifying_reason" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>Uniform Resource Name (URN) for the regulatory or policy basis enabling this change </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="resource_instance_uri" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="resource_instance_uri"/>
 			<xs:element ref="other_resource_instance_uri" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="sender_uri" type="xs:anyURI">
 				<xs:annotation>
@@ -182,7 +182,6 @@
 					<xs:documentation>Application-specific header key/value pairs</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-      <xs:any/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EnrollmentStatusType">
