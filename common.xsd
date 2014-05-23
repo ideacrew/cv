@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0" vc:minVersion="1.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
 	<xs:complexType name="PersonType">
 		<xs:annotation>
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
@@ -117,6 +116,19 @@
 			<xs:element name="key_value_pair" type="KeyValuePairType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:group name="HbxStatusGroup">
+		<xs:annotation>
+			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hbx_status" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Enterprise/globally unique identifier for this resource</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hbx_version" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
 	<xs:group name="HbxIdentifierGroup">
 		<xs:annotation>
 			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
@@ -135,16 +147,16 @@
 			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="other_resource_instance_uri"  type="otherResourceType">
+	<xs:element name="other_resource_instance_uri" type="otherResourceType">
 		<xs:annotation>
 			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:simpleType name="ResourceType">
-		<xs:restriction base="xs:anyURI"></xs:restriction>
+		<xs:restriction base="xs:anyURI"/>
 	</xs:simpleType>
 	<xs:simpleType name="otherResourceType">
-		<xs:restriction base="xs:anyURI"></xs:restriction>
+		<xs:restriction base="xs:anyURI"/>
 	</xs:simpleType>
 	<xs:element name="event_name" type="xs:anyURI">
 		<xs:annotation>
@@ -188,12 +200,12 @@
 					<xs:documentation>Application-specific header key/value pairs</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="body" maxOccurs="1" minOccurs="0">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:any maxOccurs="1" minOccurs="0" namespace="##any"/>
-                </xs:sequence>
-              </xs:complexType>
+			<xs:element name="body" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##any" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -367,7 +379,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="EnrolleeRelationshipType">
 		<xs:annotation>
-			<xs:documentation>Interpersonal relationship state between connected individuals</xs:documentation>
+			<xs:documentation>Interpersonal relationship state between individuals in a plan enrollment</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="self"/>
@@ -447,6 +459,27 @@
 			<xs:enumeration value="termination of benefits"/>
 			<xs:enumeration value="non payment"/>
 			<xs:enumeration value="employment termination"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BenefitCoverageType">
+		<xs:annotation>
+			<xs:documentation>Kind of insurance </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="health"/>
+			<xs:enumeration value="dental"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PlanMetalLevelType">
+		<xs:annotation>
+			<xs:documentation>Plan category designation </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="bronze"/>
+			<xs:enumeration value="silver"/>
+			<xs:enumeration value="gold"/>
+			<xs:enumeration value="platinum"/>
+			<xs:enumeration value="catastrophic"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
