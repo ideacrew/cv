@@ -4,21 +4,75 @@
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
-			<xs:documentation>SHOP employer</xs:documentation>
+			<xs:documentation>SHOP employer instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_group" type="EmployerGroupType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType">
+		<xs:annotation>
+			<xs:documentation>SHOP employee event instance </xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="EmployerType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer model</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="name" type="xs:string"/>
-			<xs:element name="exchange_employer_id" type="xs:string"/>
-			<xs:choice>
-				<xs:element name="fein" type="FederalTaxIdType"/>
-				<xs:element name="carrier_employer_group_id" type="xs:string"/>
-			</xs:choice>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Employer name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fein" type="FederalTaxIdType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="sic_code" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Employer's Standard Industrial Code (SIC)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fte_count" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of full-time-employees</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pte_count" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of part-time employees</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="broker" type="EmployerBrokerType" minOccurs="0"/>
+			<xs:element name="open_enrollment_start" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Open Enrollment period start date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="open_enrollment_end" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Open Enrollment period end date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="plan_year_start" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date Employer plan eligibility begins</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="plan_year_end" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date employer plan eligibility ends</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="notes" minOccurs="0"/>
+			<xs:element name="contact" type="PersonType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType"/>
 	<xs:complexType name="EmployerEmployeeEventType">
+		<xs:annotation>
+			<xs:documentation>SHOP employee model</xs:documentation>
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="EventType">
 				<xs:sequence>
@@ -32,6 +86,66 @@
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="EmployerEmployeeEventNameType">
+		<xs:annotation>
+			<xs:documentation>Valid events for employee</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:dc0:events:employer_employee#added"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#updated"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#deleted"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_selected"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_withdrawn"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#sep_started"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#sep_ended"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#effectuated"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EmployerPlanType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer-selected benefits model</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="qhp_id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>HIOS plan identifier component + subcomponent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="carrier_name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Text label for plan provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="carrier_urn" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>HBX-assigned carrier identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="policy_number" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Carrier-assigned policy number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="group_id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Carrier-assigned employer group identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coverage_type" type="BenefitCoverageType">
+				<xs:annotation>
+					<xs:documentation>Benefit type, e.g. health or dental</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="original_effective_date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Effective date coverage under this plan may begin</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renewal_effective_date" minOccurs="0"/>
+			<xs:element name="metal_level_code" type="PlanMetalLevelType"/>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="enrollment_group_uri" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
@@ -53,18 +167,47 @@
 			</xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
-	<xs:simpleType name="EmployerEmployeeEventNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:events:employer_employee#added"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#updated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#deleted"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_selected"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_withdrawn"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_started"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_ended"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#effectuated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:element name="employer_employee_event_type" type="EmployerEmployeeEventNameType" substitutionGroup="event_name"/>
+	<xs:complexType name="EmployerBrokerType">
+		<xs:annotation>
+			<xs:documentation>Model for SHOP employer-designated broker</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="npn">
+				<xs:annotation>
+					<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="tpa_ga_fein" type="FederalTaxIdType" minOccurs="0"/>
+			<xs:element name="broker_name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Broker or organization name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tpa_name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TPA or organization name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployerGroupType">
+		<xs:annotation>
+			<xs:documentation>Model for SHOP employer and designated benefit options</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="employer"/>
+			<xs:element name="plans">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="plan" type="EmployerPlanType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
