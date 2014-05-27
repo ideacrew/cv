@@ -147,25 +147,15 @@
 			<xs:element name="metal_level_code" type="PlanMetalLevelType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="enrollment_group_uri" substitutionGroup="resource_instance_uri">
+	<xs:element name="enrollment_group_uri" substitutionGroup="resource_instance_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="ResourceType"/>
-			</xs:simpleContent>
-		</xs:complexType>
 	</xs:element>
-	<xs:element name="employer_employee_uri" substitutionGroup="resource_instance_uri">
+	<xs:element name="employer_employee_uri" substitutionGroup="resource_instance_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="ResourceType"/>
-			</xs:simpleContent>
-		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="EmployerBrokerType">
 		<xs:annotation>
