@@ -417,26 +417,27 @@
 	</xs:simpleType>
 	<xs:simpleType name="SpecialEnrollmentPeriodType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:terms:sep#open_enrollment"/>
-			<xs:enumeration value="urn:dc0:terms:sep#death"/>
-			<xs:enumeration value="urn:dc0:terms:sep#adoption"/>
-			<xs:enumeration value="urn:dc0:terms:sep#marriage"/>
-			<xs:enumeration value="urn:dc0:terms:sep#location_change"/>
-			<xs:enumeration value="urn:dc0:terms:sep#termination_of_benefits"/>
-			<xs:enumeration value="urn:dc0:terms:sep#non_payment"/>
-			<xs:enumeration value="urn:dc0:terms:sep#employment_termination"/>
-			<xs:enumeration value="urn:dc0:terms:sep#citizenship_granted"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error"/>
-			<xs:enumeration value="urn:dc0:terms:sep#contract_violation"/>
-			<xs:enumeration value="urn:dc0:terms:sep#eligibility_change"/>
-			<xs:enumeration value="urn:dc0:terms:sep#qualified_native_american"/>
-			<xs:enumeration value="urn:dc0:terms:sep#non_hbx_misconduct"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_grace_period"/>
-			<xs:enumeration value="urn:dc0:terms:sep#medicaid_ineligible"/>
-			<xs:enumeration value="urn:dc0:terms:sep#legal_separation"/>
-			<xs:enumeration value="urn:dc0:terms:sep#surviving_spouse"/>
-			<xs:enumeration value="urn:dc0:terms:sep#divorce"/>
-			<xs:enumeration value="urn:dc0:terms:sep#retirement"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#open_enrollment"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#death"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#adoption"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#marriage"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#location_change"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#termination_of_benefits"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#non_payment"/>
+      <xs:enumeration value="urn:openhbx:terms:sep#new_hire"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#employment_termination"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#citizenship_granted"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#enrollment_error"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#contract_violation"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#eligibility_change"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#qualified_native_american"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#non_hbx_misconduct"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#enrollment_grace_period"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#medicaid_ineligible"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#legal_separation"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#surviving_spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#divorce"/>
+			<xs:enumeration value="urn:openhbx:terms:sep#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MaintenanceReasonType">

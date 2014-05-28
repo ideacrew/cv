@@ -92,15 +92,15 @@
 			<xs:documentation>Valid events for employee</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:events:employer_employee#added"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#updated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#deleted"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_selected"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_withdrawn"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_started"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_ended"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#effectuated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#added"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#updated"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#employment_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerPlanType">
