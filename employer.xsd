@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" vc:minVersion="1.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
@@ -92,15 +92,15 @@
 			<xs:documentation>Valid events for employee</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:events:employer_employee#added"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#updated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#deleted"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_selected"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_withdrawn"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_started"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_ended"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#effectuated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#added"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#updated"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:employer_employee#employment_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerPlanType">
@@ -147,25 +147,15 @@
 			<xs:element name="metal_level_code" type="PlanMetalLevelType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="enrollment_group_uri" substitutionGroup="resource_instance_uri">
+	<xs:element name="enrollment_group_uri" substitutionGroup="other_resource_instance_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="ResourceType"/>
-			</xs:simpleContent>
-		</xs:complexType>
 	</xs:element>
-	<xs:element name="employer_employee_uri" substitutionGroup="resource_instance_uri">
+	<xs:element name="employer_employee_uri" substitutionGroup="resource_instance_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="ResourceType"/>
-			</xs:simpleContent>
-		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="EmployerBrokerType">
 		<xs:annotation>
