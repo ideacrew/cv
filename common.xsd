@@ -20,7 +20,7 @@
 	</xs:complexType>
 	<xs:complexType name="AddressType">
 		<xs:annotation>
-			<xs:documentation>Street or mailing address</xs:documentation>
+			<xs:documentation>Physical street or mailing address</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="address_type">
@@ -423,26 +423,29 @@
 	</xs:simpleType>
 	<xs:simpleType name="SpecialEnrollmentPeriodType">
 		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:dc0:terms:sep#lost_access_to_mec"/>
 			<xs:enumeration value="urn:dc0:terms:sep#open_enrollment"/>
-			<xs:enumeration value="urn:dc0:terms:sep#death"/>
 			<xs:enumeration value="urn:dc0:terms:sep#adoption"/>
+			<xs:enumeration value="urn:dc0:terms:sep#placement_for_adoption"/>
+			<xs:enumeration value="urn:dc0:terms:sep#foster_care"/>
+			<xs:enumeration value="urn:dc0:terms:sep#birth"/>
 			<xs:enumeration value="urn:dc0:terms:sep#marriage"/>
 			<xs:enumeration value="urn:dc0:terms:sep#location_change"/>
 			<xs:enumeration value="urn:dc0:terms:sep#termination_of_benefits"/>
-			<xs:enumeration value="urn:dc0:terms:sep#non_payment"/>
 			<xs:enumeration value="urn:dc0:terms:sep#employment_termination"/>
 			<xs:enumeration value="urn:dc0:terms:sep#citizenship_granted"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error"/>
+			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_hhs"/>
+			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_hbx"/>
+			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_carrier"/>
+			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_non_hbx"/>
 			<xs:enumeration value="urn:dc0:terms:sep#contract_violation"/>
 			<xs:enumeration value="urn:dc0:terms:sep#eligibility_change"/>
 			<xs:enumeration value="urn:dc0:terms:sep#qualified_native_american"/>
-			<xs:enumeration value="urn:dc0:terms:sep#non_hbx_misconduct"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_grace_period"/>
-			<xs:enumeration value="urn:dc0:terms:sep#medicaid_ineligible"/>
-			<xs:enumeration value="urn:dc0:terms:sep#legal_separation"/>
-			<xs:enumeration value="urn:dc0:terms:sep#surviving_spouse"/>
-			<xs:enumeration value="urn:dc0:terms:sep#divorce"/>
-			<xs:enumeration value="urn:dc0:terms:sep#retirement"/>
+			<xs:enumeration value="urn:dc0:terms:sep#exceptional_circumstances">
+				<xs:annotation>
+					<xs:documentation>Medicaid ineligible, SHOP didn't go through, . Others </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MaintenanceReasonType">
@@ -451,14 +454,19 @@
 			<xs:enumeration value="benefit selection"/>
 			<xs:enumeration value="plan change"/>
 			<xs:enumeration value="change in identifying data elements"/>
-			<xs:enumeration value="birth"/>
-			<xs:enumeration value="death"/>
-			<xs:enumeration value="adoption"/>
-			<xs:enumeration value="marriage"/>
-			<xs:enumeration value="location change"/>
 			<xs:enumeration value="termination of benefits"/>
 			<xs:enumeration value="non payment"/>
 			<xs:enumeration value="employment termination"/>
+			<xs:enumeration value="marriage"/>
+			<xs:enumeration value="location change"/>
+			<xs:enumeration value="adoption"/>
+			<xs:enumeration value="urn:dc0:terms:sep#birth"/>
+			<xs:enumeration value="urn:dc0:terms:sep#death"/>
+			<xs:enumeration value="urn:dc0:terms:sep#non_payment"/>
+			<xs:enumeration value="urn:dc0:terms:sep#legal_separation"/>
+			<xs:enumeration value="urn:dc0:terms:sep#surviving_spouse"/>
+			<xs:enumeration value="urn:dc0:terms:sep#divorce"/>
+			<xs:enumeration value="urn:dc0:terms:sep#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitCoverageType">
@@ -472,7 +480,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="PlanMetalLevelType">
 		<xs:annotation>
-			<xs:documentation>Plan category designation </xs:documentation>
+			<xs:documentation>Plan category designation</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="bronze"/>
