@@ -9,6 +9,43 @@
 	<xs:element name="individual" type="IndividualType"/>
 	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="member" type="MemberRoleType"/>
+		<xs:simpleType name="UpdateKindType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="name_change"/>
+			<xs:enumeration value="address_change"/>
+			<xs:enumeration value="email_change"/>
+			<xs:enumeration value="phone_change"/>
+			<xs:enumeration value="employment_change"/>
+			<xs:enumeration value="member_change"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PreviousMemberType">
+		<xs:sequence>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="gender" type="GenderType"/>
+			<xs:element name="dob" type="SimpleDateType"/>
+			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PreviousIndividualType">
+		<xs:sequence>
+			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_first" type="xs:string"/>
+			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_last" type="xs:string"/>
+			<xs:element name="name_suffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_full" type="xs:string" minOccurs="0"/>
+			<xs:element name="member_change" type="PreviousMemberType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdateType">
+		<xs:sequence>
+			<xs:element name="change_type" type="UpdateKindType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="individual"/>
+			<xs:element name="previous_information" type="PreviousIndividualType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="update" type="UpdateType"/>
 	<xs:complexType name="MemberRoleType">
 		<xs:sequence>
 			<xs:element name="gender" type="GenderType"/>
