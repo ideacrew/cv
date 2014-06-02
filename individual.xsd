@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://dchealthlink.com/vocabularies/2.0/individual" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" targetNamespace="http://dchealthlink.com/vocabularies/2.0/individual" elementFormDefault="qualified" version="2.0">
-	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
+<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" version="1.0">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="application_group" type="ApplicationGroupType"/>
+	<xs:element name="enrollment_status" type="EnrollmentStatusType"/>
+	<xs:element name="household" type="HouseholdType"/>
+	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
 	<xs:element name="individual" type="IndividualType"/>
+	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="member" type="MemberRoleType"/>
-	<xs:element name="ApplicationGroup">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="member" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	<xs:complexType name="MemberRoleType">
 		<xs:sequence>
-			<xs:element name="gender" type="bt:GenderType"/>
-			<xs:element name="dob" type="bt:SimpleDateType">
+			<xs:element name="gender" type="GenderType"/>
+			<xs:element name="dob" type="SimpleDateType">
 				<xs:annotation>
 					<xs:documentation>Date of Birth</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ssn" type="bt:FederalTaxIdType" minOccurs="0">
+			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Social Security Number</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="tobacco_user" type="TobaccoUseType" default="unknown"/>
-			<xs:element name="language" type="bt:LanguageType" minOccurs="0"/>
-			<xs:group ref="bt:HbxIdentifierGroup"/>
-			<xs:element name="carrier_member_id" type="xs:string" minOccurs="0">
+			<xs:element name="language" type="LanguageType" minOccurs="0"/>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="carrier_assigned_member_id" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Carrier-assigned identifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="person" type="bt:PersonType"/>
+			<xs:element name="person" type="PersonType"/>
 			<xs:element name="relationship" type="RelationshipType"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -39,54 +38,14 @@
 		<xs:sequence>
 			<xs:element name="hbx_employer_id" type="xs:string"/>
 			<xs:element name="hbx_employer_uri" type="xs:anyURI"/>
-			<xs:element name="employment_status" minOccurs="0">
-				<xs:simpleType>
-					<xs:annotation>
-						<xs:documentation>Required for subscriber. For SHOP market, use employment
-                  status code. For individual market, use only active or
-                  terminated</xs:documentation>
-					</xs:annotation>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="active"/>
-						<xs:enumeration value="terminated"/>
-						<xs:enumeration value="active military overseas"/>
-						<xs:enumeration value="active military usa"/>
-						<xs:enumeration value="full time"/>
-						<xs:enumeration value="leave of absence"/>
-						<xs:enumeration value="part time"/>
-						<xs:enumeration value="retired"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="eligibility_start_date" type="bt:SimpleDateType" minOccurs="0"/>
-			<xs:element name="eligibility_end_date" type="bt:SimpleDateType" minOccurs="0"/>
+			<xs:element name="employment_status" type="EmploymentStatusType" minOccurs="0"/>
+			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ResponsiblePartyRoleType">
 		<xs:sequence>
-			<xs:element name="entity_identifier">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="case manager"/>
-						<xs:enumeration value="key person"/>
-						<xs:enumeration value="parent"/>
-						<xs:enumeration value="responsible party"/>
-						<xs:enumeration value="guardian"/>
-						<xs:enumeration value="ex-spouse"/>
-						<xs:enumeration value="significant other"/>
-						<xs:enumeration value="legal representative"/>
-						<xs:enumeration value="power of attorney"/>
-						<xs:enumeration value="other insured"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="entity_type" default='"1"'>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value='"1"'/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="entity_identifier" type="EntityType"/>
 			<xs:element name="hbx_organization_uri" type="xs:anyURI" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -94,109 +53,117 @@
 		<xs:sequence>
 			<xs:element name="authority_hbx_member_uri" type="xs:anyURI"/>
 			<xs:element name="authority_hbx_member_id" type="xs:string"/>
-			<xs:element name="person" type="bt:PersonType"/>
-			<xs:element name="members" type="MemberRoleType"/>
-			<xs:element name="jobs" type="EmployeeRoleType"/>
-			<xs:element name="responsibilities" type="ResponsiblePartyRoleType"/>
+			<xs:element name="person" type="PersonType"/>
+			<xs:element name="member_roles" type="MemberRoleType"/>
+			<xs:element name="employee_roles" type="EmployeeRoleType" maxOccurs="unbounded"/>
+			<xs:element name="responsible_party_roles" type="ResponsiblePartyRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EnrolleeType">
 		<xs:sequence>
-			<xs:element name="premium_amount" type="bt:CurrencyType"/>
+			<xs:element name="premium_amount" type="CurrencyType"/>
 			<xs:element name="disabled" type="xs:boolean"/>
-			<xs:element name="benefit_status">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="active"/>
-						<xs:enumeration value="cobra"/>
-						<xs:enumeration value="surviing insured"/>
-						<xs:enumeration value="tefra"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="employment_status" default="active">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="active"/>
-						<xs:enumeration value="full time"/>
-						<xs:enumeration value="part time"/>
-						<xs:enumeration value="retired"/>
-						<xs:enumeration value="terminated"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="benefit_status" type="BenefitStatusType" minOccurs="0"/>
+			<xs:element name="employment_status" type="EmploymentStatusType" default="urn:dc0:terms:employment_status#active"/>
 			<xs:element name="relationship" type="RelationshipType"/>
-			<xs:element name="carrier_member_id" type="xs:string"/>
-			<xs:element name="carrier_policy_id"/>
-			<xs:element name="coverage_start_date" type="bt:SimpleDateType"/>
-			<xs:element name="coverage_end_date" type="bt:CurrencyType"/>
+			<xs:element name="carrier_assigned_member_id" type="xs:string"/>
+			<xs:element name="carrier_assigned_policy_id" type="xs:string"/>
+			<xs:element name="coverage_start_date" type="SimpleDateType"/>
+			<xs:element name="coverage_end_date" type="CurrencyType"/>
 			<xs:element name="coverage_status"/>
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
-<xs:simpleType name="RelationshipType">
+	<xs:complexType name="IndividualEventType">
+		<xs:complexContent>
+			<xs:extension base="EventType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="individual_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
-			<xs:documentation>The way or state in which two individuals are connected</xs:documentation>
+			<xs:documentation>Dererferenceable identifier for individual instance, e.g. urn:dc0:individual:_id</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="spouse"/>
-			<xs:enumeration value="father"/>
-			<xs:enumeration value="mother"/>
-			<xs:enumeration value="grandfather"/>
-			<xs:enumeration value="grandmother"/>
-			<xs:enumeration value="grandson"/>
-			<xs:enumeration value="granddaughter"/>
-			<xs:enumeration value="uncle"/>
-			<xs:enumeration value="aunt"/>
-			<xs:enumeration value="nephew"/>
-			<xs:enumeration value="niece"/>
-			<xs:enumeration value="cousin"/>
-			<xs:enumeration value="adopted child"/>
-			<xs:enumeration value="foster child"/>
-			<xs:enumeration value="son-in-law"/>
-			<xs:enumeration value="daughter-in-law"/>
-			<xs:enumeration value="brother-in-law"/>
-			<xs:enumeration value="sister-in-law"/>
-			<xs:enumeration value="father-in-law"/>
-			<xs:enumeration value="mother-in-law"/>
-			<xs:enumeration value="brother"/>
-			<xs:enumeration value="sister"/>
-			<xs:enumeration value="ward"/>
-			<xs:enumeration value="stepparent"/>
-			<xs:enumeration value="stepson"/>
-			<xs:enumeration value="stepdaughter"/>
-			<xs:enumeration value="child"/>
-			<xs:enumeration value="sponsored dependent"/>
-			<xs:enumeration value="dependent of a minor dependent"/>
-			<xs:enumeration value="ex-spouse"/>
-			<xs:enumeration value="guardian"/>
-			<xs:enumeration value="court appointed guardian"/>
-			<xs:enumeration value="collateral dependent"/>
-			<xs:enumeration value="life partner"/>
-			<xs:enumeration value="female"/>
-			<xs:enumeration value="unknown"/>
-		</xs:restriction>
-		</xs:simpleType>
-			<xs:simpleType name="MaritalStatusType">
+	</xs:element>
+	<xs:complexType name="ApplicationGroupType">
+		<xs:sequence>
+			<xs:element ref="individual" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="household" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="enrollment_status" minOccurs="1"/>
+			<xs:element name="applicant_relationships" type="PersonRelationshipType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Relationships between primary applicant and each of the other appliicants.  Will include head of household self-pointer at minimum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HouseholdType">
 		<xs:annotation>
-			<xs:documentation>An individual's state of interpersonal relationship with another</xs:documentation>
+			<xs:documentation>Applicant sub-grouping for purpose of financial eligibility determination and enrollment</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="single"/>
-			<xs:enumeration value="married"/>
-			<xs:enumeration value="domestic partnership"/>
-			<xs:enumeration value="separated"/>
-			<xs:enumeration value="legally seperated"/>
-			<xs:enumeration value="divorced"/>
-			<xs:enumeration value="widowed"/>
-			<xs:enumeration value="unknown"/>
-		</xs:restriction>
-	</xs:simpleType>
+		<xs:sequence>
+			<xs:element ref="eligibility_determination" maxOccurs="unbounded"/>
+			<xs:element name="household_relationships" type="RelationshipType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:simpleType name="TobaccoUseType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="true"/>
 			<xs:enumeration value="false"/>
 			<xs:enumeration value="unknown"/>
 		</xs:restriction>
-	
-	</xs:simpleType></xs:schema>
+	</xs:simpleType>
+	<xs:complexType name="EligibilityDeterminationType">
+		<xs:sequence>
+			<xs:element name="authority_source_uri" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URN reference to service or agency responsible for determination results</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="event_id" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>reference number for determination</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date" type="SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>Date of determination</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="maximum_aptc" type="CurrencyType">
+				<xs:annotation>
+					<xs:documentation>Total tax credit amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="magi_amount" type="CurrencyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Modified Adjusted Gross Income figure used to determine elibility</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonRelationshipType">
+		<xs:sequence>
+			<xs:element name="subject_person_uri" type="xs:anyURI"/>
+			<xs:element name="relationship_kind" type="RelationshipType">
+				<xs:annotation>
+					<xs:documentation>change to substitution group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="object_person_uri" type="xs:anyURI"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="IndividualEventNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:dc0:events:employer_employee#added"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#updated"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#deleted"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_selected"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#sep_started"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#sep_ended"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#effectuated"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#authority_member_set"/>
+			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="individual_event_type" type="IndividualEventNameType" substitutionGroup="event_name"/>
+</xs:schema>
