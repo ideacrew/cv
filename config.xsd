@@ -6,7 +6,7 @@
   
   <xs:complexType name="BaseServiceEndpoint" abstract="true">
     <xs:sequence>
-      <xs:element name="root_element" type="xs:NAME"/>
+      <xs:element name="root_element" type="xs:NCNAME"/>
     </xs:sequence>
   </xs:complexType>
   
