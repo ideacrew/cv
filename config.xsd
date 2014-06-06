@@ -6,10 +6,7 @@
   
   <xs:complexType name="BaseServiceEndpoint" abstract="true">
     <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
       <xs:element name="root_element" type="xs:NAME"/>
-      <xs:element name="xsl_tranform" type="xs:string"/>
-      <xs:element name="xsl_validate" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   
@@ -22,6 +19,9 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  
+  <xs:element name="endpoint" type="BaseServiceEndpoint" abstract="true"/>
+  <xs:element name="http_endpoint" type="HttpEndpoint" substitutionGroup="endpoint"/>
   
   <xs:complexType name="JmsEndpoint">
     <xs:complexContent>
@@ -41,6 +41,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:element name="jms_endpoint" type="JmsEndpoint" substitutionGroup="endpoint"/>
   
   <xs:complexType name="AmqpEndpoint">
     <xs:complexContent>
@@ -54,10 +55,13 @@
     </xs:complexContent>
   </xs:complexType>
   
+  <xs:element name="amqp_endpoint" type="AmqpEndpoint" substitutionGroup="endpoint"/>
+  
   <xs:complexType name="Service">
     <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
       <xs:element name="version" type="xs:string"/>
-      <xs:element name="endpoint" type="BaseServiceEndpoint" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element ref="endpoint" minOccurs="1" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   
