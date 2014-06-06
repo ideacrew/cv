@@ -508,12 +508,4 @@
 			<xs:enumeration value="catastrophic"/>
 		</xs:restriction>
 	</xs:simpleType>
-  
-  <xs:complexType name="EndpointSet">
-    <xs:sequence>
-      <xs:element name="amqp" type="xs:string"/>
-      <xs:element name="http" type="xs:string"/>
-      <xs:element name="jms" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
 </xs:schema>
