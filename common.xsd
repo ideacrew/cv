@@ -137,7 +137,7 @@
 		<xs:sequence>
 			<xs:element name="urn" type="xs:anyURI">
 				<xs:annotation>
-					<xs:documentation>Unique reference fot this service</xs:documentation>
+					<xs:documentation>Unique reference for this service</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="uri" type="xs:anyURI">
@@ -508,4 +508,12 @@
 			<xs:enumeration value="catastrophic"/>
 		</xs:restriction>
 	</xs:simpleType>
+  
+  <xs:complexType name="EndpointSet">
+    <xs:sequence>
+      <xs:element name="amqp" type="xs:string"/>
+      <xs:element name="http" type="xs:string"/>
+      <xs:element name="jms" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
