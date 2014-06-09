@@ -115,7 +115,7 @@
 			<xs:element name="carrier_assigned_policy_id" type="xs:string"/>
 			<xs:element name="coverage_start_date" type="SimpleDateType"/>
 			<xs:element name="coverage_end_date" type="CurrencyType"/>
-			<xs:element name="coverage_status"/>
+			<xs:element name="coverage_status" type="xs:string"/>
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
