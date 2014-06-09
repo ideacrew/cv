@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="application_group" type="ApplicationGroupType"/>
 	<xs:element name="enrollment_status" type="EnrollmentStatusType"/>
@@ -9,16 +9,39 @@
 	<xs:element name="individual" type="IndividualType"/>
 	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="member" type="MemberRoleType"/>
-		<xs:simpleType name="UpdateKindType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="name_change"/>
-			<xs:enumeration value="address_change"/>
-			<xs:enumeration value="email_change"/>
-			<xs:enumeration value="phone_change"/>
-			<xs:enumeration value="employment_change"/>
-			<xs:enumeration value="member_change"/>
-		</xs:restriction>
-	</xs:simpleType>
+	<xs:element name="individual_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+		<xs:annotation>
+			<xs:documentation>Dererferenceable identifier for individual instance, e.g. urn:dc0:individual:_id</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="update" type="UpdateType"/>
+	<xs:complexType name="IndividualType">
+		<xs:sequence>
+			<xs:element name="authority_hbx_member_uri" type="xs:anyURI"/>
+			<xs:element name="authority_hbx_member_id" type="xs:string"/>
+			<xs:element name="person" type="PersonType"/>
+			<xs:element name="member_roles" type="MemberRoleType"/>
+			<xs:element name="employee_roles" type="EmployeeRoleType" maxOccurs="unbounded"/>
+			<xs:element name="responsible_party_roles" type="ResponsiblePartyRoleType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualEventType">
+		<xs:annotation>
+			<xs:documentation>Message format for Individual resource event</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="EventType">
+				<xs:sequence>
+					<xs:element name="hbx_id" type="xs:string"/>
+					<xs:element name="event_name" type="IndividualEventNameType"/>
+					<xs:element name="qualifying_reason" type="SpecialEnrollmentPeriodType"/>
+					<xs:element ref="individual_uri"/>
+					<xs:element name="sender_uri" type="xs:anyURI"/>
+					<xs:element name="submitted_timestamp" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="PreviousMemberType">
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
@@ -45,7 +68,6 @@
 			<xs:element name="previous_information" type="PreviousIndividualType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="update" type="UpdateType"/>
 	<xs:complexType name="MemberRoleType">
 		<xs:sequence>
 			<xs:element name="gender" type="GenderType"/>
@@ -86,16 +108,6 @@
 			<xs:element name="hbx_organization_uri" type="xs:anyURI" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="IndividualType">
-		<xs:sequence>
-			<xs:element name="authority_hbx_member_uri" type="xs:anyURI"/>
-			<xs:element name="authority_hbx_member_id" type="xs:string"/>
-			<xs:element name="person" type="PersonType"/>
-			<xs:element name="member_roles" type="MemberRoleType"/>
-			<xs:element name="employee_roles" type="EmployeeRoleType" maxOccurs="unbounded"/>
-			<xs:element name="responsible_party_roles" type="ResponsiblePartyRoleType"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="EnrolleeType">
 		<xs:sequence>
 			<xs:element name="premium_amount" type="CurrencyType"/>
@@ -111,16 +123,6 @@
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="IndividualEventType">
-		<xs:complexContent>
-			<xs:extension base="EventType"/>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:element name="individual_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
-		<xs:annotation>
-			<xs:documentation>Dererferenceable identifier for individual instance, e.g. urn:dc0:individual:_id</xs:documentation>
-		</xs:annotation>
-	</xs:element>
 	<xs:complexType name="ApplicationGroupType">
 		<xs:sequence>
 			<xs:element ref="individual" minOccurs="1" maxOccurs="unbounded"/>
@@ -142,13 +144,6 @@
 			<xs:element name="household_relationships" type="RelationshipType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="TobaccoUseType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="true"/>
-			<xs:enumeration value="false"/>
-			<xs:enumeration value="unknown"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="EligibilityDeterminationType">
 		<xs:sequence>
 			<xs:element name="authority_source_uri" minOccurs="0">
@@ -191,16 +186,32 @@
 	</xs:complexType>
 	<xs:simpleType name="IndividualEventNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:events:employer_employee#added"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#updated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#deleted"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#qhp_selected"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_started"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#sep_ended"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#effectuated"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#authority_member_set"/>
-			<xs:enumeration value="urn:dc0:events:employer_employee#employment_terminated"/>
+			<xs:enumeration value="urn:dc0:events:individual#added"/>
+			<xs:enumeration value="urn:dc0:events:individual#updated"/>
+			<xs:enumeration value="urn:dc0:events:individual#deleted"/>
+			<xs:enumeration value="urn:dc0:events:individual#qhp_withdrawn"/>
+			<xs:enumeration value="urn:dc0:events:individual#qhp_selected"/>
+			<xs:enumeration value="urn:dc0:events:individual#sep_started"/>
+			<xs:enumeration value="urn:dc0:events:individual#sep_ended"/>
+			<xs:enumeration value="urn:dc0:events:individual#effectuated"/>
+			<xs:enumeration value="urn:dc0:events:individual#authority_member_set"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:element name="individual_event_type" type="IndividualEventNameType" substitutionGroup="event_name"/>
+	<xs:simpleType name="UpdateKindType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="name_change"/>
+			<xs:enumeration value="address_change"/>
+			<xs:enumeration value="email_change"/>
+			<xs:enumeration value="phone_change"/>
+			<xs:enumeration value="employment_change"/>
+			<xs:enumeration value="member_change"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TobaccoUseType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
