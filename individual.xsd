@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="application_group" type="ApplicationGroupType"/>
 	<xs:element name="enrollment_status" type="EnrollmentStatusType"/>
@@ -84,11 +85,6 @@
 			<xs:element name="tobacco_user" type="TobaccoUseType" default="unknown"/>
 			<xs:element name="language" type="LanguageType" minOccurs="0"/>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="carrier_assigned_member_id" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Carrier-assigned identifier</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="person" type="PersonType"/>
 			<xs:element name="relationship" type="RelationshipType"/>
 		</xs:sequence>
@@ -119,7 +115,7 @@
 			<xs:element name="carrier_assigned_policy_id" type="xs:string"/>
 			<xs:element name="coverage_start_date" type="SimpleDateType"/>
 			<xs:element name="coverage_end_date" type="CurrencyType"/>
-			<xs:element name="coverage_status"/>
+			<xs:element name="coverage_status" type="xs:string"/>
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
