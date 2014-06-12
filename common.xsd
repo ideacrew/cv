@@ -6,17 +6,27 @@
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="name" type="NameType"/>
+			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
+			<xs:element name="department" type="xs:string" minOccurs="0"/>
+			<xs:element name="addresses" type="AddressType" maxOccurs="unbounded"/>
+			<xs:element name="emails" type="EmailType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="phones" type="PhoneType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonListType">
+		<xs:sequence>
+			<xs:element name="name" type="NameType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NameType">
+		<xs:sequence>
 			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_first" type="xs:string"/>
 			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_last" type="xs:string"/>
 			<xs:element name="name_suffix" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_full" type="xs:string" minOccurs="0"/>
-			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
-			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element name="addresses" type="AddressType" maxOccurs="unbounded"/>
-			<xs:element name="emails" type="EmailType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="phones" type="PhoneType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AddressType">
@@ -152,7 +162,7 @@
 			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="other_resource_instance_uri" type="xs:anyURI">
+	<xs:element name="extended_resource_instance_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
@@ -162,7 +172,7 @@
 			<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:dc0:events:individual#added</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:complexType name="EventType">
+	<xs:complexType name="EventType" abstract="true">
 		<xs:annotation>
 			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
 		</xs:annotation>
@@ -174,19 +184,32 @@
 			</xs:element>
 			<xs:element ref="event_name">
 				<xs:annotation>
-					<xs:documentation>Uniform Resource Name (URN) for this change event, e.g.; urn:dc0:events:individual#added</xs:documentation>
+					<xs:documentation>URN for this event, e.g.; urn:openhbx:events:individual#created</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="qualifying_reason" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Uniform Resource Name (URN) for the regulatory or policy basis enabling this change </xs:documentation>
+					<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="resource_instance_uri" minOccurs="1"/>
-			<xs:element ref="other_resource_instance_uri" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="resource_instance_uri" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>URN for the resource instance that is subject of this event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="extended_resource_instance_uri" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>URN(s) for other resource instances assocated with this event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="authorization">
+				<xs:annotation>
+					<xs:documentation>Authentication/authorization credentials</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="sender_uri" type="xs:anyURI">
 				<xs:annotation>
-					<xs:documentation>Uniform Resource Name (URN) for service or source that raised event, e.g. urn:dc0:services:connecture</xs:documentation>
+					<xs:documentation>URN for service or source that raised event</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="submitted_timestamp" type="xs:dateTime">
@@ -508,4 +531,5 @@
 			<xs:enumeration value="catastrophic"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="ErrorMessageType"/>
 </xs:schema>
