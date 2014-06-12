@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="application_group" type="ApplicationGroupType"/>
 	<xs:element name="enrollment_status" type="EnrollmentStatusType"/>
@@ -37,8 +36,21 @@
 					<xs:element name="event_name" type="IndividualEventNameType"/>
 					<xs:element name="qualifying_reason" type="SpecialEnrollmentPeriodType"/>
 					<xs:element ref="individual_uri"/>
-					<xs:element name="sender_uri" type="xs:anyURI"/>
-					<xs:element name="submitted_timestamp" type="xs:dateTime"/>
+					<xs:element name="authorization">
+						<xs:annotation>
+							<xs:documentation>Authentication/authorization credentials</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sender_uri" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>URN for service or source that raised event</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="submitted_timestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>UTC date and time when event occured</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -93,6 +105,7 @@
 		<xs:sequence>
 			<xs:element name="hbx_employer_id" type="xs:string"/>
 			<xs:element name="hbx_employer_uri" type="xs:anyURI"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="employment_status" type="EmploymentStatusType" minOccurs="0"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
@@ -182,15 +195,17 @@
 	</xs:complexType>
 	<xs:simpleType name="IndividualEventNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:events:individual#added"/>
-			<xs:enumeration value="urn:dc0:events:individual#updated"/>
-			<xs:enumeration value="urn:dc0:events:individual#deleted"/>
-			<xs:enumeration value="urn:dc0:events:individual#qhp_withdrawn"/>
-			<xs:enumeration value="urn:dc0:events:individual#qhp_selected"/>
-			<xs:enumeration value="urn:dc0:events:individual#sep_started"/>
-			<xs:enumeration value="urn:dc0:events:individual#sep_ended"/>
-			<xs:enumeration value="urn:dc0:events:individual#effectuated"/>
-			<xs:enumeration value="urn:dc0:events:individual#authority_member_set"/>
+			<xs:enumeration value="urn:dc0:event:individual#added"/>
+			<xs:enumeration value="urn:dc0:event:individual#updated"/>
+			<xs:enumeration value="urn:dc0:event:individual#deleted"/>
+			<xs:enumeration value="urn:dc0:event:individual#qhp_selected"/>
+			<xs:enumeration value="urn:dc0:event:individual#qhp_withdrawn"/>
+			<xs:enumeration value="urn:dc0:event:individual#qhp_effectuated"/>
+			<xs:enumeration value="urn:dc0:event:individual#qhp_terminated"/>
+			<xs:enumeration value="urn:dc0:event:individual#qhp_canceled"/>
+			<xs:enumeration value="urn:dc0:event:individual#sep_started"/>
+			<xs:enumeration value="urn:dc0:event:individual#sep_ended"/>
+			<xs:enumeration value="urn:dc0:event:individual#authority_member_set"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="UpdateKindType">
