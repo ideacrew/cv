@@ -8,19 +8,14 @@
 			<xs:documentation>SHOP employer instance</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="employer_group" type="EmployerGroupType">
+	<xs:element name="employer_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
-			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
+			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="employer_event" type="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer event instance</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType">
-		<xs:annotation>
-			<xs:documentation>SHOP employee event instance </xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="EmployerType">
@@ -33,6 +28,7 @@
 					<xs:documentation>Employer name in free-form text</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="fein" type="FederalTaxIdType"/>
 			<xs:element name="contacts">
 				<xs:complexType>
@@ -41,7 +37,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="sic_code" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Employer's Standard Industrial Code (SIC)</xs:documentation>
@@ -57,14 +52,14 @@
 					<xs:documentation>Number of part-time employees</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="employee_list" minOccurs="0">
+			<xs:element name="employees" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="employee" type="EmployerEmployeeListType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="plan_list" minOccurs="0">
+			<xs:element name="plans" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
@@ -133,16 +128,27 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:element name="employer_employee" type="EmployerEmployeeType"/>
+	<xs:element name="employer_employee_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+		<xs:annotation>
+			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType">
+		<xs:annotation>
+			<xs:documentation>SHOP employee event instance </xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:complexType name="EmployerEmployeeType">
 		<xs:sequence>
-			<xs:element name="name" type="NameType"/>
-			<xs:element name="role" type="EmployeeRoleType"/>
+			<xs:element name="employee" type="IndividualType"/>
+			<xs:element name="employee_role" type="EmployeeRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeListType">
 		<xs:sequence>
 			<xs:element name="name" type="NameType"/>
-			<xs:element name="identifier" type="EmployeeRoleType"/>
+			<xs:element name="employee_role" type="EmployeeRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeEventType">
@@ -276,14 +282,9 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="employer_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+	<xs:element name="employer_group" type="EmployerGroupType">
 		<xs:annotation>
-			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="employer_employee_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
-		<xs:annotation>
-			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
+			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="extended_resource_instance_uri">
@@ -291,7 +292,6 @@
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="employer_employee" type="EmployerEmployeeType"/>
 	<xs:simpleType name="EmployerEventNameType">
 		<xs:annotation>
 			<xs:documentation>Global event types for SHOP employer</xs:documentation>
