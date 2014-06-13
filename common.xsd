@@ -9,9 +9,31 @@
 			<xs:element name="name" type="NameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element name="addresses" type="AddressType" maxOccurs="unbounded"/>
-			<xs:element name="emails" type="EmailType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="phones" type="PhoneType" minOccurs="0" maxOccurs="unbounded"/>
+			
+			<xs:element name="addresses" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="emails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="email" type="EmailType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="phones" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="phone" type="PhoneType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonListType">
@@ -247,9 +269,9 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="urn:dc0:terms:enrollment_state#open"/>
-						<xs:enumeration value="urn:dc0:terms:enrollment_state#closed"/>
-						<xs:enumeration value="urn:dc0:terms:enrollment_state#special_enrollment_period"/>
+						<xs:enumeration value="urn:dc0:term:enrollment_state#open"/>
+						<xs:enumeration value="urn:dc0:term:enrollment_state#closed"/>
+						<xs:enumeration value="urn:dc0:term:enrollment_state#special_enrollment_period"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -322,41 +344,41 @@
 			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:terms:gender#male"/>
-			<xs:enumeration value="urn:dc0:terms:gender#female"/>
-			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
+			<xs:enumeration value="urn:dc0:term:gender#male"/>
+			<xs:enumeration value="urn:dc0:term:gender#female"/>
+			<xs:enumeration value="urn:dc0:term:gender#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EntityType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:terms:entity#case_manager"/>
-			<xs:enumeration value="urn:dc0:terms:entity#key_person"/>
-			<xs:enumeration value="urn:dc0:terms:entity#parent"/>
-			<xs:enumeration value="urn:dc0:terms:entity#responsible_party"/>
-			<xs:enumeration value="urn:dc0:terms:entity#guardian"/>
-			<xs:enumeration value="urn:dc0:terms:entity#ex_spouse"/>
-			<xs:enumeration value="urn:dc0:terms:entity#significant_other"/>
-			<xs:enumeration value="urn:dc0:terms:entity#legal_representative"/>
-			<xs:enumeration value="urn:dc0:terms:entity#power_of_attorney"/>
-			<xs:enumeration value="urn:dc0:terms:entity#other_insured"/>
+			<xs:enumeration value="urn:dc0:term:entity#case_manager"/>
+			<xs:enumeration value="urn:dc0:term:entity#key_person"/>
+			<xs:enumeration value="urn:dc0:term:entity#parent"/>
+			<xs:enumeration value="urn:dc0:term:entity#responsible_party"/>
+			<xs:enumeration value="urn:dc0:term:entity#guardian"/>
+			<xs:enumeration value="urn:dc0:term:entity#ex_spouse"/>
+			<xs:enumeration value="urn:dc0:term:entity#significant_other"/>
+			<xs:enumeration value="urn:dc0:term:entity#legal_representative"/>
+			<xs:enumeration value="urn:dc0:term:entity#power_of_attorney"/>
+			<xs:enumeration value="urn:dc0:term:entity#other_insured"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EmploymentStatusType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:terms:employment_status#active"/>
-			<xs:enumeration value="urn:dc0:terms:employment_status#full_time"/>
-			<xs:enumeration value="urn:dc0:terms:employment_status#part_time"/>
-			<xs:enumeration value="urn:dc0:terms:employment_status#terminated"/>
-			<xs:enumeration value="urn:dc0:terms:employment_status#leave_of_absence"/>
-			<xs:enumeration value="urn:dc0:terms:employment_status#retired"/>
+			<xs:enumeration value="urn:dc0:term:employment_status#active"/>
+			<xs:enumeration value="urn:dc0:term:employment_status#full_time"/>
+			<xs:enumeration value="urn:dc0:term:employment_status#part_time"/>
+			<xs:enumeration value="urn:dc0:term:employment_status#terminated"/>
+			<xs:enumeration value="urn:dc0:term:employment_status#leave_of_absence"/>
+			<xs:enumeration value="urn:dc0:term:employment_status#retired"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitStatusType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:terms:benefit_status#active"/>
-			<xs:enumeration value="urn:dc0:terms:benefit_status#cobra"/>
-			<xs:enumeration value="urn:dc0:terms:benefit_status#surviing_insured"/>
-			<xs:enumeration value="urn:dc0:terms:benefit_status#tefra"/>
+			<xs:enumeration value="urn:dc0:term:benefit_status#active"/>
+			<xs:enumeration value="urn:dc0:term:benefit_status#cobra"/>
+			<xs:enumeration value="urn:dc0:term:benefit_status#surviing_insured"/>
+			<xs:enumeration value="urn:dc0:term:benefit_status#tefra"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MaritalStatusType">
@@ -364,14 +386,14 @@
 			<xs:documentation>Matrimonial relationship state between two individuals</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:terms:marital_status#single"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#married"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#domestic_partnership"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#separated"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#legally_seperated"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#divorced"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#widowed"/>
-			<xs:enumeration value="urn:dc0:terms:marital_status#unknown"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#single"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#married"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#domestic_partnership"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#separated"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#legally_seperated"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#divorced"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#widowed"/>
+			<xs:enumeration value="urn:dc0:term:marital_status#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="RelationshipType">
@@ -464,25 +486,25 @@
 	</xs:simpleType>
 	<xs:simpleType name="SpecialEnrollmentPeriodType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:terms:sep#lost_access_to_mec"/>
-			<xs:enumeration value="urn:dc0:terms:sep#open_enrollment"/>
-			<xs:enumeration value="urn:dc0:terms:sep#adoption"/>
-			<xs:enumeration value="urn:dc0:terms:sep#placement_for_adoption"/>
-			<xs:enumeration value="urn:dc0:terms:sep#foster_care"/>
-			<xs:enumeration value="urn:dc0:terms:sep#birth"/>
-			<xs:enumeration value="urn:dc0:terms:sep#marriage"/>
-			<xs:enumeration value="urn:dc0:terms:sep#location_change"/>
-			<xs:enumeration value="urn:dc0:terms:sep#termination_of_benefits"/>
-			<xs:enumeration value="urn:dc0:terms:sep#employment_termination"/>
-			<xs:enumeration value="urn:dc0:terms:sep#citizenship_granted"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_hhs"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_hbx"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_carrier"/>
-			<xs:enumeration value="urn:dc0:terms:sep#enrollment_error_or_misconduct_non_hbx"/>
-			<xs:enumeration value="urn:dc0:terms:sep#contract_violation"/>
-			<xs:enumeration value="urn:dc0:terms:sep#eligibility_change"/>
-			<xs:enumeration value="urn:dc0:terms:sep#qualified_native_american"/>
-			<xs:enumeration value="urn:dc0:terms:sep#exceptional_circumstances">
+			<xs:enumeration value="urn:dc0:term:sep#lost_access_to_mec"/>
+			<xs:enumeration value="urn:dc0:term:sep#open_enrollment"/>
+			<xs:enumeration value="urn:dc0:term:sep#adoption"/>
+			<xs:enumeration value="urn:dc0:term:sep#placement_for_adoption"/>
+			<xs:enumeration value="urn:dc0:term:sep#foster_care"/>
+			<xs:enumeration value="urn:dc0:term:sep#birth"/>
+			<xs:enumeration value="urn:dc0:term:sep#marriage"/>
+			<xs:enumeration value="urn:dc0:term:sep#location_change"/>
+			<xs:enumeration value="urn:dc0:term:sep#termination_of_benefits"/>
+			<xs:enumeration value="urn:dc0:term:sep#employment_termination"/>
+			<xs:enumeration value="urn:dc0:term:sep#citizenship_granted"/>
+			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_hhs"/>
+			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_hbx"/>
+			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_carrier"/>
+			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_non_hbx"/>
+			<xs:enumeration value="urn:dc0:term:sep#contract_violation"/>
+			<xs:enumeration value="urn:dc0:term:sep#eligibility_change"/>
+			<xs:enumeration value="urn:dc0:term:sep#qualified_native_american"/>
+			<xs:enumeration value="urn:dc0:term:sep#exceptional_circumstances">
 				<xs:annotation>
 					<xs:documentation>Medicaid ineligible, SHOP didn't go through, etc.</xs:documentation>
 				</xs:annotation>
@@ -501,13 +523,13 @@
 			<xs:enumeration value="marriage"/>
 			<xs:enumeration value="location change"/>
 			<xs:enumeration value="adoption"/>
-			<xs:enumeration value="urn:dc0:terms:sep#birth"/>
-			<xs:enumeration value="urn:dc0:terms:sep#death"/>
-			<xs:enumeration value="urn:dc0:terms:sep#non_payment"/>
-			<xs:enumeration value="urn:dc0:terms:sep#legal_separation"/>
-			<xs:enumeration value="urn:dc0:terms:sep#surviving_spouse"/>
-			<xs:enumeration value="urn:dc0:terms:sep#divorce"/>
-			<xs:enumeration value="urn:dc0:terms:sep#retirement"/>
+			<xs:enumeration value="urn:dc0:term:sep#birth"/>
+			<xs:enumeration value="urn:dc0:term:sep#death"/>
+			<xs:enumeration value="urn:dc0:term:sep#non_payment"/>
+			<xs:enumeration value="urn:dc0:term:sep#legal_separation"/>
+			<xs:enumeration value="urn:dc0:term:sep#surviving_spouse"/>
+			<xs:enumeration value="urn:dc0:term:sep#divorce"/>
+			<xs:enumeration value="urn:dc0:term:sep#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitCoverageType">
