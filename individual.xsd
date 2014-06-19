@@ -15,6 +15,7 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="update" type="UpdateType"/>
+	<xs:element name="employment_status" type="EmploymentStatusType" default="urn:dc0:term:employment_status#active"/>
 	<xs:complexType name="IndividualType">
 		<xs:sequence>
 			<xs:element name="authority_hbx_member_uri" type="xs:anyURI"/>
@@ -103,10 +104,8 @@
 	</xs:complexType>
 	<xs:complexType name="EmployeeRoleType">
 		<xs:sequence>
-			<xs:element name="hbx_employer_id" type="xs:string"/>
-			<xs:element name="hbx_employer_uri" type="xs:anyURI"/>
+			<xs:element ref="employment_status"/>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="employment_status" type="EmploymentStatusType" minOccurs="0"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
@@ -122,7 +121,7 @@
 			<xs:element name="premium_amount" type="CurrencyType"/>
 			<xs:element name="disabled" type="xs:boolean"/>
 			<xs:element name="benefit_status" type="BenefitStatusType" minOccurs="0"/>
-			<xs:element name="employment_status" type="EmploymentStatusType" default="urn:dc0:terms:employment_status#active"/>
+			<xs:element ref="employment_status"/>
 			<xs:element name="relationship" type="RelationshipType"/>
 			<xs:element name="carrier_assigned_member_id" type="xs:string"/>
 			<xs:element name="carrier_assigned_policy_id" type="xs:string"/>

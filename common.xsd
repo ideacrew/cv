@@ -9,7 +9,6 @@
 			<xs:element name="name" type="NameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			
 			<xs:element name="addresses" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -17,7 +16,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			
 			<xs:element name="emails" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -25,7 +23,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-
 			<xs:element name="phones" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -33,15 +30,20 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonListType">
+		<xs:annotation>
+			<xs:documentation>Summary attributes for a person</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name" type="NameType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="NameType">
+		<xs:annotation>
+			<xs:documentation>Base type for components of an individual's name</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_first" type="xs:string"/>
@@ -191,7 +193,7 @@
 	</xs:element>
 	<xs:element name="event_name" type="xs:anyURI">
 		<xs:annotation>
-			<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:dc0:events:individual#added</xs:documentation>
+			<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:individual#added</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="EventType" abstract="true">
@@ -206,7 +208,7 @@
 			</xs:element>
 			<xs:element ref="event_name">
 				<xs:annotation>
-					<xs:documentation>URN for this event, e.g.; urn:openhbx:events:individual#created</xs:documentation>
+					<xs:documentation>URN for this event, e.g.; urn:openhbx:events:v1:individual#created</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="qualifying_reason" type="xs:anyURI" minOccurs="0">
@@ -269,9 +271,9 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="urn:dc0:term:enrollment_state#open"/>
-						<xs:enumeration value="urn:dc0:term:enrollment_state#closed"/>
-						<xs:enumeration value="urn:dc0:term:enrollment_state#special_enrollment_period"/>
+						<xs:enumeration value="urn:dc0:terms:enrollment_state#open"/>
+						<xs:enumeration value="urn:dc0:terms:enrollment_state#closed"/>
+						<xs:enumeration value="urn:dc0:terms:enrollment_state#special_enrollment_period"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -299,6 +301,102 @@
 			</xs:element>
 			<xs:element name="description" type="xs:string" minOccurs="0"/>
 			<xs:group ref="ServiceEndpointGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SetResponseType">
+		<xs:annotation>
+			<xs:documentation>Base type for response body for a collection of resource items</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="ResponseStatusType"/>
+			<xs:element name="metadata" type="MetadataType"/>
+			<xs:element name="results">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##any" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ItemResponseType">
+		<xs:annotation>
+			<xs:documentation>Base type for one instance of a resource</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="ResponseStatusType"/>
+			<xs:any namespace="##any" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResponseStatusType">
+		<xs:annotation>
+			<xs:documentation>Base type to indicate success or failure of a request to a service</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status" type="HttpStatusType">
+				<xs:annotation>
+					<xs:documentation>HTTP status code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="error_code" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Error code relevant to local service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="developer_message" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Plain text description for app developer with hits about how to fix</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="user_message" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Message passed to the application. if needed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="more_information" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Link with additional information about this error </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MetadataType">
+		<xs:annotation>
+			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="metadata">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="result_set">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="count" type="xs:integer">
+										<xs:annotation>
+											<xs:documentation>Total number of items in the result set</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="limit" type="xs:integer">
+										<xs:annotation>
+											<xs:documentation>Number of items returned in this payload</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="offset" type="xs:integer">
+										<xs:annotation>
+											<xs:documentation>Position in the result set of the first record in this payload</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:any namespace="##any" processContents="lax" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Wildcard to support schema extension</xs:documentation>
+							</xs:annotation>
+						</xs:any>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="TelephoneNumberType">
@@ -344,41 +442,47 @@
 			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:term:gender#male"/>
-			<xs:enumeration value="urn:dc0:term:gender#female"/>
-			<xs:enumeration value="urn:dc0:term:gender#unknown"/>
+			<xs:enumeration value="urn:dc0:terms:gender#male"/>
+			<xs:enumeration value="urn:dc0:terms:gender#female"/>
+			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmploymentStatusType">
+		<xs:annotation>
+			<xs:documentation>State of activity in the labor force</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#active"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#full_time"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#part_time"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#terminated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#leave_of_absence"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#retired"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EntityType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:term:entity#case_manager"/>
-			<xs:enumeration value="urn:dc0:term:entity#key_person"/>
-			<xs:enumeration value="urn:dc0:term:entity#parent"/>
-			<xs:enumeration value="urn:dc0:term:entity#responsible_party"/>
-			<xs:enumeration value="urn:dc0:term:entity#guardian"/>
-			<xs:enumeration value="urn:dc0:term:entity#ex_spouse"/>
-			<xs:enumeration value="urn:dc0:term:entity#significant_other"/>
-			<xs:enumeration value="urn:dc0:term:entity#legal_representative"/>
-			<xs:enumeration value="urn:dc0:term:entity#power_of_attorney"/>
-			<xs:enumeration value="urn:dc0:term:entity#other_insured"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="EmploymentStatusType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:term:employment_status#active"/>
-			<xs:enumeration value="urn:dc0:term:employment_status#full_time"/>
-			<xs:enumeration value="urn:dc0:term:employment_status#part_time"/>
-			<xs:enumeration value="urn:dc0:term:employment_status#terminated"/>
-			<xs:enumeration value="urn:dc0:term:employment_status#leave_of_absence"/>
-			<xs:enumeration value="urn:dc0:term:employment_status#retired"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#key_person"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#parent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#responsible_party"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#ex_spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#significant_other"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#legal_representative"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#power_of_attorney"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitStatusType">
+		<xs:annotation>
+			<xs:documentation>State of activity for an enrollment</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:term:benefit_status#active"/>
-			<xs:enumeration value="urn:dc0:term:benefit_status#cobra"/>
-			<xs:enumeration value="urn:dc0:term:benefit_status#surviing_insured"/>
-			<xs:enumeration value="urn:dc0:term:benefit_status#tefra"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#active"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#cobra"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#surviing_insured"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#tefra"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MaritalStatusType">
@@ -386,14 +490,14 @@
 			<xs:documentation>Matrimonial relationship state between two individuals</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:dc0:term:marital_status#single"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#married"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#domestic_partnership"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#separated"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#legally_seperated"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#divorced"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#widowed"/>
-			<xs:enumeration value="urn:dc0:term:marital_status#unknown"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#single"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#married"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#domestic_partners"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#separated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#legally_seperated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#divorced"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#widowed"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="RelationshipType">
@@ -401,43 +505,43 @@
 			<xs:documentation>Interpersonal relationship state between connected individuals</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="head of household"/>
-			<xs:enumeration value="spouse"/>
-			<xs:enumeration value="father"/>
-			<xs:enumeration value="mother"/>
-			<xs:enumeration value="grandfather"/>
-			<xs:enumeration value="grandmother"/>
-			<xs:enumeration value="grandson"/>
-			<xs:enumeration value="granddaughter"/>
-			<xs:enumeration value="uncle"/>
-			<xs:enumeration value="aunt"/>
-			<xs:enumeration value="nephew"/>
-			<xs:enumeration value="niece"/>
-			<xs:enumeration value="cousin"/>
-			<xs:enumeration value="adopted child"/>
-			<xs:enumeration value="foster child"/>
-			<xs:enumeration value="son-in-law"/>
-			<xs:enumeration value="daughter-in-law"/>
-			<xs:enumeration value="brother-in-law"/>
-			<xs:enumeration value="sister-in-law"/>
-			<xs:enumeration value="father-in-law"/>
-			<xs:enumeration value="mother-in-law"/>
-			<xs:enumeration value="brother"/>
-			<xs:enumeration value="sister"/>
-			<xs:enumeration value="ward"/>
-			<xs:enumeration value="stepparent"/>
-			<xs:enumeration value="stepson"/>
-			<xs:enumeration value="stepdaughter"/>
-			<xs:enumeration value="child"/>
-			<xs:enumeration value="sponsored dependent"/>
-			<xs:enumeration value="dependent of a minor dependent"/>
-			<xs:enumeration value="ex-spouse"/>
-			<xs:enumeration value="guardian"/>
-			<xs:enumeration value="court appointed guardian"/>
-			<xs:enumeration value="collateral dependent"/>
-			<xs:enumeration value="life partner"/>
-			<xs:enumeration value="female"/>
-			<xs:enumeration value="unknown"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#head of household"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#father"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#mother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#grandfather"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#grandmother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#grandson"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#granddaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#uncle"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#aunt"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#nephew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#niece"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#cousin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#adopted child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#foster child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#son-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#daughter-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#brother-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#sister-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#father-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#mother-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#brother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#sister"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#ward"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#stepparent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#stepson"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#stepdaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#sponsored dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#dependent of a minor dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#ex-spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#court appointed guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#collateral dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#life partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#female"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EnrolleeRelationshipType">
@@ -445,66 +549,68 @@
 			<xs:documentation>Interpersonal relationship state between individuals in a plan enrollment</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="self"/>
-			<xs:enumeration value="spouse"/>
-			<xs:enumeration value="father"/>
-			<xs:enumeration value="mother"/>
-			<xs:enumeration value="grandfather"/>
-			<xs:enumeration value="grandmother"/>
-			<xs:enumeration value="grandson"/>
-			<xs:enumeration value="granddaughter"/>
-			<xs:enumeration value="uncle"/>
-			<xs:enumeration value="aunt"/>
-			<xs:enumeration value="nephew"/>
-			<xs:enumeration value="niece"/>
-			<xs:enumeration value="cousin"/>
-			<xs:enumeration value="adopted child"/>
-			<xs:enumeration value="foster child"/>
-			<xs:enumeration value="son-in-law"/>
-			<xs:enumeration value="daughter-in-law"/>
-			<xs:enumeration value="brother-in-law"/>
-			<xs:enumeration value="sister-in-law"/>
-			<xs:enumeration value="father-in-law"/>
-			<xs:enumeration value="mother-in-law"/>
-			<xs:enumeration value="brother"/>
-			<xs:enumeration value="sister"/>
-			<xs:enumeration value="ward"/>
-			<xs:enumeration value="stepparent"/>
-			<xs:enumeration value="stepson"/>
-			<xs:enumeration value="stepdaughter"/>
-			<xs:enumeration value="child"/>
-			<xs:enumeration value="sponsored dependent"/>
-			<xs:enumeration value="dependent of a minor dependent"/>
-			<xs:enumeration value="ex-spouse"/>
-			<xs:enumeration value="guardian"/>
-			<xs:enumeration value="court appointed guardian"/>
-			<xs:enumeration value="collateral dependent"/>
-			<xs:enumeration value="life partner"/>
-			<xs:enumeration value="female"/>
-			<xs:enumeration value="unknown"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#self"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#father"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#mother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#grandfather"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#grandmother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#grandson"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#granddaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#uncle"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#aunt"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#nephew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#niece"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#cousin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#adopted child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#foster child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#son-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#daughter-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#brother-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#sister-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#father-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#mother-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#brother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#sister"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#ward"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#stepparent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#stepson"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#stepdaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#sponsored dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#dependent of a minor dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#ex-spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#court appointed guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#collateral dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#life partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#female"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="SpecialEnrollmentPeriodType">
+		<xs:annotation>
+			<xs:documentation>Life events that trigger special enrollment periods</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:term:sep#lost_access_to_mec"/>
-			<xs:enumeration value="urn:dc0:term:sep#open_enrollment"/>
-			<xs:enumeration value="urn:dc0:term:sep#adoption"/>
-			<xs:enumeration value="urn:dc0:term:sep#placement_for_adoption"/>
-			<xs:enumeration value="urn:dc0:term:sep#foster_care"/>
-			<xs:enumeration value="urn:dc0:term:sep#birth"/>
-			<xs:enumeration value="urn:dc0:term:sep#marriage"/>
-			<xs:enumeration value="urn:dc0:term:sep#location_change"/>
-			<xs:enumeration value="urn:dc0:term:sep#termination_of_benefits"/>
-			<xs:enumeration value="urn:dc0:term:sep#employment_termination"/>
-			<xs:enumeration value="urn:dc0:term:sep#citizenship_granted"/>
-			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_hhs"/>
-			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_hbx"/>
-			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_carrier"/>
-			<xs:enumeration value="urn:dc0:term:sep#enrollment_error_or_misconduct_non_hbx"/>
-			<xs:enumeration value="urn:dc0:term:sep#contract_violation"/>
-			<xs:enumeration value="urn:dc0:term:sep#eligibility_change"/>
-			<xs:enumeration value="urn:dc0:term:sep#qualified_native_american"/>
-			<xs:enumeration value="urn:dc0:term:sep#exceptional_circumstances">
+			<xs:enumeration value="urn:dc0:terms:v1:sep#lost_access_to_mec"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#open_enrollment"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#adoption"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#placement_for_adoption"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#foster_care"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#birth"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#marriage"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#location_change"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#termination_of_benefits"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#employment_termination"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#citizenship_granted"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#enrollment_error_or_misconduct_hbx"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#enrollment_error_or_misconduct_carrier"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#enrollment_error_or_misconduct_non_hbx"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#contract_violation"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#eligibility_change"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#qualified_native_american"/>
+			<xs:enumeration value="urn:dc0:terms:v1:sep#exceptional_circumstances">
 				<xs:annotation>
 					<xs:documentation>Medicaid ineligible, SHOP didn't go through, etc.</xs:documentation>
 				</xs:annotation>
@@ -512,24 +618,27 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MaintenanceReasonType">
+		<xs:annotation>
+			<xs:documentation>Event that causes change in benefit enrollment</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="initial enrollment"/>
-			<xs:enumeration value="benefit selection"/>
-			<xs:enumeration value="plan change"/>
-			<xs:enumeration value="change in identifying data elements"/>
-			<xs:enumeration value="termination of benefits"/>
-			<xs:enumeration value="non payment"/>
-			<xs:enumeration value="employment termination"/>
-			<xs:enumeration value="marriage"/>
-			<xs:enumeration value="location change"/>
-			<xs:enumeration value="adoption"/>
-			<xs:enumeration value="urn:dc0:term:sep#birth"/>
-			<xs:enumeration value="urn:dc0:term:sep#death"/>
-			<xs:enumeration value="urn:dc0:term:sep#non_payment"/>
-			<xs:enumeration value="urn:dc0:term:sep#legal_separation"/>
-			<xs:enumeration value="urn:dc0:term:sep#surviving_spouse"/>
-			<xs:enumeration value="urn:dc0:term:sep#divorce"/>
-			<xs:enumeration value="urn:dc0:term:sep#retirement"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#initial_enrollment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#benefit_selection"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#plan_change"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#identifying_info_change"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#termination_of_benefits"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#non_payment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#employment_termination"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#marriage"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#location_change"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#adoption"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#birth"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#death"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#non_payment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#legal_separation"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#surviving_spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#divorce"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitCoverageType">
@@ -537,21 +646,81 @@
 			<xs:documentation>Kind of insurance </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="health"/>
-			<xs:enumeration value="dental"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage#health"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PlanMetalLevelType">
 		<xs:annotation>
-			<xs:documentation>Plan category designation</xs:documentation>
+			<xs:documentation>ACA plan category designation</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="bronze"/>
-			<xs:enumeration value="silver"/>
-			<xs:enumeration value="gold"/>
-			<xs:enumeration value="platinum"/>
-			<xs:enumeration value="catastrophic"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#bronze"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#silver"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#gold"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#platinum"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#catastrophic"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="ErrorMessageType"/>
+	<xs:simpleType name="HttpStatusType">
+		<xs:annotation>
+			<xs:documentation>Hypertext Transfer Protocol (HTTP) response codes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="200">
+				<xs:annotation>
+					<xs:documentation>OK</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="201">
+				<xs:annotation>
+					<xs:documentation>Created</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="304">
+				<xs:annotation>
+					<xs:documentation>Not modified</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="400">
+				<xs:annotation>
+					<xs:documentation>Bad request</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="401">
+				<xs:annotation>
+					<xs:documentation>Unauthorized due to authentication error</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="403">
+				<xs:annotation>
+					<xs:documentation>Unauthorized</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="404">
+				<xs:annotation>
+					<xs:documentation>Not found</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="500">
+				<xs:annotation>
+					<xs:documentation>Internal server error</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HbxResourceNameType">
+		<xs:annotation>
+			<xs:documentation>Resources in OpenHBX services model</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#application_groups"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#individuals"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#employers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#policies"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#carriers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#plans"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#brokers"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
