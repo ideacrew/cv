@@ -20,77 +20,76 @@
 	</xs:element>
 	<xs:complexType name="EmployerType">
 		<xs:annotation>
-			<xs:documentation>Model for SHOP employer</xs:documentation>
+			<xs:documentation>Response body for SHOP employer instance</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Employer name in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="fein" type="FederalTaxIdType"/>
-			<xs:element name="contacts">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="sic_code" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Employer's Standard Industrial Code (SIC)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="fte_count" type="xs:integer">
-				<xs:annotation>
-					<xs:documentation>Number of full-time-employees</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="pte_count" type="xs:integer" default="0">
-				<xs:annotation>
-					<xs:documentation>Number of part-time employees</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="employees" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="employee" type="EmployerEmployeeListType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="plans" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="broker" type="EmployerBrokerType" minOccurs="0"/>
-			<xs:element name="open_enrollment_start" type="xs:date">
-				<xs:annotation>
-					<xs:documentation>Open Enrollment period start date</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="open_enrollment_end" type="xs:date">
-				<xs:annotation>
-					<xs:documentation>Open Enrollment period end date</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="plan_year_start" type="xs:date">
-				<xs:annotation>
-					<xs:documentation>Date Employer plan eligibility begins</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="plan_year_end" type="xs:date" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Date employer plan eligibility ends</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="notes" minOccurs="0"/>
-		</xs:sequence>
+		<xs:complexContent>
+			<xs:extension base="ItemResponseType">
+				<xs:sequence>
+					<xs:element name="employer" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Employer name in free-form text</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:group ref="HbxIdentifierGroup"/>
+								<xs:element name="fein" type="FederalTaxIdType"/>
+								<xs:element name="contacts">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element ref="sic_code" minOccurs="0"/>
+								<xs:element ref="fte_count"/>
+								<xs:element ref="pte_count"/>
+								<xs:element name="plans" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="employees" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="employee" type="EmployerEmployeeListType" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element ref="broker" minOccurs="0"/>
+								<xs:element ref="open_enrollment_start"/>
+								<xs:element ref="open_enrollment_end"/>
+								<xs:element ref="plan_year_start"/>
+								<xs:element ref="plan_year_end" minOccurs="0"/>
+								<xs:element name="notes" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="EmployerListType"/>
+	<xs:complexType name="EmployerListType">
+		<xs:annotation>
+			<xs:documentation>Response body for summary employer set request</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SetResponseType">
+				<xs:sequence>
+					<xs:element name="employers">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="employer" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>Message structure for SHOP employer event</xs:documentation>
@@ -105,7 +104,7 @@
 					</xs:element>
 					<xs:element ref="event_name">
 						<xs:annotation>
-							<xs:documentation>URN for this event, e.g.; urn:openhbx:event:individual#created</xs:documentation>
+							<xs:documentation>URN for this event, e.g.; urn:openhbx:events:individual#created</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element ref="employer_uri"/>
@@ -140,16 +139,31 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="EmployerEmployeeType">
+		<xs:annotation>
+			<xs:documentation>Response body for employee instance</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="employee" type="IndividualType"/>
 			<xs:element name="employee_role" type="EmployeeRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeListType">
-		<xs:sequence>
-			<xs:element name="name" type="NameType"/>
-			<xs:element name="employee_role" type="EmployeeRoleType"/>
-		</xs:sequence>
+		<xs:annotation>
+			<xs:documentation>Response body for summary employee set request </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SetResponseType">
+				<xs:sequence>
+					<xs:element name="employer_employees">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="employer_employee" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeEventType">
 		<xs:annotation>
@@ -297,17 +311,17 @@
 			<xs:documentation>Global event types for SHOP employer</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:event:employer#created"/>
-			<xs:enumeration value="urn:openhbx:event:employer#updated"/>
-			<xs:enumeration value="urn:openhbx:event:employer#deleted"/>
-			<xs:enumeration value="urn:openhbx:event:employer#terminated"/>
-			<xs:enumeration value="urn:openhbx:event:employer#enrollment_opened"/>
-			<xs:enumeration value="urn:openhbx:event:employer#enrollment_closed"/>
-			<xs:enumeration value="urn:openhbx:event:employer#payment_initiated"/>
-			<xs:enumeration value="urn:openhbx:event:employer#payment_allocated"/>
-			<xs:enumeration value="urn:openhbx:event:employer#payment_remitted"/>
-			<xs:enumeration value="urn:openhbx:event:employer#payment_nsf"/>
-			<xs:enumeration value="urn:openhbx:event:employer#payment_refunded"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#enrollment_opened"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#enrollment_closed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#payment_initiated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#payment_allocated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#payment_remitted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#payment_nsf"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#payment_refunded"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EmployerEmployeeEventNameType">
@@ -315,17 +329,53 @@
 			<xs:documentation>Global event types for SHOP employee</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:event:employer_employee#created"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#updated"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#deleted"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#qhp_selected"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#qhp_withdrawn"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#qhp_effectuated"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#qhp_canceled"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#qhp_terminated"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#sep_started"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#sep_ended"/>
-			<xs:enumeration value="urn:openhbx:event:employer_employee#employment_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#qhp_effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#qhp_canceled"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#qhp_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employee#employment_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:element name="sic_code" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Employer's Standard Industrial Code (SIC)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fte_count" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>Number of full-time-employees</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pte_count" type="xs:integer" default="0">
+		<xs:annotation>
+			<xs:documentation>Number of part-time employees</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="broker" type="EmployerBrokerType"/>
+	<xs:element name="open_enrollment_start" type="xs:date">
+		<xs:annotation>
+			<xs:documentation>Open Enrollment period start date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="open_enrollment_end" type="xs:date">
+		<xs:annotation>
+			<xs:documentation>Open Enrollment period end date</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="plan_year_start" type="xs:date">
+		<xs:annotation>
+			<xs:documentation>Date Employer plan eligibility begins</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="plan_year_end" type="xs:date">
+		<xs:annotation>
+			<xs:documentation>Date employer plan eligibility ends</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 </xs:schema>
