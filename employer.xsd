@@ -13,63 +13,43 @@
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="employer_request" type="EmployerRequestType"/>
 	<xs:element name="employer_event" type="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer event instance</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="EmployerRequestType">
+		<xs:annotation>
+			<xs:documentation>Service call to employer resource</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="RequestType">
+				<xs:sequence>
+					<xs:element ref="hbx_id"/>
+					<xs:element ref="request_name"/>
+					<xs:element ref="message_id" minOccurs="0"/>
+					<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="parameters" type="HashType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="EmployerType">
 		<xs:annotation>
 			<xs:documentation>Response body for SHOP employer instance</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="ItemResponseType">
+			<xs:restriction base="ItemResponseType">
 				<xs:sequence>
-					<xs:element name="employer" minOccurs="0">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element name="name" type="xs:string">
-									<xs:annotation>
-										<xs:documentation>Employer name in free-form text</xs:documentation>
-									</xs:annotation>
-								</xs:element>
-								<xs:group ref="HbxIdentifierGroup"/>
-								<xs:element name="fein" type="FederalTaxIdType"/>
-								<xs:element name="contacts">
-									<xs:complexType>
-										<xs:sequence>
-											<xs:element name="contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
-										</xs:sequence>
-									</xs:complexType>
-								</xs:element>
-								<xs:element ref="sic_code" minOccurs="0"/>
-								<xs:element ref="fte_count"/>
-								<xs:element ref="pte_count"/>
-								<xs:element name="plans" minOccurs="0">
-									<xs:complexType>
-										<xs:sequence>
-											<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
-										</xs:sequence>
-									</xs:complexType>
-								</xs:element>
-								<xs:element name="employees" minOccurs="0">
-									<xs:complexType>
-										<xs:sequence>
-											<xs:element name="employee" type="EmployerEmployeeListType" maxOccurs="unbounded"/>
-										</xs:sequence>
-									</xs:complexType>
-								</xs:element>
-								<xs:element ref="broker" minOccurs="0"/>
-								<xs:element ref="open_enrollment_start"/>
-								<xs:element ref="open_enrollment_end"/>
-								<xs:element ref="plan_year_start"/>
-								<xs:element ref="plan_year_end" minOccurs="0"/>
-								<xs:element name="notes" minOccurs="0"/>
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
+					<xs:element name="status" type="ResponseStatusType"/>
+					<xs:any namespace="##any" minOccurs="0"/>
 				</xs:sequence>
-			</xs:extension>
+			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="EmployerListType">
@@ -138,6 +118,14 @@
 			<xs:documentation>SHOP employee event instance </xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="EmployerEmployeeRequestType">
+		<xs:annotation>
+			<xs:documentation>Service call to employee resource</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RequestType"/>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeType">
 		<xs:annotation>
 			<xs:documentation>Response body for employee instance</xs:documentation>
