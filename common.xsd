@@ -205,6 +205,7 @@
 		<xs:sequence>
 			<xs:element ref="hbx_id"/>
 			<xs:element ref="request_name"/>
+			<xs:element ref="correlation_id" minOccurs="0"/>
 			<xs:element ref="message_id" minOccurs="0"/>
 			<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
@@ -379,6 +380,7 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element ref="message_id" minOccurs="0"/>
+						<xs:element ref="originating_service" minOccurs="0"/>
 						<xs:element ref="correlation_id" minOccurs="0"/>
 						<xs:element name="result_set">
 							<xs:complexType>
@@ -426,6 +428,7 @@
 			<xs:documentation>Previous message ID of application-specifc ID associated with this message</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="originating_service"/>
 	<xs:simpleType name="TelephoneNumberType">
 		<xs:annotation>
 			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
