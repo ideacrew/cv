@@ -3,7 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
-	<xs:element name="employer" type="EmployerType">
+	<xs:element name="employer" type="EmployerIndexType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
 		</xs:annotation>
@@ -13,10 +13,21 @@
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="employer_request" type="EmployerRequestType"/>
 	<xs:element name="employer_event" type="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer event instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_group" type="EmployerGroupType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_employee" type="EmployerEmployeeType"/>
+	<xs:element name="employer_request" type="EmployerRequestType"/>
+	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType">
+		<xs:annotation>
+			<xs:documentation>SHOP employee event instance </xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="EmployerRequestType">
@@ -40,58 +51,40 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="EmployerEmployeeRequestType">
+	<xs:simpleType name="EmployerRequestNameType">
 		<xs:annotation>
-			<xs:documentation>Service call to employee resource</xs:documentation>
+			<xs:documentation>Request methods for SHOP employer resourcxe</xs:documentation>
 		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="RequestType">
-				<xs:sequence>
-					<xs:element ref="hbx_id"/>
-					<xs:element name="request_name" type="EmployerEmployeeRequestNameType"/>
-					<xs:element ref="correlation_id"/>
-					<xs:element ref="message_id" minOccurs="0"/>
-					<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="parameters" type="HashType"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="EmployerType">
-		<xs:annotation>
-			<xs:documentation>Response body for SHOP employer instance</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="ItemResponseType">
-				<xs:sequence>
-					<xs:element name="status" type="ResponseStatusType"/>
-					<xs:any namespace="##any" minOccurs="0"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="EmployerListType">
-		<xs:annotation>
-			<xs:documentation>Response body for summary employer set request</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="SetResponseType">
-				<xs:sequence>
-					<xs:element name="employers">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element ref="employer" minOccurs="0" maxOccurs="unbounded"/>
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:requests:v1:employers"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#terminate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#open_enrollment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#close_enrollment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#enrollment_group">
+				<xs:annotation>
+					<xs:documentation>Provides a list of actively enrolled employees</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#assign_carrier_group">
+				<xs:annotation>
+					<xs:documentation>Sets the carrier-assigned group identifier for this employer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#initiate_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#allocate_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#remit_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#nsf_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#refund_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#premium_amount_due"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#nfp_employer_premium_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#nfp_get_dashboard_data"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employees#nfp_get_customer_statements"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>Message structure for SHOP employer event</xs:documentation>
@@ -129,37 +122,49 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:element name="employer_employee" type="EmployerEmployeeType"/>
-	<xs:element name="employer_employee_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+	<xs:simpleType name="EmployerEventNameType">
 		<xs:annotation>
-			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
+			<xs:documentation>Global event types for SHOP employer</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:employees#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#enrollment_opened"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#enrollment_closed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#carrier_group_assigned"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_initiated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_allocated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_remitted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_nsf"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_refunded"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EmployerType">
 		<xs:annotation>
-			<xs:documentation>SHOP employee event instance </xs:documentation>
+			<xs:documentation>Response body for SHOP employer instance</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="EmployerEmployeeType">
-		<xs:annotation>
-			<xs:documentation>Response body for employee instance</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="employee" type="IndividualType"/>
-			<xs:element name="employee_role" type="EmployeeRoleType"/>
-		</xs:sequence>
+		<xs:complexContent>
+			<xs:restriction base="ItemResponseType">
+				<xs:sequence>
+					<xs:element name="status" type="ResponseStatusType"/>
+					<xs:element name="employer" type="EmployerDetailType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="EmployerEmployeeListType">
+	<xs:complexType name="EmployerListType">
 		<xs:annotation>
-			<xs:documentation>Response body for summary employee set request </xs:documentation>
+			<xs:documentation>Response body for summary employer set request</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="SetResponseType">
 				<xs:sequence>
-					<xs:element name="employer_employees">
+					<xs:element name="employers">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element ref="employer_employee" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element ref="employer" minOccurs="0" maxOccurs="unbounded"/>
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
@@ -167,6 +172,105 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="EmployerIndexType">
+		<xs:annotation>
+			<xs:documentation>Summary-level emplioyer attributes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Employer name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="fein"/>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element ref="sic_code" minOccurs="0"/>
+			<xs:element ref="fte_count"/>
+			<xs:element ref="pte_count"/>
+			<xs:element ref="open_enrollment_start"/>
+			<xs:element ref="open_enrollment_end"/>
+			<xs:element ref="plan_year_start"/>
+			<xs:element ref="plan_year_end" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployerDetailType">
+		<xs:annotation>
+			<xs:documentation>Instance-level employer attributes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Employer name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="fein"/>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element ref="sic_code" minOccurs="0"/>
+			<xs:element ref="fte_count"/>
+			<xs:element ref="pte_count"/>
+			<xs:element name="broker" type="EmployerBrokerType" minOccurs="0"/>
+			<xs:element ref="open_enrollment_start"/>
+			<xs:element ref="open_enrollment_end"/>
+			<xs:element ref="plan_year_start"/>
+			<xs:element ref="plan_year_end" minOccurs="0"/>
+			<xs:element name="plans" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="contacts">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="notes" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployerEmployeeRequestType">
+		<xs:annotation>
+			<xs:documentation>Service call to employee resource</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="RequestType">
+				<xs:sequence>
+					<xs:element ref="hbx_id"/>
+					<xs:element name="request_name" type="EmployerEmployeeRequestNameType"/>
+					<xs:element ref="correlation_id"/>
+					<xs:element ref="message_id" minOccurs="0"/>
+					<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="parameters" type="HashType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="EmployerEmployeeRequestNameType">
+		<xs:annotation>
+			<xs:documentation>Request methods for SHOP employee resource</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#terminate_employment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#effectuate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#start_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#end_sep"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#select_qhp"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#withdraw_qhp"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#terminate_qhp"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#cancel_qhp"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="EmployerEmployeeEventType">
 		<xs:annotation>
 			<xs:documentation>Message structure for SHOP employee event</xs:documentation>
@@ -196,6 +300,51 @@
 					</xs:element>
 				</xs:sequence>
 			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="EmployerEmployeeEventNameType">
+		<xs:annotation>
+			<xs:documentation>Global event types for SHOP employee</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_canceled"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#employment_terminated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EmployerEmployeeType">
+		<xs:annotation>
+			<xs:documentation>Response body for employee instance</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="employee" type="IndividualType"/>
+			<xs:element name="employee_role" type="EmployeeRoleType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployerEmployeeListType">
+		<xs:annotation>
+			<xs:documentation>Response body for summary employee set request </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SetResponseType">
+				<xs:sequence>
+					<xs:element name="employer_employees">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="employer_employee" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="EmployerPlanListType">
@@ -303,98 +452,16 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="employer_group" type="EmployerGroupType">
-		<xs:annotation>
-			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
-		</xs:annotation>
-	</xs:element>
 	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="extended_resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:simpleType name="EmployerRequestNameType">
+	<xs:element name="employer_employee_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
-			<xs:documentation>Request methods for SHOP employer resourcxe</xs:documentation>
+			<xs:documentation>Dereferenceable identifier for employee instance, e.g. http://dchealthlink.com/api/services/employer/_id/employee/_id</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:requests:v1:employers"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#id"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#create"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#update"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#terminate"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#open_enrollment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#close_enrollment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#assign_carrier_group"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#initiate_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#allocate_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#remit_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#nsf_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#refund_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#premium_amount_due"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#nfp_employer_premium_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#nfp_get_dashboard_data"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employees#nfp_get_customer_statements"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="EmployerEmployeeRequestNameType">
-		<xs:annotation>
-			<xs:documentation>Request methods for SHOP employee resource</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#id"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#create"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#update"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#terminate_employment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#effectuate"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#start_sep"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#end_sep"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#select_qhp"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#withdraw_qhp"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#terminate_qhp"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#cancel_qhp"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="EmployerEventNameType">
-		<xs:annotation>
-			<xs:documentation>Global event types for SHOP employer</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:employees#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#deleted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#terminated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#enrollment_opened"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#enrollment_closed"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#carrier_group_assigned"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_initiated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_allocated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_remitted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_nsf"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employees#payment_refunded"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="EmployerEmployeeEventNameType">
-		<xs:annotation>
-			<xs:documentation>Global event types for SHOP employee</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#deleted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_selected"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_withdrawn"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_effectuated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_canceled"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_terminated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#sep_started"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#sep_ended"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#employment_terminated"/>
-		</xs:restriction>
-	</xs:simpleType>
+	</xs:element>
 	<xs:element name="sic_code" type="xs:string">
 		<xs:annotation>
 			<xs:documentation>Employer's Standard Industrial Code (SIC)</xs:documentation>
@@ -411,6 +478,11 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="broker" type="EmployerBrokerType"/>
+	<xs:element name="fein" type="FederalTaxIdType">
+		<xs:annotation>
+			<xs:documentation>Federal Employer Identification Number</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="open_enrollment_start" type="xs:date">
 		<xs:annotation>
 			<xs:documentation>Open Enrollment period start date</xs:documentation>
