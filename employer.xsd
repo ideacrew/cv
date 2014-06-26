@@ -149,7 +149,7 @@
 			<xs:restriction base="ItemResponseType">
 				<xs:sequence>
 					<xs:element name="status" type="ResponseStatusType"/>
-					<xs:element name="employer" type="EmployerDetailType" minOccurs="0"/>
+					<xs:element ref="employer" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -256,19 +256,19 @@
 			<xs:documentation>Request methods for SHOP employee resource</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#id"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#create"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#update"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#terminate_employment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#effectuate"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#start_sep"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employer_employees#end_sep"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#select_qhp"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#withdraw_qhp"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#terminate_qhp"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#cancel_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#terminate_employment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#effectuate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#start_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#end_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#select_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#withdraw_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#terminate_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#cancel_qhp"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerEmployeeEventType">
@@ -307,17 +307,17 @@
 			<xs:documentation>Global event types for SHOP employee</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#deleted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_selected"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_withdrawn"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_effectuated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_canceled"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#qhp_terminated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#sep_started"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#sep_ended"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employer_employees#employment_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#qhp_effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#qhp_canceled"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#qhp_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#employment_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerEmployeeType">
@@ -336,7 +336,7 @@
 		<xs:complexContent>
 			<xs:extension base="SetResponseType">
 				<xs:sequence>
-					<xs:element name="employer_employees">
+					<xs:element name="employers_employees">
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element ref="employer_employee" minOccurs="0" maxOccurs="unbounded"/>
