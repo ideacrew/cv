@@ -6,7 +6,7 @@
 	<xs:element name="enrollment_status" type="EnrollmentStatusType"/>
 	<xs:element name="household" type="HouseholdType"/>
 	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
-	<xs:element name="individual" type="IndividualType"/>
+	<xs:element name="individual" type="IndividualDetailType"/>
 	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="member" type="MemberRoleType"/>
 	<xs:element name="individual_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
@@ -15,17 +15,67 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="update" type="UpdateType"/>
-	<xs:element name="employment_status" type="EmploymentStatusType" default="urn:dc0:term:employment_status#active"/>
-	<xs:complexType name="IndividualType">
+	<xs:element name="employment_status" type="EmploymentStatusType" default="urn:openhbx:terms:v1:employment_status#active"/>
+	<xs:complexType name="ApplicationGroupType">
 		<xs:sequence>
-			<xs:element name="authority_hbx_member_uri" type="xs:anyURI"/>
-			<xs:element name="authority_hbx_member_id" type="xs:string"/>
-			<xs:element name="person" type="PersonType"/>
-			<xs:element name="member_roles" type="MemberRoleType"/>
-			<xs:element name="employee_roles" type="EmployeeRoleType" maxOccurs="unbounded"/>
-			<xs:element name="responsible_party_roles" type="ResponsiblePartyRoleType"/>
+			<xs:element ref="individual" maxOccurs="unbounded"/>
+			<xs:element ref="household" maxOccurs="unbounded"/>
+			<xs:element ref="enrollment_status"/>
+			<xs:element name="applicant_relationships" type="PersonRelationshipType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Relationships between primary applicant and each of the other appliicants.  Will include head of household self-pointer at minimum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="HouseholdType">
+		<xs:annotation>
+			<xs:documentation>Applicant sub-grouping for purpose of financial eligibility determination and enrollment</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="eligibility_determination" maxOccurs="unbounded"/>
+			<xs:element name="household_relationships" type="RelationshipType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ApplicationGroupRequestNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#start_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#end_sep"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IndividualRequestType">
+		<xs:complexContent>
+			<xs:restriction base="RequestType">
+				<xs:sequence>
+					<xs:element ref="hbx_id"/>
+					<xs:element ref="request_name"/>
+					<xs:element ref="correlation_id" minOccurs="0"/>
+					<xs:element ref="message_id" minOccurs="0"/>
+					<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="parameters" type="HashType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="IndividualRequestNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#effectuate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#select_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#withdraw_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#terminate_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#cancel_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individuals#set_authority_member"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="IndividualEventType">
 		<xs:annotation>
 			<xs:documentation>Message format for Individual resource event</xs:documentation>
@@ -55,6 +105,76 @@
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="IndividualEventNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:individuals#added"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#updated"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#qhp_effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#qhp_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#qhp_canceled"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:individuals#authority_member_set"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IndividualType">
+		<xs:complexContent>
+			<xs:restriction base="ItemResponseType">
+				<xs:sequence>
+					<xs:element name="status" type="ResponseStatusType"/>
+					<xs:element ref="individual" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IndividualListType">
+		<xs:annotation>
+			<xs:documentation>Response body for summary Individual set request</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SetResponseType">
+				<xs:sequence>
+					<xs:element name="individuals">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="individual" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IndividualIndexType">
+		<xs:sequence>
+			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualDetailType">
+		<xs:sequence>
+			<xs:element name="authority_hbx_member_uri" type="xs:anyURI"/>
+			<xs:element name="authority_hbx_member_id" type="xs:string"/>
+			<xs:element name="person" type="PersonType"/>
+			<xs:element name="member_roles">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="member_role" type="MemberRoleType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="employee_role" type="EmployeeRoleType" minOccurs="0"/>
+			<xs:element name="responsible_party_roles" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="responsible_party_role" type="ResponsiblePartyRoleType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PreviousMemberType">
 		<xs:sequence>
@@ -131,27 +251,6 @@
 			<xs:element name="member" type="MemberRoleType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ApplicationGroupType">
-		<xs:sequence>
-			<xs:element ref="individual" minOccurs="1" maxOccurs="unbounded"/>
-			<xs:element ref="household" minOccurs="1" maxOccurs="unbounded"/>
-			<xs:element ref="enrollment_status" minOccurs="1"/>
-			<xs:element name="applicant_relationships" type="PersonRelationshipType" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Relationships between primary applicant and each of the other appliicants.  Will include head of household self-pointer at minimum</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="HouseholdType">
-		<xs:annotation>
-			<xs:documentation>Applicant sub-grouping for purpose of financial eligibility determination and enrollment</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element ref="eligibility_determination" maxOccurs="unbounded"/>
-			<xs:element name="household_relationships" type="RelationshipType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="EligibilityDeterminationType">
 		<xs:sequence>
 			<xs:element name="authority_source_uri" minOccurs="0">
@@ -192,21 +291,6 @@
 			<xs:element name="object_person_uri" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="IndividualEventNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:event:individual#added"/>
-			<xs:enumeration value="urn:dc0:event:individual#updated"/>
-			<xs:enumeration value="urn:dc0:event:individual#deleted"/>
-			<xs:enumeration value="urn:dc0:event:individual#qhp_selected"/>
-			<xs:enumeration value="urn:dc0:event:individual#qhp_withdrawn"/>
-			<xs:enumeration value="urn:dc0:event:individual#qhp_effectuated"/>
-			<xs:enumeration value="urn:dc0:event:individual#qhp_terminated"/>
-			<xs:enumeration value="urn:dc0:event:individual#qhp_canceled"/>
-			<xs:enumeration value="urn:dc0:event:individual#sep_started"/>
-			<xs:enumeration value="urn:dc0:event:individual#sep_ended"/>
-			<xs:enumeration value="urn:dc0:event:individual#authority_member_set"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="UpdateKindType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="name_change"/>

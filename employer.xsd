@@ -64,7 +64,6 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#terminate"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#add_broker"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#remove_broker"/>
-
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#open_enrollment"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#close_enrollment"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#enrollment_group">
@@ -136,7 +135,6 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers#terminated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_added"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_removed"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#terminated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_opened"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_closed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#carrier_group_assigned"/>
