@@ -61,12 +61,19 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#create"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#update"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#terminate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#terminate">
+				<xs:annotation>
+					<xs:documentation>Transition an employer's status on the Exchange to terminated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#reinstate">
+				<xs:annotation>
+					<xs:documentation>Transition an employer's status on the Exchange from terminated to active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#add_broker"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#remove_broker"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#open_enrollment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#close_enrollment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#enrollment_group">
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#enrollment">
 				<xs:annotation>
 					<xs:documentation>Provides a list of actively enrolled employees</xs:documentation>
 				</xs:annotation>
@@ -76,12 +83,42 @@
 					<xs:documentation>Sets the carrier-assigned group identifier for this employer</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#initiate_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#allocate_payment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#open_enrollment">
+				<xs:annotation>
+					<xs:documentation>Transition employer enrollment status to open</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#close_enrollment">
+				<xs:annotation>
+					<xs:documentation>Change employer enrollment status to closed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#initiate_premium_payment">
+				<xs:annotation>
+					<xs:documentation>Start a premium payment transaction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#advance_premium_payment">
+				<xs:annotation>
+					<xs:documentation>Allocate premium payment transaction(s) sufficient to fund coverage period</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#reverse_premium_payment">
+				<xs:annotation>
+					<xs:documentation>Debit premium paid balance due to refund, Non-Sufficient Funds (NSF) or other reversal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#remit_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#nsf_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#refund_payment"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#premium_amount_due"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#binder_premium_amount_due">
+				<xs:annotation>
+					<xs:documentation>Provide total premium amount due for an employer's first payment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#premium_amount_due">
+				<xs:annotation>
+					<xs:documentation>Provide total premium amount due for an employer's current payment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#nfp_employer_premium_payment"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#nfp_get_dashboard_data"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#nfp_get_customer_statements"/>
@@ -133,16 +170,15 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers#updated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#deleted"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#reinstated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_added"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_removed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_opened"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_closed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#carrier_group_assigned"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_initiated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_allocated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_remitted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_nsf"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_refunded"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_advanced"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_reversed"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerType">
@@ -269,10 +305,12 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#effectuate"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#start_sep"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#end_sep"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#select_qhp"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#withdraw_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#select_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#change_qhp"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#terminate_qhp"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#cancel_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#reinstate"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerEmployeeEventType">
