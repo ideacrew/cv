@@ -57,7 +57,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:requests:v1:employers"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#by_id"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#create"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#update"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers#delete"/>
@@ -98,12 +98,12 @@
 					<xs:documentation>Start a premium payment transaction</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#advance_premium_payment">
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#advance_coverage_period">
 				<xs:annotation>
-					<xs:documentation>Allocate premium payment transaction(s) sufficient to fund coverage period</xs:documentation>
+					<xs:documentation>Allocate premium paid balance sufficient to fund additional coverage period</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers#reverse_premium_payment">
+			<xs:enumeration value="urn:openhbx:requests:v1:employers#reverse_coverage_period">
 				<xs:annotation>
 					<xs:documentation>Debit premium paid balance due to refund, Non-Sufficient Funds (NSF) or other reversal</xs:documentation>
 				</xs:annotation>
@@ -177,8 +177,8 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_closed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#carrier_group_assigned"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_initiated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_advanced"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_reversed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_advanced"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_reversed"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerType">
@@ -297,7 +297,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#by_id"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#create"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#update"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:employers_employees#delete"/>
