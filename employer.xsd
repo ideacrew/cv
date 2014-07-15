@@ -3,6 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
+	<xs:element name="employer_response" type="EmployerResponseType"/>
 	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
@@ -222,9 +223,11 @@
 			<xs:documentation>Response body for SHOP employer request</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="RequestResponseType">
+			<xs:restriction base="RequestResponseType">
 				<xs:sequence>
-					<xs:element name="employers">
+					<xs:element name="header" type="ResponseHeaderType"/>
+					<xs:element name="metadata" type="MetadataType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="results">
 						<xs:complexType>
 							<xs:sequence>
 								<xs:element ref="employer" minOccurs="0" maxOccurs="unbounded"/>
@@ -232,7 +235,7 @@
 						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
-			</xs:extension>
+			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="EmployerIndexType">
