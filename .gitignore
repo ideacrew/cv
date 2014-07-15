@@ -1,2 +1,3 @@
 # XMLSpy Project file
 *.spp
+/schema_checker/target/
