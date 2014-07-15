@@ -212,7 +212,7 @@
           <xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="parameters" type="HashType"/>
+      <xs:element name="parameters" type="xs:anyType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="EventType" abstract="true">

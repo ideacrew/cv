@@ -24,6 +24,11 @@ public class SchemaCheckerTest {
   }
   
   @Test
+  public void CheckDocumentStorageTest() throws Exception {
+    checkSchema("document_storage.xsd");
+  }
+  
+  @Test
   public void CheckEdiTest() throws Exception {
     checkSchema("edi.xsd");
   }
