@@ -3,7 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
-	<xs:element name="employer" type="EmployerIndexType">
+	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
 		</xs:annotation>
@@ -23,13 +23,49 @@
 			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="employer_employee" type="EmployerEmployeeType"/>
 	<xs:element name="employer_request" type="EmployerRequestType"/>
 	<xs:element name="employer_employee_event" type="EmployerEmployeeEventType">
 		<xs:annotation>
 			<xs:documentation>SHOP employee event instance </xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="EmployerType">
+		<xs:annotation>
+			<xs:documentation>Instance-level employer attributes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Employer name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="fein"/>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element ref="sic_code" minOccurs="0"/>
+			<xs:element ref="fte_count"/>
+			<xs:element ref="pte_count"/>
+			<xs:element name="broker" type="EmployerBrokerType" minOccurs="0"/>
+			<xs:element ref="open_enrollment_start"/>
+			<xs:element ref="open_enrollment_end"/>
+			<xs:element ref="plan_year_start"/>
+			<xs:element ref="plan_year_end" minOccurs="0"/>
+			<xs:element name="plans" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="contacts">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="notes" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="EmployerRequestType">
 		<xs:annotation>
 			<xs:documentation>Service call to employer resource</xs:documentation>
@@ -181,25 +217,12 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_reversed"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="EmployerType">
+	<xs:complexType name="EmployerResponseType">
 		<xs:annotation>
-			<xs:documentation>Response body for SHOP employer instance</xs:documentation>
+			<xs:documentation>Response body for SHOP employer request</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:restriction base="ItemResponseType">
-				<xs:sequence>
-					<xs:element name="status" type="ResponseStatusType"/>
-					<xs:element ref="employer" minOccurs="0"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="EmployerListType">
-		<xs:annotation>
-			<xs:documentation>Response body for summary employer set request</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="SetResponseType">
+			<xs:extension base="RequestResponseType">
 				<xs:sequence>
 					<xs:element name="employers">
 						<xs:complexType>
@@ -233,41 +256,17 @@
 			<xs:element ref="plan_year_end" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EmployerDetailType">
-		<xs:annotation>
-			<xs:documentation>Instance-level employer attributes</xs:documentation>
-		</xs:annotation>
+	<xs:complexType name="EmployerEmployeeType">
 		<xs:sequence>
-			<xs:element name="name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Employer name in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="fein"/>
-			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element ref="sic_code" minOccurs="0"/>
-			<xs:element ref="fte_count"/>
-			<xs:element ref="pte_count"/>
-			<xs:element name="broker" type="EmployerBrokerType" minOccurs="0"/>
-			<xs:element ref="open_enrollment_start"/>
-			<xs:element ref="open_enrollment_end"/>
-			<xs:element ref="plan_year_start"/>
-			<xs:element ref="plan_year_end" minOccurs="0"/>
-			<xs:element name="plans" minOccurs="0">
+			<xs:element ref="employer"/>
+			<xs:element name="employee" type="PersonType"/>
+			<xs:element name="member_roles">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="plan" type="EmployerPlanListType" maxOccurs="unbounded"/>
+						<xs:element name="member_role" type="MemberRoleType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="contacts">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="notes" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeRequestType">
@@ -362,21 +361,12 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#employment_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="EmployerEmployeeType">
-		<xs:annotation>
-			<xs:documentation>Response body for employee instance</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="employee" type="IndividualType"/>
-			<xs:element name="employee_role" type="EmployeeRoleType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="EmployerEmployeeListType">
+	<xs:complexType name="EmployerEmployeeResponseType">
 		<xs:annotation>
 			<xs:documentation>Response body for summary employee set request </xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="SetResponseType">
+			<xs:extension base="RequestResponseType">
 				<xs:sequence>
 					<xs:element name="employers_employees">
 						<xs:complexType>
@@ -494,6 +484,11 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="employer_employee" type="EmployerEmployeeType">
+		<xs:annotation>
+			<xs:documentation>SHOP employee instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="extended_resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
