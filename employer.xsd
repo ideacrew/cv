@@ -3,40 +3,11 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
-	<xs:element name="employer_group" type="EmployerGroupType">
-		<xs:annotation>
-			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="employer_request" type="EmployerRequestType"/>
-	<xs:element name="employer_response" type="EmployerResponseType"/>
+	<xs:include schemaLocation="organization.xsd"/>
 	<xs:complexType name="EmployerBrokerType">
-		<xs:annotation>
-			<xs:documentation>Model for SHOP employer-designated broker</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="npn">
-				<xs:annotation>
-					<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:maxLength value="10"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="tpa_ga_fein" type="FederalTaxIdType" minOccurs="0"/>
-			<xs:element name="broker_name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Broker or organization name in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="tpa_name" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>TPA or organization name in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
+		<xs:complexContent>
+			<xs:extension base="BrokerType"/>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="EmployerGroupType">
 		<xs:annotation>
@@ -285,7 +256,7 @@
 	</xs:complexType>
 	<xs:simpleType name="EmployerEventNameType">
 		<xs:annotation>
-			<xs:documentation>Global event types for SHOP employer</xs:documentation>
+			<xs:documentation>Event notification types for SHOP employer</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:employers#created"/>
@@ -436,7 +407,7 @@
 	</xs:complexType>
 	<xs:simpleType name="EmployerEmployeeEventNameType">
 		<xs:annotation>
-			<xs:documentation>Global event types for SHOP employee</xs:documentation>
+			<xs:documentation>Event notification types for SHOP employee</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:employers_employees#created"/>
@@ -473,6 +444,13 @@
 	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_request" type="EmployerRequestType"/>
+	<xs:element name="employer_response" type="EmployerResponseType"/>
+	<xs:element name="employer_group" type="EmployerGroupType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer group (demographic) instance</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="employer_employee" type="EmployerEmployeeType">
