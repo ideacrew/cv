@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
 	<xs:complexType name="PersonType">
 		<xs:annotation>
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
@@ -31,13 +31,6 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="authority_hbx_id" type="xs:string" minOccurs="0"/>
-			<xs:element name="members">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="member" type="MemberRoleType" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonListType">
@@ -165,12 +158,12 @@
 			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="hbx_uri" type="xs:anyURI">
+			<xs:element name="hbx_assigned_uri" type="xs:anyURI">
 				<xs:annotation>
 					<xs:documentation>Enterprise/globally unique identifier for this resource</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="hbx_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="hbx_assigned_id" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:group>
 	<xs:group name="ServiceEndpointGroup">
@@ -200,22 +193,27 @@
 			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="request_name" type="xs:anyURI">
-		<xs:annotation>
-			<xs:documentation>Uniform Resource Name (URN) for this request e.g.; urn:openhbx:requests:v1:individual</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="event_name" type="xs:anyURI">
-		<xs:annotation>
-			<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
-		</xs:annotation>
-	</xs:element>
 	<xs:complexType name="RequestType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base type to call a SOA service</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element ref="hbx_id"/>
-			<xs:element ref="request_name"/>
-			<xs:element ref="correlation_id" minOccurs="0"/>
-			<xs:element ref="message_id" minOccurs="0"/>
+			<xs:element name="hbx_id" type="HbxIdNameType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="message_id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Value that uniquely identifies message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="request_name" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Uniform Resource Name (URN) for this request e.g.; urn:openhbx:requests:v1:individual</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="correlation_id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Attribute to associate the current message with previous message ID or application-specifc ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
@@ -230,8 +228,21 @@
 			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element ref="hbx_id"/>
-			<xs:element ref="event_name"/>
+			<xs:element name="hbx_id" type="HbxIdNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="message_id" type="xs:string" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Value that uniqely identifies message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="event_name" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="qualifying_reason" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
@@ -324,22 +335,35 @@
 			<xs:group ref="ServiceEndpointGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ResponseHeaderType">
-		<xs:sequence>
-			<xs:element ref="message_id" minOccurs="0"/>
-			<xs:element ref="originating_service" minOccurs="0"/>
-			<xs:element ref="correlation_id" minOccurs="0"/>
-			<xs:element name="status" type="ResponseStatusType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="RequestResponseType">
+	<xs:complexType name="RequestResponseType" abstract="true">
 		<xs:annotation>
 			<xs:documentation>Base type for response body.  If results might return more than one record (i.e. it's a set response type), you MUST provide metadata.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="header" type="ResponseHeaderType"/>
-			<xs:element name="metadata" type="MetadataType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="metadata" type="MessageMetadataType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="results" type="xs:anyType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResponseHeaderType">
+		<xs:sequence>
+			<xs:element name="hbx_id" type="HbxIdNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="message_id" type="xs:string" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Value that uniqely identifies message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="originating_service" type="xs:anyURI"/>
+			<xs:element name="correlation_id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Attribute to associate the current message with previous message ID or application-specifc ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="ResponseStatusType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ResponseStatusType">
@@ -374,7 +398,7 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="MetadataType">
+	<xs:complexType name="MessageMetadataType">
 		<xs:annotation>
 			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
 		</xs:annotation>
@@ -413,22 +437,17 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="hbx_id" type="xs:string">
+	<xs:simpleType name="HbxIdNameType">
 		<xs:annotation>
 			<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
+			<xs:appinfo>
+				<altova:exampleValues>
+					<altova:example value="urn:openhbx:terms:v1:hbx#dc0"/>
+				</altova:exampleValues>
+			</xs:appinfo>
 		</xs:annotation>
-	</xs:element>
-	<xs:element name="message_id" type="xs:string">
-		<xs:annotation>
-			<xs:documentation>Unique identifier for this message</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="correlation_id" type="xs:string">
-		<xs:annotation>
-			<xs:documentation>Previous message ID of application-specifc ID associated with this message</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="originating_service"/>
+		<xs:list itemType="xs:anyURI"/>
+	</xs:simpleType>
 	<xs:simpleType name="TelephoneNumberType">
 		<xs:annotation>
 			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
