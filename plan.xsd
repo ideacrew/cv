@@ -110,7 +110,7 @@
 			<xs:element name="networks" type="CostByNetworkType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="MetadataType">
+	<xs:complexType name="PlanMetadataType">
 		<xs:sequence>
 			<xs:element name="brochure_url" type="xs:anyURI"/>
 			<xs:element name="child_only_offering" type="xs:string"/>
