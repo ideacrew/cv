@@ -30,6 +30,14 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="authority_hbx_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="members">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="member" type="MemberRoleType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonListType">
@@ -38,6 +46,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name" type="NameType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="NameType">
