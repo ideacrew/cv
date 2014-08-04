@@ -193,25 +193,36 @@
 			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:complexType name="RequestType" abstract="true">
-		<xs:annotation>
-			<xs:documentation>Base type to call a SOA service</xs:documentation>
-		</xs:annotation>
+	<xs:complexType name="ServiceHeaderType">
 		<xs:sequence>
-			<xs:element name="hbx_id" type="HbxIdNameType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="message_id" type="xs:string">
+			<xs:element name="hbx_id" type="xs:string">
 				<xs:annotation>
-					<xs:documentation>Value that uniquely identifies message</xs:documentation>
+					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="request_name" type="xs:anyURI">
+			<xs:element name="submitted_timestamp" type="xs:dateTime">
 				<xs:annotation>
-					<xs:documentation>Uniform Resource Name (URN) for this request e.g.; urn:openhbx:requests:v1:individual</xs:documentation>
+					<xs:documentation>UTC date and time when event occured</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="correlation_id" type="xs:string" minOccurs="0">
+			<xs:element name="authorization" type="xs:string" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Attribute to associate the current message with previous message ID or application-specifc ID</xs:documentation>
+					<xs:documentation>Authentication/authorization credentials</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="status" type="ServiceStatusType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicate success or failure of a request to a service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="message_id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Value that uniqely identifies message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="originating_service" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The urn of the requesting service</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
@@ -219,25 +230,138 @@
 					<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="parameters" type="xs:anyType" minOccurs="0"/>
-			<xs:element name="body" type="xs:anyType" minOccurs="0"/>
+			<xs:element name="correlation_id" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Attribute to associate the current message with previous message ID or application-specifc ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="application_header_properties" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Application-specific header key/value pairs</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EventType" abstract="true">
+	<xs:complexType name="ServiceStatusType">
+		<xs:sequence>
+			<xs:element name="return_status">
+				<xs:annotation>
+					<xs:documentation>HTTP status code</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="200">
+							<xs:annotation>
+								<xs:documentation>OK</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="201">
+							<xs:annotation>
+								<xs:documentation>Created</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="304">
+							<xs:annotation>
+								<xs:documentation>Not modified</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="400">
+							<xs:annotation>
+								<xs:documentation>Bad request</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="401">
+							<xs:annotation>
+								<xs:documentation>Unauthorized due to authentication error</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="403">
+							<xs:annotation>
+								<xs:documentation>Unauthorized</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="404">
+							<xs:annotation>
+								<xs:documentation>Not found</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="500">
+							<xs:annotation>
+								<xs:documentation>Internal server error</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="error_code" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Error code relevant to local service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="developer_message" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Plain text description for app developer with hits about how to fix</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="user_message" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Message passed to the application. if needed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="more_information" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Link with additional information about this error </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceBodyType">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceResultSetType">
+		<xs:sequence>
+			<xs:element name="count" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Total number of items in the result set</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="limit" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of items returned in this payload</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offset" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Position in the result set of the first record in this payload</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceMetadataType">
+		<xs:annotation>
+			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="result_set" type="ServiceResultSetType"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Wildcard to support schema extension</xs:documentation>
+				</xs:annotation>
+			</xs:any>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceEventType" abstract="true">
 		<xs:annotation>
 			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="hbx_id" type="HbxIdNameType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="message_id" type="xs:string" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Value that uniqely identifies message</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="event_name" type="xs:anyURI">
 				<xs:annotation>
 					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
@@ -248,7 +372,7 @@
 					<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="resource_instance_uri" minOccurs="1">
+			<xs:element ref="resource_instance_uri">
 				<xs:annotation>
 					<xs:documentation>URN for the resource instance that is subject of this event</xs:documentation>
 				</xs:annotation>
@@ -258,33 +382,32 @@
 					<xs:documentation>URN(s) for other resource instances assocated with this event</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="authorization">
+			<xs:element name="body" type="ServiceBodyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceRequestType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base type to call a SOA service</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="request_name" type="xs:anyURI">
 				<xs:annotation>
-					<xs:documentation>Authentication/authorization credentials</xs:documentation>
+					<xs:documentation>Uniform Resource Name (URN) for this request e.g.; urn:openhbx:requests:v1:individual</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="sender_uri" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>URN for service or source that raised event</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="submitted_timestamp" type="xs:dateTime">
-				<xs:annotation>
-					<xs:documentation>UTC date and time when event occured</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="application_header_properties" type="KeyValuePairType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Application-specific header key/value pairs</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="body" minOccurs="0" maxOccurs="1">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="parameters" type="xs:anyType" minOccurs="0"/>
+			<xs:element name="metadata" type="ServiceMetadataType" minOccurs="0"/>
+			<xs:element name="body" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceResponseType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base type for response body.  If results might return more than one record (i.e. it's a set response type), you MUST provide metadata.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="header" type="ServiceHeaderType"/>
+			<xs:element name="metadata" type="ServiceMetadataType"/>
+			<xs:element name="body" type="xs:anyType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EnrollmentStatusType">
@@ -333,108 +456,6 @@
 			</xs:element>
 			<xs:element name="description" type="xs:string" minOccurs="0"/>
 			<xs:group ref="ServiceEndpointGroup"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="RequestResponseType" abstract="true">
-		<xs:annotation>
-			<xs:documentation>Base type for response body.  If results might return more than one record (i.e. it's a set response type), you MUST provide metadata.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="header" type="ResponseHeaderType"/>
-			<xs:element name="metadata" type="MessageMetadataType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="results" type="xs:anyType" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ResponseHeaderType">
-		<xs:sequence>
-			<xs:element name="hbx_id" type="HbxIdNameType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="message_id" type="xs:string" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Value that uniqely identifies message</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="originating_service" type="xs:anyURI"/>
-			<xs:element name="correlation_id" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Attribute to associate the current message with previous message ID or application-specifc ID</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="status" type="ResponseStatusType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ResponseStatusType">
-		<xs:annotation>
-			<xs:documentation>Base type to indicate success or failure of a request to a service</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="status" type="HttpStatusType">
-				<xs:annotation>
-					<xs:documentation>HTTP status code</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="error_code" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Error code relevant to local service</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="developer_message" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Plain text description for app developer with hits about how to fix</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="user_message" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Message passed to the application. if needed</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="more_information" type="xs:anyURI" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Link with additional information about this error </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="MessageMetadataType">
-		<xs:annotation>
-			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="metadata">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="result_set">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="count" type="xs:integer">
-										<xs:annotation>
-											<xs:documentation>Total number of items in the result set</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="limit" type="xs:integer">
-										<xs:annotation>
-											<xs:documentation>Number of items returned in this payload</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="offset" type="xs:integer">
-										<xs:annotation>
-											<xs:documentation>Position in the result set of the first record in this payload</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Wildcard to support schema extension</xs:documentation>
-							</xs:annotation>
-						</xs:any>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="HbxIdNameType">
@@ -709,53 +730,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#gold"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#platinum"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:metal_level#catastrophic"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="HttpStatusType">
-		<xs:annotation>
-			<xs:documentation>Hypertext Transfer Protocol (HTTP) response codes</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:integer">
-			<xs:enumeration value="200">
-				<xs:annotation>
-					<xs:documentation>OK</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="201">
-				<xs:annotation>
-					<xs:documentation>Created</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="304">
-				<xs:annotation>
-					<xs:documentation>Not modified</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="400">
-				<xs:annotation>
-					<xs:documentation>Bad request</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="401">
-				<xs:annotation>
-					<xs:documentation>Unauthorized due to authentication error</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="403">
-				<xs:annotation>
-					<xs:documentation>Unauthorized</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="404">
-				<xs:annotation>
-					<xs:documentation>Not found</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="500">
-				<xs:annotation>
-					<xs:documentation>Internal server error</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="HbxResourceNameType">
