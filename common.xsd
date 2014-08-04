@@ -194,6 +194,9 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="ServiceHeaderType">
+		<xs:annotation>
+			<xs:documentation>Base type of header component properties for SOA service call or response</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="hbx_id" type="xs:string">
 				<xs:annotation>
@@ -248,6 +251,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ServiceStatusType">
+		<xs:annotation>
+			<xs:documentation>Base type of status result properties for SOA service call </xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="return_status">
 				<xs:annotation>
@@ -320,12 +326,23 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ServiceBodyType">
+	<xs:complexType name="ServiceMetadataType">
+		<xs:annotation>
+			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
+			<xs:element name="result_set" type="ServiceResultSetType"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Wildcard to support schema extension</xs:documentation>
+				</xs:annotation>
+			</xs:any>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ServiceResultSetType">
+		<xs:annotation>
+			<xs:documentation>Base type of service result propoerties for SOA service call</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="count" type="xs:integer">
 				<xs:annotation>
@@ -344,17 +361,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ServiceMetadataType">
+	<xs:complexType name="ServiceBodyType">
 		<xs:annotation>
-			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
+			<xs:documentation>Base type of body component properties for a SOA service call or response</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="result_set" type="ServiceResultSetType"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Wildcard to support schema extension</xs:documentation>
-				</xs:annotation>
-			</xs:any>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ServiceEventType" abstract="true">
@@ -507,7 +519,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:simpleType name="GenderType">
+	<xs:simpleType name="GenderNameType">
 		<xs:annotation>
 			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
 		</xs:annotation>
@@ -517,7 +529,7 @@
 			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="EmploymentStatusType">
+	<xs:simpleType name="EmploymentStatusNameType">
 		<xs:annotation>
 			<xs:documentation>State of activity in the labor force</xs:documentation>
 		</xs:annotation>
@@ -530,7 +542,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#retired"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="EntityType">
+	<xs:simpleType name="EntityNameType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#key_person"/>
@@ -544,7 +556,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="BenefitStatusType">
+	<xs:simpleType name="BenefitStatusNameType">
 		<xs:annotation>
 			<xs:documentation>State of activity for an enrollment</xs:documentation>
 		</xs:annotation>
@@ -555,7 +567,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#tefra"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="MaritalStatusType">
+	<xs:simpleType name="MaritalStatusNameType">
 		<xs:annotation>
 			<xs:documentation>Matrimonial relationship state between two individuals</xs:documentation>
 		</xs:annotation>
@@ -570,7 +582,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="RelationshipType">
+	<xs:simpleType name="RelationshipNameType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship state between connected individuals</xs:documentation>
 		</xs:annotation>
@@ -614,7 +626,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="EnrolleeRelationshipType">
+	<xs:simpleType name="EnrolleeRelationshipNameType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship state between individuals in a plan enrollment</xs:documentation>
 		</xs:annotation>
@@ -658,7 +670,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="SpecialEnrollmentPeriodType">
+	<xs:simpleType name="QualifyingLifeEventNameType">
 		<xs:annotation>
 			<xs:documentation>Life events that trigger special enrollment periods</xs:documentation>
 		</xs:annotation>
@@ -687,7 +699,7 @@
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="MaintenanceReasonType">
+	<xs:simpleType name="MaintenanceReasonNameType">
 		<xs:annotation>
 			<xs:documentation>Event that causes change in benefit enrollment</xs:documentation>
 		</xs:annotation>
@@ -711,7 +723,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:maintenance#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="BenefitCoverageType">
+	<xs:simpleType name="BenefitCoverageNameType">
 		<xs:annotation>
 			<xs:documentation>Kind of insurance </xs:documentation>
 		</xs:annotation>
@@ -720,7 +732,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:coverage#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="PlanMetalLevelType">
+	<xs:simpleType name="PlanMetalLevelNameType">
 		<xs:annotation>
 			<xs:documentation>ACA plan category designation</xs:documentation>
 		</xs:annotation>
