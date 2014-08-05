@@ -656,12 +656,12 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="subject_individual" type="xs:anyURI"/>
-			<xs:element ref="relationship_uri"/>
-			<xs:element ref="inverse_relationship_uri" minOccurs="0"/>
+			<xs:element name="relationship_uri" type="xs:anyURI"/>
+			<xs:element name="inverse_relationship_uri" minOccurs="0" type="xs:anyURI"/>
 			<xs:element name="object_individual" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="relationship_uri" type="xs:anyURI"/>
+	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
 	<xs:simpleType name="IndividualRelationshipNameType">
 		<xs:annotation>
