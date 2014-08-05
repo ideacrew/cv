@@ -125,7 +125,7 @@
 			<xs:element name="x" type="xs:float"/>
 			<xs:element name="y" type="xs:float"/>
 			<xs:element name="z" type="xs:float" minOccurs="0"/>
-			<xs:element name="coordinate_system_reference" type="xs:anyURI" default=" urn:ogc:def:crs:EPSG::4326" />
+			<xs:element name="coordinate_system_reference" type="xs:anyURI" default=" urn:ogc:def:crs:EPSG::4326"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SimpleDateRangeType">
@@ -837,6 +837,15 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#carriers"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#plans"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#brokers"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnrollmentStatusNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#application_intake"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#plan_shopping"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#application_submitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#maintenance_pending"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#maintenance_submitted"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
