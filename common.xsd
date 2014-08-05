@@ -62,10 +62,10 @@
 		<xs:sequence>
 			<xs:element name="address_type">
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="billing"/>
-						<xs:enumeration value="home"/>
-						<xs:enumeration value="work"/>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:address_type#billing"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:address_type#home"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:address_type#work"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -85,19 +85,20 @@
 		<xs:sequence>
 			<xs:element name="phone_type">
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="home"/>
-						<xs:enumeration value="work"/>
-						<xs:enumeration value="mobile"/>
-						<xs:enumeration value="pager"/>
-						<xs:enumeration value="main"/>
-						<xs:enumeration value="extension"/>
-						<xs:enumeration value="other"/>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#home"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#work"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#mobile"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#pager"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#main"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#extension"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#other"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="phone_number" type="TelephoneNumberType"/>
 			<xs:element name="extension" type="xs:string" minOccurs="0"/>
+			<xs:element name="preferred" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmailType">
@@ -107,9 +108,9 @@
 		<xs:sequence>
 			<xs:element name="email_type">
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="home"/>
-						<xs:enumeration value="work"/>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:email_type#home"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:email_type#work"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -124,7 +125,7 @@
 			<xs:element name="x" type="xs:float"/>
 			<xs:element name="y" type="xs:float"/>
 			<xs:element name="z" type="xs:float" minOccurs="0"/>
-			<xs:element name="coordinate_system_reference" type="xs:anyURI" default=" urn:ogc:def:crs:EPSG::4326"/>
+			<xs:element name="coordinate_system_reference" type="xs:anyURI" default=" urn:ogc:def:crs:EPSG::4326" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SimpleDateRangeType">
@@ -437,7 +438,7 @@
 					<xs:documentation>Status of enrollment</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
+					<xs:restriction base="xs:anyURI">
 						<xs:enumeration value="urn:dc0:terms:enrollment_state#open"/>
 						<xs:enumeration value="urn:dc0:terms:enrollment_state#closed"/>
 						<xs:enumeration value="urn:dc0:terms:enrollment_state#special_enrollment_period"/>
@@ -518,7 +519,7 @@
 		<xs:annotation>
 			<xs:documentation>US state names</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Alabama"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Alaska"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Arizona"/>
@@ -590,7 +591,7 @@
 		<xs:annotation>
 			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:dc0:terms:gender#male"/>
 			<xs:enumeration value="urn:dc0:terms:gender#female"/>
 			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
@@ -600,7 +601,7 @@
 		<xs:annotation>
 			<xs:documentation>State of activity in the labor force</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#active"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#full_time"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employment_status#part_time"/>
@@ -610,7 +611,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EntityNameType">
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#key_person"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#parent"/>
@@ -627,7 +628,7 @@
 		<xs:annotation>
 			<xs:documentation>State of activity for an enrollment</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#active"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#cobra"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#surviing_insured"/>
@@ -638,7 +639,7 @@
 		<xs:annotation>
 			<xs:documentation>Matrimonial relationship state between two individuals</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#single"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#married"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#domestic_partners"/>
@@ -783,7 +784,7 @@
 		<xs:annotation>
 			<xs:documentation>Event that causes change in benefit enrollment</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#initial_enrollment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#benefit_selection"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#plan_change"/>
@@ -807,7 +808,7 @@
 		<xs:annotation>
 			<xs:documentation>Kind of insurance </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#dental"/>
 		</xs:restriction>
@@ -816,7 +817,7 @@
 		<xs:annotation>
 			<xs:documentation>ACA plan category designation</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#bronze"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#silver"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#gold"/>
@@ -828,7 +829,7 @@
 		<xs:annotation>
 			<xs:documentation>Resources in OpenHBX services model</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#application_groups"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#individuals"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#employers"/>
