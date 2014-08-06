@@ -9,28 +9,28 @@
 			<xs:element name="name" type="NameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element name="addresses" minOccurs="0">
+			<xs:element name="addresses">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
+						<xs:element name="address" type="AddressType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="emails" minOccurs="0">
+			<xs:element name="emails">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="email" type="EmailType" maxOccurs="unbounded"/>
+						<xs:element name="email" type="EmailType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="phones" minOccurs="0">
+			<xs:element name="phones">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="phone" type="PhoneType" maxOccurs="unbounded"/>
+						<xs:element name="phone" type="PhoneType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="authority_hbx_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="authority_hbx_id" type="xs:anyURI" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonListType">
@@ -98,7 +98,11 @@
 			</xs:element>
 			<xs:element name="phone_number" type="TelephoneNumberType"/>
 			<xs:element name="extension" type="xs:string" minOccurs="0"/>
-			<xs:element name="preferred" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="preferred" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Flag indicating preferred contact number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmailType">
@@ -135,23 +139,6 @@
 		<xs:sequence>
 			<xs:element name="start" type="SimpleDateType"/>
 			<xs:element name="end" type="SimpleDateType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="KeyValuePairType">
-		<xs:annotation>
-			<xs:documentation>Data structure that includes a label and associated attribute value</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="key" type="xs:string"/>
-			<xs:element name="value" type="xs:anyType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="HashType">
-		<xs:annotation>
-			<xs:documentation>An array of one or more KeyValueType pairs</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="key_value_pair" type="KeyValuePairType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:group name="HbxIdentifierGroup">
@@ -650,20 +637,20 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="InterpersonalRelationshipType">
+	<xs:complexType name="PeopleRelationshipType">
 		<xs:annotation>
-			<xs:documentation>Interpersonal relationship state between two indiciduals</xs:documentation>
+			<xs:documentation>Interpersonal relationship state between two individuals</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="subject_individual" type="xs:anyURI"/>
 			<xs:element name="relationship_uri" type="xs:anyURI"/>
-			<xs:element name="inverse_relationship_uri" minOccurs="0" type="xs:anyURI"/>
+			<xs:element name="inverse_relationship_uri" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="object_individual" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
-	<xs:simpleType name="IndividualRelationshipNameType">
+	<xs:simpleType name="PeopleRelationshipNameType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship names between connected individuals</xs:documentation>
 		</xs:annotation>
