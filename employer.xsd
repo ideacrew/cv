@@ -787,7 +787,11 @@
 			<xs:documentation>Number of part-time employees</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="broker" type="EmployerBrokerType"/>
+	<xs:element name="broker" type="EmployerBrokerType">
+		<xs:annotation>
+			<xs:documentation>Insurance Broker instance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="fein" type="FederalTaxIdType">
 		<xs:annotation>
 			<xs:documentation>Federal Employer Identification Number</xs:documentation>
