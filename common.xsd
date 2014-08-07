@@ -410,33 +410,11 @@
 			<xs:element name="body" type="xs:anyType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EnrollmentStatusType">
-		<xs:annotation>
-			<xs:documentation>An Application Group's enrollment status at a given period of time</xs:documentation>
-		</xs:annotation>
+	<xs:complexType name="DatePeriodType">
 		<xs:sequence>
-			<xs:element name="event_id">
-				<xs:annotation>
-					<xs:documentation>Dereferenceable event identifier that triggered enrollment state</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="state">
-				<xs:annotation>
-					<xs:documentation>Status of enrollment</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:dc0:terms:enrollment_state#open"/>
-						<xs:enumeration value="urn:dc0:terms:enrollment_state#closed"/>
-						<xs:enumeration value="urn:dc0:terms:enrollment_state#special_enrollment_period"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="time_period">
-				<xs:annotation>
-					<xs:documentation>Enrollment state start and end dates</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element name="begin_date" type="xs:date"/>
+			<xs:element name="end_date" type="xs:date" minOccurs="0"/>
+			<xs:element name="number_of_days" type="xs:integer" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ServiceEndPointType">
@@ -637,6 +615,26 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="ApprovalType">
+		<xs:sequence>
+			<xs:element name="status">
+				<xs:simpleType>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#pending"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#approved"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#denied"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="determined_by" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Individual, Representative or agent who adjudicated approval</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="determination_date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="notes" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="PeopleRelationshipType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship state between two individuals</xs:documentation>
