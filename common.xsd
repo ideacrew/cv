@@ -436,6 +436,18 @@
 			<xs:group ref="ServiceEndpointGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="CalendarYearType">
+			<xs:annotation>
+			<xs:documentation>Year represented in four-digit format: CCYY.  For example: 2015</xs:documentation>
+		</xs:annotation>
+
+		<xs:restriction base="xs:integer">
+		
+				<xs:minInclusive value="2013"/>
+				<xs:maxInclusive value="2020"/>
+
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="HbxIdNameType">
 		<xs:annotation>
 			<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
