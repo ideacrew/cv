@@ -6,6 +6,7 @@
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="name" type="NameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
@@ -30,7 +31,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="authority_hbx_id" type="xs:anyURI" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonListType">
@@ -436,16 +436,19 @@
 			<xs:group ref="ServiceEndpointGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="IdentifierType">
+		<xs:annotation>
+			<xs:documentation>Base type for unique, dereferenceable instance identifiers </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
 	<xs:simpleType name="CalendarYearType">
-			<xs:annotation>
+		<xs:annotation>
 			<xs:documentation>Year represented in four-digit format: CCYY.  For example: 2015</xs:documentation>
 		</xs:annotation>
-
 		<xs:restriction base="xs:integer">
-		
-				<xs:minInclusive value="2013"/>
-				<xs:maxInclusive value="2020"/>
-
+			<xs:minInclusive value="2013"/>
+			<xs:maxInclusive value="2020"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="HbxIdNameType">
