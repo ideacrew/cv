@@ -10,36 +10,27 @@
 			<xs:element name="name" type="NameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element name="addresses">
+			<xs:element name="addresses" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="address" type="AddressType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="emails">
+			<xs:element name="emails" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="email" type="EmailType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="email" type="EmailType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="phones">
+			<xs:element name="phones" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="phone" type="PhoneType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="phone" type="PhoneType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PersonListType">
-		<xs:annotation>
-			<xs:documentation>Summary attributes for a person</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="name" type="NameType"/>
-			<xs:group ref="HbxIdentifierGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="NameType">
@@ -143,15 +134,19 @@
 	</xs:complexType>
 	<xs:group name="HbxIdentifierGroup">
 		<xs:annotation>
-			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
+			<xs:documentation>Identifier pair for a Enterprise/globally unique resource</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="hbx_assigned_uri" type="xs:anyURI">
+			<xs:element name="hbx_id" type="xs:anyURI">
 				<xs:annotation>
-					<xs:documentation>Enterprise/globally unique identifier for this resource</xs:documentation>
+					<xs:documentation>CMS-assigned Exchange ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="hbx_assigned_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="id" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Exchange-assigned ID for this resource</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:group>
 	<xs:group name="ServiceEndpointGroup">
@@ -650,7 +645,7 @@
 			<xs:element name="notes" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="PeopleRelationshipType">
+	<xs:complexType name="PersonRelationshipType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship state between two individuals</xs:documentation>
 		</xs:annotation>
@@ -846,6 +841,20 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#application_submitted"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#maintenance_pending"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#maintenance_submitted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HbxMarketNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_market#individual"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_market#shop"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NpnIdType">
+		<xs:annotation>
+			<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
