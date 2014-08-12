@@ -14,23 +14,32 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="applicants">
+				<xs:annotation>
+					<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="applicant" type="IndividualType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="households">
+			<xs:element name="households" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Household breakout for this application group based on applied ACA and HBX rules</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="household" type="ApplicationGroupHouseholdType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="household" type="ApplicationGroupHouseholdType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="qualifying_life_events">
+				<xs:annotation>
+					<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -299,41 +308,56 @@
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="tax_household_size" type="xs:integer"/>
-			<xs:element name="person_relationships">
+			<xs:element name="total_incomes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Sum of household member income amounts by calendar year</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="person_relationship" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:complexContent>
-									<xs:restriction base="PeopleRelationshipType">
-										<xs:sequence>
-											<xs:element name="subject_individual" type="xs:anyURI"/>
-											<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
-											<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
-											<xs:element name="object_individual" type="xs:anyURI"/>
-										</xs:sequence>
-									</xs:restriction>
-								</xs:complexContent>
-							</xs:complexType>
-						</xs:element>
+						<xs:element name="total_income" type="TotalIndividualIncomeType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="eligibility_determinations">
+			<xs:element name="people_relationships">
+				<xs:annotation>
+					<xs:documentation>FIX: Many relationships</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
-					<xs:sequence>
-						<xs:element ref="eligibility_determination" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
+					<xs:complexContent>
+						<xs:restriction base="PersonRelationshipType">
+							<xs:sequence>
+								<xs:element name="subject_individual" type="xs:anyURI"/>
+								<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
+								<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
+								<xs:element name="object_individual" type="xs:anyURI"/>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="total_incomes">
+			<xs:element name="eligibility_determinations" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="total_income" type="TotalIndividualIncomeType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="eligibility_determination" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualRelationshipType">
+		<xs:annotation>
+			<xs:documentation>Interpersonal relationships between this individual and others within a group</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="PersonRelationshipType">
+				<xs:sequence>
+					<xs:element name="subject_individual" type="xs:anyURI"/>
+					<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
+					<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
+					<xs:element name="object_individual" type="xs:anyURI"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="IndividualType">
 		<xs:annotation>
@@ -342,30 +366,8 @@
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="person" type="PersonType"/>
-			<xs:element name="hbx_roles" type="IndividualFacetType"/>
-			<xs:element name="person_relationships">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="person_relationship" maxOccurs="unbounded">
-							<xs:annotation>
-								<xs:documentation>Relationships between primary applicant and each of the other applicants.  Always include at least head of household self-reference</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:complexContent>
-									<xs:restriction base="PeopleRelationshipType">
-										<xs:sequence>
-											<xs:element name="subject_individual" type="xs:anyURI"/>
-											<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
-											<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
-											<xs:element name="object_individual" type="xs:anyURI"/>
-										</xs:sequence>
-									</xs:restriction>
-								</xs:complexContent>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="relationships" type="IndividualRelationshipType"/>
+			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
 			<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
 			<xs:element name="state_of_residency" type="UsStateNameType" minOccurs="0"/>
 			<xs:element name="immigration_status" type="ImmigrationStatusNameType" minOccurs="0"/>
@@ -660,31 +662,31 @@
 					<xs:documentation>ID of the authority QHP Role (disambiguates multiple QHP roles)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="qhp_roles">
+			<xs:element name="qhp_roles" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="qhp_role" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="qhp_role" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="responsible_party_roles">
+			<xs:element name="responsible_party_roles" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="responsible_party_role" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="responsible_party_role" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="medicaid_roles">
+			<xs:element name="medicaid_roles" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="medicaid_role" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="medicaid_role" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="employee_roles">
+			<xs:element name="employee_roles" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="employee_role" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="employee_role" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -749,26 +751,6 @@
 			</xs:element>
 			<xs:element name="tobacco_user" type="TobaccoUseNameType" default="unknown" minOccurs="0"/>
 			<xs:element name="language" type="LanguageType" minOccurs="0"/>
-			<xs:element name="enrollee_relationships">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="enrollee_relationship" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:complexContent>
-									<xs:restriction base="PeopleRelationshipType">
-										<xs:sequence>
-											<xs:element name="subject_individual" type="xs:anyURI"/>
-											<xs:element name="relationship_uri" type="EnrolleeRelationshipNameType"/>
-											<xs:element name="inverse_relationship_uri" type="EnrolleeRelationshipNameType" minOccurs="0"/>
-											<xs:element name="object_individual" type="xs:anyURI"/>
-										</xs:sequence>
-									</xs:restriction>
-								</xs:complexContent>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployeeRoleType">
@@ -793,14 +775,14 @@
 	</xs:complexType>
 	<xs:complexType name="EligibilityDeterminationType">
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType">
+				<xs:annotation>
+					<xs:documentation>reference number for determination</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="authority_source_uri" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>URN reference to service or agency responsible for determination results</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="event_id" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>reference number for determination</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="date" type="SimpleDateType">
@@ -867,7 +849,7 @@
 			<xs:element name="verification" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="verified" type="xs:boolean"/>
+						<xs:element name="verified_flag" type="xs:boolean"/>
 						<xs:element name="source" type="xs:anyURI">
 							<xs:annotation>
 								<xs:documentation>Authority source used to verify value</xs:documentation>
