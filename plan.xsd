@@ -15,24 +15,57 @@
 	</xs:element>
 	<xs:complexType name="PlanType">
 		<xs:sequence>
-			<xs:element name="id" type="xs:string"/>
+			<xs:element name="id" type="IdentifierType">
+				<xs:annotation>
+					<xs:documentation>Exchange-assigned Plan ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="hios_id" type="HiosPlanIdType"/>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="is_dental_only_flag" type="xs:boolean"/>
-			<xs:element name="issuer" type="IssuerLinkType"/>
+			<xs:element name="carrier" type="IssuerLinkType"/>
+			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 			<xs:element name="market" type="HbxMarketNameType"/>
-			<xs:element name="coverages" type="CoverageType" maxOccurs="unbounded"/>
-			<xs:element name="cost_structure" type="CostStructureType"/>
-			<xs:element name="maximums">
+			<xs:element name="coverages" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="coverage" type="CoverageType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cost_structure" type="CostStructureType" minOccurs="0"/>
+			<xs:element name="maximums" minOccurs="0">
 				<xs:complexType>
 					<xs:complexContent>
 						<xs:extension base="MaximumType"/>
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="deductables" type="DeductableType"/>
-			<xs:element name="metadata" type="xs:string"/>
-			<xs:element name="rates" type="RateType"/>
+			<xs:element name="deductables" type="DeductableType" minOccurs="0"/>
+			<xs:element name="metadata" type="xs:string" minOccurs="0"/>
+			<xs:element name="rates" type="RateType" minOccurs="0"/>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PlanLinkType">
+		<xs:complexContent>
+			<xs:restriction base="PlanType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType">
+						<xs:annotation>
+							<xs:documentation>Exchange-assigned Plan ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="HbxIdentifierGroup"/>
+					<xs:element name="hios_id" type="HiosPlanIdType"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
+					<xs:element name="carrier" type="IssuerLinkType"/>
+					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
+					<xs:element name="market" type="HbxMarketNameType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="RateType">
 		<xs:sequence>
@@ -77,7 +110,7 @@
 			<xs:element name="name">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="is_covered" type="xs:boolean"/>
+						<xs:element name="is_covered_flag" type="xs:boolean"/>
 						<xs:element name="ehb_variance_reason" type="xs:string" minOccurs="0"/>
 						<xs:element name="excluded_from_in_network_moop" type="xs:boolean" minOccurs="0"/>
 						<xs:element name="excluded_from_out_of_network_moop" type="xs:boolean" minOccurs="0"/>
@@ -146,7 +179,6 @@
 			<xs:element name="wellness_program_offered" type="xs:boolean"/>
 		</xs:sequence>
 	</xs:complexType>
-	
 	<xs:complexType name="CoverageCostType">
 		<xs:sequence>
 			<xs:element name="coinsurance" type="CostByNetworkType"/>
@@ -175,15 +207,4 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Deductables"/>
-	<xs:complexType name="PlanReferenceType">
-		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="hbx_id" type="IdentifierType"/>
-			<xs:element name="hios_plan_id" type="xs:string"/>
-			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
-			<xs:element name="csr" type="xs:float"/>
-			<xs:element name="ehb" type="xs:float"/>
-			<xs:element name="issuer" type="IssuerLinkType"/>
-		</xs:sequence>
-	</xs:complexType>
 </xs:schema>
