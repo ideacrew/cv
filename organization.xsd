@@ -10,14 +10,16 @@
 	</xs:element>
 	<xs:complexType name="OrganizationType">
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="name" type="xs:string"/>
+			<xs:element name="display_name" type="xs:string" minOccurs="0"/>
 			<xs:element name="abbreviation" type="xs:string" minOccurs="0"/>
 			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
 			<xs:element name="address" type="AddressType"/>
 			<xs:element name="phone" type="PhoneType"/>
 			<xs:element name="email" type="EmailType" minOccurs="0"/>
 			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-			<xs:group ref="HbxIdentifierGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CarrierType"/>
