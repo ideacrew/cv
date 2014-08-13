@@ -134,18 +134,28 @@
 	</xs:complexType>
 	<xs:group name="HbxIdentifierGroup">
 		<xs:annotation>
-			<xs:documentation>Identifier pair for a Enterprise/globally unique resource</xs:documentation>
+			<xs:documentation>Identifier for an individual Health Benefit Exchange</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="hbx_id" type="xs:anyURI">
 				<xs:annotation>
-					<xs:documentation>CMS-assigned Exchange ID</xs:documentation>
+					<xs:documentation>CMS-assigned Source Exchange ID (e.g. DC0)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="id" type="xs:anyURI">
+			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Exchange-assigned ID for this resource</xs:documentation>
+					<xs:documentation>Exchange's Federal tax ID</xs:documentation>
 				</xs:annotation>
+			</xs:element>
+			<xs:element name="rating_area" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Adminstrative area for determining individual or family premium amounts</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
@@ -856,5 +866,8 @@
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="10"/>
 		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HiosPlanIdType">
+		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
 </xs:schema>
