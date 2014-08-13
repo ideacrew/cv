@@ -11,42 +11,56 @@
 					<xs:documentation>HBX-assigned Policy ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="hbx_id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="carrier_assigned_policy_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
 			<xs:element name="enrollees">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="enrollee" type="EnrolleeType" maxOccurs="unbounded"/>
+						<xs:element name="subscriber" type="EnrolleeType"/>
+						<xs:element name="members" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="member" type="EnrolleeType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="responsible_party" type="PersonType" minOccurs="0"/>
 			<xs:element name="carrier_assigned_member_id" type="xs:string"/>
-			<xs:element name="carrier_assigned_policy_id" type="xs:string"/>
-			<xs:element name="carrier_to_bill_flag" type="xs:boolean"/>
-			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
-			<xs:element name="premium_amount_total"/>
-			<xs:element name="total_responsible_amount" type="CurrencyType"/>
-			<xs:element name="total_employer_responsible_amount" type="CurrencyType" minOccurs="0"/>
-			<xs:element name="plan" type="PlanReferenceType"/>
-			<xs:choice>
-				<xs:element name="shop_market">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="employer" type="EmployerLinkType"/>
-							<xs:element name="total_employer_responsible_amount" type="CurrencyType"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="individual_market">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="carrier_to_bill_flag" type="xs:boolean"/>
-							<xs:element name="allocated_aptc_amount" type="CurrencyType"/>
-							<xs:element name="elected_aptc_percent" type="xs:float"/>
-							<xs:element name="applied_aptc_amount" type="CurrencyType"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:choice>
+			<xs:element name="enrollment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="plan" type="PlanLinkType"/>
+						<xs:choice>
+							<xs:element name="shop_market">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="employer" type="EmployerLinkType"/>
+										<xs:element name="total_employer_responsible_amount" type="CurrencyType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="individual_market">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="carrier_to_bill_flag" type="xs:boolean"/>
+										<xs:element name="allocated_aptc_amount" type="CurrencyType"/>
+										<xs:element name="elected_aptc_percent" type="xs:float"/>
+										<xs:element name="applied_aptc_amount" type="CurrencyType"/>
+										<xs:element name="other_payment_amount" type="CurrencyType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="premium_amount_total"/>
+						<xs:element name="total_responsible_amount" type="CurrencyType"/>
+						<xs:element name="total_employer_responsible_amount" type="CurrencyType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="submitted_timestamp" type="xs:dateTime">
 				<xs:annotation>
 					<xs:documentation>UTC date and time when event occured</xs:documentation>
@@ -289,7 +303,7 @@
 	</xs:complexType>
 	<xs:complexType name="EnrolleeType">
 		<xs:sequence>
-			<xs:element name="enrollee">
+			<xs:element name="member">
 				<xs:complexType>
 					<xs:complexContent>
 						<xs:restriction base="IndividualType">
