@@ -137,12 +137,12 @@
 			<xs:documentation>Identifier for an individual Health Benefit Exchange</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="hbx_id" type="xs:anyURI">
+			<xs:element name="hbx_id" type="HbxCmsNameType">
 				<xs:annotation>
-					<xs:documentation>CMS-assigned Source Exchange ID (e.g. DC0)</xs:documentation>
+					<xs:documentation>CMS-assigned Source Exchange ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0">
+			<xs:element name="hbx_fein" type="FederalTaxIdType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Exchange's Federal tax ID</xs:documentation>
 				</xs:annotation>
@@ -456,16 +456,13 @@
 			<xs:maxInclusive value="2020"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="HbxIdNameType">
+	<xs:simpleType name="HbxCmsNameType">
 		<xs:annotation>
-			<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
-			<xs:appinfo>
-				<altova:exampleValues>
-					<altova:example value="urn:openhbx:terms:v1:hbx#dc0"/>
-				</altova:exampleValues>
-			</xs:appinfo>
+			<xs:documentation>CMS-assigned Health Benefit Exchange identifier in URN form</xs:documentation>
 		</xs:annotation>
-		<xs:list itemType="xs:anyURI"/>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_cms_name#dc0"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TelephoneNumberType">
 		<xs:annotation>
@@ -505,57 +502,57 @@
 			<xs:documentation>US state names</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Alabama"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Alaska"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Arizona"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Arkansas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#California"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Colorado"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Connecticut"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Delaware"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#District Of Columbia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Florida"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Georgia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Hawaii"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Idaho"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Illinois"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Indiana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Iowa"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Kansas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Kentucky"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Louisiana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Maine"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Maryland"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Massachusetts"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Michigan"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Minnesota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Mississippi"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Missouri"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Montana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Nebraska"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Nevada"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#New Hampshire"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#New Jersey"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#New Mexico"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#New York"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#North Carolina"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#North Dakota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Ohio"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Oklahoma"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Oregon"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Pennsylvania"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Rhode Island"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#South Carolina"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#South Dakota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Tennessee"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Texas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Utah"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Vermont"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Virginia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Washington"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#West Virginia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Wisconsin"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_states#Wyoming"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Alabama"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Alaska"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Arizona"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Arkansas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#California"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Colorado"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Connecticut"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Delaware"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#District Of Columbia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Florida"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Georgia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Hawaii"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Idaho"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Illinois"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Indiana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Iowa"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Kansas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Kentucky"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Louisiana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Maine"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Maryland"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Massachusetts"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Michigan"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Minnesota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Mississippi"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Missouri"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Montana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Nebraska"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Nevada"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New Hampshire"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New Jersey"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New Mexico"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New York"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#North Carolina"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#North Dakota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Ohio"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Oklahoma"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Oregon"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Pennsylvania"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Rhode Island"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#South Carolina"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#South Dakota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Tennessee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Texas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Utah"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Vermont"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Virginia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Washington"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#West Virginia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Wisconsin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Wyoming"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="CurrencyType">
