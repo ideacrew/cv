@@ -3,6 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
+	<xs:include schemaLocation="policy.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:complexType name="EmployerPlanListType">
 		<xs:annotation>
@@ -24,9 +25,9 @@
 					<xs:documentation>HIOS plan identifier component + subcomponent</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="issuer" type="IssuerLinkType">
+			<xs:element name="carrier" type="CarrierLinkType">
 				<xs:annotation>
-					<xs:documentation>Text label for plan provider</xs:documentation>
+					<xs:documentation>Issuer</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="policy_number" type="xs:string" minOccurs="0">
@@ -62,7 +63,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="hbx_id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="name" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>Employer name in free-form text</xs:documentation>
@@ -75,36 +76,9 @@
 			</xs:element>
 			<xs:element ref="fein"/>
 			<xs:element ref="sic_code" minOccurs="0"/>
+			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
 			<xs:element ref="fte_count"/>
 			<xs:element ref="pte_count"/>
-			<xs:element name="broker" minOccurs="0">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:restriction base="BrokerType">
-							<xs:sequence>
-								<xs:element name="id" type="IdentifierType"/>
-								<xs:element name="hbx_id" type="IdentifierType"/>
-								<xs:element name="npn" type="NpnIdType">
-									<xs:annotation>
-										<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
-									</xs:annotation>
-								</xs:element>
-								<xs:element name="name" type="xs:string">
-									<xs:annotation>
-										<xs:documentation>Broker or organization name in free-form text</xs:documentation>
-									</xs:annotation>
-								</xs:element>
-								<xs:element name="tpa_ga_fein" type="FederalTaxIdType" minOccurs="0"/>
-								<xs:element name="tpa_name" minOccurs="0">
-									<xs:annotation>
-										<xs:documentation>TPA or organization name in free-form text</xs:documentation>
-									</xs:annotation>
-								</xs:element>
-							</xs:sequence>
-						</xs:restriction>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
 			<xs:element ref="open_enrollment_start"/>
 			<xs:element ref="open_enrollment_end"/>
 			<xs:element ref="plan_year_start"/>
