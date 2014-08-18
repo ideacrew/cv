@@ -24,7 +24,7 @@
 			<xs:element name="hios_id" type="HiosPlanIdType"/>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="is_dental_only_flag" type="xs:boolean"/>
-			<xs:element name="carrier" type="IssuerLinkType"/>
+			<xs:element name="carrier" type="CarrierLinkType"/>
 			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 			<xs:element name="market" type="HbxMarketNameType"/>
 			<xs:element name="coverages" minOccurs="0">
@@ -60,7 +60,7 @@
 					<xs:element name="hios_id" type="HiosPlanIdType"/>
 					<xs:element name="name" type="xs:string"/>
 					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
-					<xs:element name="carrier" type="IssuerLinkType"/>
+					<xs:element name="carrier" type="CarrierLinkType"/>
 					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 					<xs:element name="market" type="HbxMarketNameType"/>
 				</xs:sequence>
@@ -207,4 +207,74 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Deductables"/>
+	<xs:simpleType name="EnrolleeRelationshipNameType">
+		<xs:annotation>
+			<xs:documentation>Interpersonal relationship names between individuals in a plan enrollment</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#self"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#father"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#mother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#grandfather"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#grandmother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#grandson"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#granddaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#uncle"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#aunt"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#nephew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#niece"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#cousin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#adopted_child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#foster_child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#son_in_law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#daughter_in_law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#brother_in_law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#sister_in_law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#father_in_law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#mother_in_law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#brother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#sister"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#ward"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#stepparent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#stepson"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#stepdaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#sponsored_dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#dependent_of_a_minor_dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#ex_spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#court_appointed_guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#collateral_dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#life_partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#female"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BenefitCoverageNameType">
+		<xs:annotation>
+			<xs:documentation>Kind of insurance </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#dental"/>
+		</xs:restriction>
+	</xs:simpleType>
+		<xs:simpleType name="PlanMetalLevelNameType">
+		<xs:annotation>
+			<xs:documentation>ACA plan category designation</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#bronze"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#silver"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#gold"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#platinum"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#catastrophic"/>
+		</xs:restriction>
+		
+	</xs:simpleType>
+	<xs:simpleType name="HiosPlanIdType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
 </xs:schema>
