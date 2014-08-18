@@ -74,8 +74,8 @@ The CV model embodies knowledge gained and lessions learned by DCHBX and project
 * Identify authority sources for each CV resource and event type
 * For each authority information source, map attributes to CV elements
 * For each authority event source, define message topic and/or HTTP endpoint and publish events via:
-** application trigger that sends notifications to event topic, or
-** polling program that periodically queries authority event source
+  * application trigger that sends notifications to event topic, or
+  * polling program that periodically queries authority event source
 
 
 ### Documentation
