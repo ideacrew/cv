@@ -112,12 +112,14 @@
 			<xs:element name="email_address" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
-		<xs:complexType name="ContactListType">
+	<xs:complexType name="ContactListType">
+		<xs:annotation>
+			<xs:documentation>Collection of Persons</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="contact" type="PersonType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="PositionPointType">
 		<xs:annotation>
 			<xs:documentation>Location cooordinate expressed as a GeoJSON Point.  See: http://www.geojson.org/geojson-spec.html#positions</xs:documentation>
@@ -566,6 +568,29 @@
 			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="HbxMarketNameType">
+		<xs:annotation>
+			<xs:documentation>URIs for Individual and SHOP markets</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_market#individual"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_market#shop"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HbxResourceNameType">
+		<xs:annotation>
+			<xs:documentation>Resources in OpenHBX services model</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#application_groups"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#individuals"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#employers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#policies"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#carriers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#plans"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#brokers"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:element name="resource_instance_uri" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
@@ -577,6 +602,9 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="ApprovalType">
+		<xs:annotation>
+			<xs:documentation>Base type to manage a resource's acceptance status</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="status">
 				<xs:simpleType>
@@ -609,24 +637,4 @@
 	</xs:complexType>
 	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
-	<xs:simpleType name="HbxResourceNameType">
-		<xs:annotation>
-			<xs:documentation>Resources in OpenHBX services model</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#application_groups"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#individuals"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#employers"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#policies"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#carriers"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#plans"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#brokers"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="HbxMarketNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:hbx_market#individual"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:hbx_market#shop"/>
-		</xs:restriction>
-	</xs:simpleType>
 </xs:schema>
