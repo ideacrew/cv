@@ -353,7 +353,11 @@
 		<xs:complexContent>
 			<xs:restriction base="PersonRelationshipType">
 				<xs:sequence>
-					<xs:element name="subject_individual" type="xs:anyURI"/>
+					<xs:element name="subject_individual" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>Individual's HBX ID </xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
 					<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
 					<xs:element name="object_individual" type="xs:anyURI"/>
@@ -367,6 +371,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="person" type="PersonType"/>
 			<xs:element name="relationships" type="IndividualRelationshipType"/>
 			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
@@ -769,6 +774,7 @@
 			<xs:element ref="employment_status"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="employment_termination_date" type="xs:date" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="MedicaidRoleType">
@@ -956,7 +962,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
-		<xs:simpleType name="PeopleRelationshipNameType">
+	<xs:simpleType name="PeopleRelationshipNameType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship names between connected individuals</xs:documentation>
 		</xs:annotation>
@@ -998,8 +1004,8 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#life partner"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#female"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#unknown"/>
-		</xs:restriction>	</xs:simpleType>
-
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="TaxFilerNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:tax_filer#single"/>
@@ -1009,7 +1015,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:tax_filer#non-filer"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:element name="application_group" type="ApplicationGroupType"/>
 	<xs:element name="application_group_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
