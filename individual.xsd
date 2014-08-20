@@ -6,7 +6,7 @@
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:complexType name="ApplicationGroupType">
 		<xs:annotation>
-			<xs:documentation>Application Group instance attributes</xs:documentation>
+			<xs:documentation>A family or group of people who apply for insurance on the HBX</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -133,14 +133,14 @@
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:requests:v1:application_groups"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#by_id"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#create"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#update"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#split"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#merge"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#submit_sep"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_groups#adjudicate_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#by_id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#split"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#merge"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#submit_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#adjudicate_sep"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="ApplicationGroupEventType">
@@ -215,22 +215,22 @@
 	</xs:complexType>
 	<xs:simpleType name="ApplicationGroupEventNameType">
 		<xs:annotation>
-			<xs:documentation>Notification message types published for Application Group resource</xs:documentation>
+			<xs:documentation>Enumerated list of notification messages published for an Application Group resource</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#split"/>
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#merged"/>
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#deleted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#sep_submitted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:application_groups#sep_adjudicated">
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#split"/>
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#merged"/>
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#sep_submitted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:application_group#sep_adjudicated">
 				<xs:annotation>
 					<xs:documentation>SEP request approved or denied</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:events:application_groups#sep_started"/>
-			<xs:enumeration value="urn:openhbx:events:application_groups#sep_ended"/>
+			<xs:enumeration value="urn:openhbx:events:application_group#sep_started"/>
+			<xs:enumeration value="urn:openhbx:events:application_group#sep_ended"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="ApplicationGroupResponseType">
@@ -477,30 +477,20 @@
 	</xs:complexType>
 	<xs:simpleType name="IndividualRequestNameType">
 		<xs:annotation>
-			<xs:documentation>Request methods suported by Application Group resource</xs:documentation>
+			<xs:documentation>Request methods suported by Individual resource</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:requests:v1:individuals"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#by_id"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#create"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#update"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#effectuate"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#select_qhp"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#withdraw_qhp"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#terminate_qhp"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#cancel_qhp"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:individuals#set_authority_member"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="IndividualUpdateNameType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="name_change"/>
-			<xs:enumeration value="address_change"/>
-			<xs:enumeration value="email_change"/>
-			<xs:enumeration value="phone_change"/>
-			<xs:enumeration value="employment_change"/>
-			<xs:enumeration value="member_change"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#by_id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#effectuate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#select_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#withdraw_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#terminate_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#cancel_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#set_authority_member"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="IndividualEventType">
@@ -578,15 +568,15 @@
 			<xs:documentation>Notification message types published for Individual resource</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#deleted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#authority_member_set"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#qhp_selected"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#qhp_withdrawn"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#qhp_effectuated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#qhp_terminated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:individuals#qhp_canceled"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#authority_member_set"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#qhp_withdrawn"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#qhp_effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#qhp_terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:individual#qhp_canceled"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="IndividualResponseType">
@@ -715,6 +705,16 @@
 			<xs:element name="previous_information" type="PreviousIndividualType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="IndividualUpdateNameType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="urn:openhbx:requests:v1:individual_update#name_change"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual_update#address_change"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual_update#email_change"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual_update#phone_change"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual_update#employment_change"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual_update#member_change"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="PreviousIndividualType">
 		<xs:sequence>
 			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
@@ -734,6 +734,19 @@
 			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="MinimumEssentialCoverageNameType">
+		<xs:annotation>
+			<xs:documentation>Source of coverage</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:minimum_essential_coverage#medicaid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:minimum_essential_coverage#medicare"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:minimum_essential_coverage#individual_market_hbx"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:minimum_essential_coverage#individual_market_non_hbx"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:minimum_essential_coverage#employer"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:minimum_essential_coverage#other"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="MinimumEssentialCoverageType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -743,6 +756,9 @@
 	<xs:element name="individual_relationship_uri" type="PeopleRelationshipNameType" substitutionGroup="relationship_uri"/>
 	<xs:element name="individual_inverse_relationship_uri" type="PeopleRelationshipNameType" substitutionGroup="inverse_relationship_uri"/>
 	<xs:complexType name="QhpRoleType">
+		<xs:annotation>
+			<xs:documentation>An Individual's HBX activity associated with Qualified Health Plans</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="gender" type="GenderNameType"/>
@@ -769,8 +785,24 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployeeRoleType">
+		<xs:annotation>
+			<xs:documentation>An Individual's HBX activity assocaited with SHOP employers</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="employer">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="EmployerLinkType">
+							<xs:sequence>
+								<xs:element name="id" type="IdentifierType"/>
+								<xs:element name="hbx_id" type="IdentifierType"/>
+								<xs:element name="name" type="xs:string"/>
+								<xs:element name="dba" minOccurs="0"/>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
 			<xs:element ref="employment_status"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
@@ -778,13 +810,20 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="MedicaidRoleType">
+		<xs:annotation>
+			<xs:documentation>An Individual's HBX activity assocaited with Medicaid assistance</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ResponsiblePartyRoleType">
+		<xs:annotation>
+			<xs:documentation>An Individual's HBX activity assocaited with sponsoring insurance coverage for others</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="policy_id" type="IdentifierType"/>
 			<xs:element name="entity_identifier" type="EntityNameType"/>
 			<xs:element name="organization_id" type="IdentifierType" minOccurs="0"/>
 		</xs:sequence>
@@ -819,6 +858,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="QualifyingLifeEventType">
+		<xs:annotation>
+			<xs:documentation>A change in status that permits insurance coverage change outside annual open enrollment</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType">
 				<xs:annotation>
@@ -901,6 +943,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ImmigrationStatusNameType">
+		<xs:annotation>
+			<xs:documentation>Enumerated list of citizenship/residency modes</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#us_citizen"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#naturalized_citizen"/>
@@ -1007,6 +1052,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TaxFilerNameType">
+		<xs:annotation>
+			<xs:documentation>Enumerated list of federal tax filing modes</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:tax_filer#single"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:tax_filer#joint"/>
@@ -1022,7 +1070,11 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="application_group_event" type="ApplicationGroupEventType"/>
-	<xs:element name="individual" type="IndividualType"/>
+	<xs:element name="individual" type="IndividualType">
+		<xs:annotation>
+			<xs:documentation>Instance of an Individual type</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="individual_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for individual instance, e.g. urn:dc0:resources:individual:_id</xs:documentation>

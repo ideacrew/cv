@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
-	<xs:element name="plan">
-		<xs:annotation>
-			<xs:documentation>Comment describing your root element</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="PlanType"/>
-			</xs:complexContent>
-		</xs:complexType>
-	</xs:element>
 	<xs:complexType name="PlanType">
+		<xs:annotation>
+			<xs:documentation>Individual or group insurance product that provides, or pays the cost of, medical care</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType">
 				<xs:annotation>
-					<xs:documentation>Exchange-assigned Plan ID</xs:documentation>
+					<xs:documentation>Exchange-assigned Plan Identifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="hios_id" type="HiosPlanIdType"/>
+			<xs:element name="qhp_id" type="HiosPlanIdType">
+				<xs:annotation>
+					<xs:documentation>HIOS Plan Identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="is_dental_only_flag" type="xs:boolean"/>
 			<xs:element name="carrier" type="CarrierLinkType"/>
 			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
+			<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
 			<xs:element name="market" type="HbxMarketNameType"/>
 			<xs:element name="coverages" minOccurs="0">
 				<xs:complexType>
@@ -57,11 +55,16 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:group ref="HbxIdentifierGroup"/>
-					<xs:element name="hios_id" type="HiosPlanIdType"/>
+					<xs:element name="qhp_id" type="HiosPlanIdType">
+						<xs:annotation>
+							<xs:documentation>HIOS Plan Identifier</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="name" type="xs:string"/>
 					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
 					<xs:element name="carrier" type="CarrierLinkType"/>
 					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
+					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
 					<xs:element name="market" type="HbxMarketNameType"/>
 				</xs:sequence>
 			</xs:restriction>
@@ -207,6 +210,16 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Deductables"/>
+	<xs:element name="plan">
+		<xs:annotation>
+			<xs:documentation>Medical insurance plan instance</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="PlanType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 	<xs:simpleType name="EnrolleeRelationshipNameType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship names between individuals in a plan enrollment</xs:documentation>
@@ -253,14 +266,14 @@
 	</xs:simpleType>
 	<xs:simpleType name="BenefitCoverageNameType">
 		<xs:annotation>
-			<xs:documentation>Kind of insurance </xs:documentation>
+			<xs:documentation>Kind of medical insurance provided under plan</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
-		<xs:simpleType name="PlanMetalLevelNameType">
+	<xs:simpleType name="PlanMetalLevelNameType">
 		<xs:annotation>
 			<xs:documentation>ACA plan category designation</xs:documentation>
 		</xs:annotation>
@@ -271,10 +284,11 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#platinum"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#catastrophic"/>
 		</xs:restriction>
-		
 	</xs:simpleType>
 	<xs:simpleType name="HiosPlanIdType">
+		<xs:annotation>
+			<xs:documentation>Health Insurance Oversight System (HIOS) plan identifier</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-
 </xs:schema>

@@ -5,61 +5,9 @@
 	<xs:include schemaLocation="individual.xsd"/>
 	<xs:include schemaLocation="policy.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
-	<xs:complexType name="EmployerPlanListType">
-		<xs:annotation>
-			<xs:documentation>SHOP employer-selected benefits model</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Carrier-assigned text label for plan </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="hbx_plan_id" type="IdentifierType">
-				<xs:annotation>
-					<xs:documentation>HBX-assigned plan identifier</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="qhp_id" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>HIOS plan identifier component + subcomponent</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="carrier" type="CarrierLinkType">
-				<xs:annotation>
-					<xs:documentation>Issuer</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="policy_number" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Carrier-assigned policy number</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="group_id" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Carrier-assigned employer group identifier</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="coverage_type" type="BenefitCoverageNameType">
-				<xs:annotation>
-					<xs:documentation>Benefit type, e.g. health or dental</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="original_effective_date" type="xs:date">
-				<xs:annotation>
-					<xs:documentation>Effective date coverage under this plan may begin</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="metal_level_code" type="PlanMetalLevelNameType">
-				<xs:annotation>
-					<xs:documentation>ACA actuarial level for plan</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="EmployerType">
 		<xs:annotation>
-			<xs:documentation>SHOP employer instance attributes</xs:documentation>
+			<xs:documentation>An HBX SHOP-participating business that employs people</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -86,7 +34,31 @@
 			<xs:element name="plans">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="plan" type="EmployerPlanListType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="plan" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="EmployerPlanListType">
+										<xs:sequence>
+											<xs:element name="original_effective_date" type="xs:date">
+												<xs:annotation>
+													<xs:documentation>Effective date coverage under this plan may begin</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="group_id" type="xs:string" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Carrier-assigned employer group identifier</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="policy_number" type="xs:string" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Carrier-assigned policy number</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -410,6 +382,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerLinkType">
+		<xs:annotation>
+			<xs:documentation>Reference to an Employer instance </xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="hbx_id" type="IdentifierType"/>
@@ -419,7 +394,7 @@
 	</xs:complexType>
 	<xs:complexType name="EmployerIndexType">
 		<xs:annotation>
-			<xs:documentation>Summary-level emplioyer attributes</xs:documentation>
+			<xs:documentation>Summary-level employer attributes</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -444,11 +419,40 @@
 			<xs:element ref="plan_year_end" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="EmployerPlanListType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer-selected benefits model</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="PlanType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType">
+						<xs:annotation>
+							<xs:documentation>Exchange-assigned Plan Identifier</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="HbxIdentifierGroup"/>
+					<xs:element name="qhp_id" type="HiosPlanIdType">
+						<xs:annotation>
+							<xs:documentation>HIOS Plan Identifier</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
+					<xs:element name="carrier" type="CarrierLinkType"/>
+					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
+					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
+					<xs:element name="market" type="HbxMarketNameType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeSubscriberType">
 		<xs:complexContent>
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType"/>
+					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="person" type="PersonType"/>
 					<xs:element name="relationships" type="IndividualRelationshipType"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
@@ -458,7 +462,7 @@
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeType">
 		<xs:annotation>
-			<xs:documentation>Employee instance attributes</xs:documentation>
+			<xs:documentation>An individual employed by a SHOP employer</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
