@@ -8,11 +8,6 @@
 			<xs:documentation>Individual or group insurance product that provides, or pays the cost of, medical care</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType">
-				<xs:annotation>
-					<xs:documentation>Exchange-assigned Plan Identifier</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="qhp_id" type="HiosPlanIdType">
 				<xs:annotation>
@@ -49,11 +44,6 @@
 		<xs:complexContent>
 			<xs:restriction base="PlanType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType">
-						<xs:annotation>
-							<xs:documentation>Exchange-assigned Plan ID</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="qhp_id" type="HiosPlanIdType">
 						<xs:annotation>

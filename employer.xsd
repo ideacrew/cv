@@ -10,7 +10,6 @@
 			<xs:documentation>An HBX SHOP-participating business that employs people</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="name" type="xs:string">
 				<xs:annotation>
@@ -283,7 +282,7 @@
 										<xs:complexContent>
 											<xs:restriction base="ServiceBodyType">
 												<xs:sequence>
-													<xs:element ref="employer"/>
+													<xs:element ref="employer_link"/>
 												</xs:sequence>
 											</xs:restriction>
 										</xs:complexContent>
@@ -439,11 +438,6 @@
 		<xs:complexContent>
 			<xs:restriction base="PlanType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType">
-						<xs:annotation>
-							<xs:documentation>Exchange-assigned Plan Identifier</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="qhp_id" type="HiosPlanIdType">
 						<xs:annotation>
@@ -464,11 +458,15 @@
 		<xs:complexContent>
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="person" type="PersonType"/>
 					<xs:element name="relationships" type="IndividualRelationshipType"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -478,12 +476,12 @@
 			<xs:documentation>An individual employed by a SHOP employer</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="hbx_id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="links"/>
 			<xs:element name="employer" type="EmployerLinkType"/>
 			<xs:element name="employee" type="EmployerEmployeeSubscriberType"/>
 			<xs:element name="dependents" type="EmployerEmployeeDependentsType" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerEmployeeRequestType">
@@ -743,7 +741,8 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="employer" type="EmployerLinkType">
+	<xs:element name="employer_link" type="EmployerLinkType"/>
+	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
 		</xs:annotation>

@@ -9,13 +9,8 @@
 			<xs:documentation>A contract for insurance coverage</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType">
-				<xs:annotation>
-					<xs:documentation>HBX-assigned Policy ID</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
+			<xs:element ref="broker" minOccurs="0"/>
 			<xs:element name="enrollees">
 				<xs:complexType>
 					<xs:sequence>
@@ -31,7 +26,6 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="responsible_party" type="PersonType" minOccurs="0"/>
-			<xs:element name="carrier_assigned_member_id" type="xs:string"/>
 			<xs:element name="enrollment">
 				<xs:complexType>
 					<xs:sequence>
@@ -63,12 +57,24 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="policy_state" type="PolicyStateNameType"/>
+			<xs:element ref="policy_state"/>
 			<xs:element name="request_submitted_timestamp" type="xs:dateTime">
 				<xs:annotation>
 					<xs:documentation>UTC date and time when benefit enrollment application is initiated by consumer</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PolicyLinkType">
+		<xs:sequence>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element ref="broker" minOccurs="0"/>
+			<xs:element name="enrollees" type="EnrolleeType"/>
+			<xs:element name="plan" type="PlanLinkType"/>
+			<xs:element ref="employer" minOccurs="0"/>
+			<xs:element ref="policy_state"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PolicyRequestType">
@@ -326,12 +332,16 @@
 					<xs:complexContent>
 						<xs:restriction base="IndividualType">
 							<xs:sequence>
-								<xs:element name="id" type="IdentifierType"/>
 								<xs:group ref="HbxIdentifierGroup"/>
 								<xs:element name="person" type="PersonType"/>
 								<xs:element name="relationships" type="IndividualRelationshipType"/>
 								<xs:element name="hbx_roles" type="IndividualFacetType"/>
 								<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
+								<xs:sequence>
+									<xs:element name="created_at" type="xs:dateTime"/>
+									<xs:element name="modified_at" type="xs:dateTime"/>
+									<xs:element name="version" type="xs:integer" minOccurs="0"/>
+								</xs:sequence>
 							</xs:sequence>
 						</xs:restriction>
 					</xs:complexContent>
@@ -347,6 +357,7 @@
 						<xs:element name="begin_date" type="SimpleDateType"/>
 						<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 						<xs:element name="carrier_assigned_policy_id" type="xs:string" minOccurs="0"/>
+						<xs:element name="carrier_assigned_enrollee_id" minOccurs="0"/>
 						<xs:element name="coverage_level" type="CoverageLevelNameType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
@@ -452,4 +463,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:marital_status#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:element name="policy_state" type="PolicyStateNameType"/>
+	<xs:element name="broker" type="BrokerLinkType"/>
 </xs:schema>
