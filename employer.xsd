@@ -307,13 +307,26 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers#terminated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#reinstated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_added"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_changed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_removed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_opened"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_closed"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#carrier_group_assigned"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_initiated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_advanced"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_reversed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#carrier_acknowledged_group"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_initiated">
+				<xs:annotation>
+					<xs:documentation>Employer successfully completed online payment transaction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_advanced">
+				<xs:annotation>
+					<xs:documentation>Employer premium payment allocated to account</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#coverage_period_reversed">
+				<xs:annotation>
+					<xs:documentation>Employer premium payment reversed on account, e.g. NSF return</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="EmployerResponseType">
