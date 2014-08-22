@@ -2,7 +2,7 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
-	<xs:include schemaLocation="policy.xsd"/>
+	<!-- <xs:include schemaLocation="employer.xsd"/>-->
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:complexType name="ApplicationGroupType">
 		<xs:annotation>
@@ -796,16 +796,12 @@
 		<xs:sequence>
 			<xs:element name="employer">
 				<xs:complexType>
-					<xs:complexContent>
-						<xs:restriction base="EmployerLinkType">
 							<xs:sequence>
 								<xs:element name="id" type="IdentifierType"/>
 								<xs:element name="hbx_id" type="IdentifierType"/>
 								<xs:element name="name" type="xs:string"/>
 								<xs:element name="dba" minOccurs="0"/>
 							</xs:sequence>
-						</xs:restriction>
-					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
 			<xs:element ref="employment_status"/>
