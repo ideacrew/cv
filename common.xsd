@@ -479,7 +479,7 @@
       <xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}"/>
+      <xs:pattern value="\d{7,10}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="SimpleDateType">
