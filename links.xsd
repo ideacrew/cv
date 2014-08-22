@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
+  <xs:include schemaLocation="common.xsd"/>
+  
+  	<xs:complexType name="EmployerLinkType">
+		<xs:annotation>
+			<xs:documentation>Reference to an Employer instance </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="hbx_id" type="IdentifierType"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="dba" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+  	<xs:complexType name="PolicyLinkType">
+		<xs:sequence>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
+			<xs:element name="plan" type="PlanLinkType"/>
+			<xs:element name="enrollees">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="enrollee" type="EnrolleeLinkType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="employer" type="EmployerLinkType" minOccurs="0"/>
+			<xs:element name="policy_state" type="PolicyStateNameType"/>
+			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+  
+  	<xs:complexType name="EnrolleeLinkType">
+				<xs:sequence>
+					<xs:element name="individual" type="IndividualLinkType"/>
+					<xs:element ref="employment_status"/>
+					<xs:element name="physically_disabled_flag" type="xs:boolean" default="false"/>
+					<xs:element name="benefit" type="EnrolleeBenefitType"/>
+				</xs:sequence>
+	</xs:complexType>
+  
+	<xs:complexType name="IndividualLinkType">
+		<xs:complexContent>
+			<xs:restriction base="IndividualType">
+				<xs:sequence>
+					<xs:group ref="HbxIdentifierGroup"/>
+					<xs:element name="person" type="PersonType"/>
+					<xs:element name="relationships" type="IndividualRelationshipType"/>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

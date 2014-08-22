@@ -2,8 +2,9 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
-	<!-- <xs:include schemaLocation="employer.xsd"/>-->
+  <xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
+  <xs:include schemaLocation="plan.xsd"/>
 	<xs:complexType name="ApplicationGroupType">
 		<xs:annotation>
 			<xs:documentation>A family or group of people who apply for insurance on the HBX</xs:documentation>
@@ -385,22 +386,7 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="IndividualLinkType">
-		<xs:complexContent>
-			<xs:restriction base="IndividualType">
-				<xs:sequence>
-					<xs:group ref="HbxIdentifierGroup"/>
-					<xs:element name="person" type="PersonType"/>
-					<xs:element name="relationships" type="IndividualRelationshipType"/>
-					<xs:sequence>
-						<xs:element name="created_at" type="xs:dateTime"/>
-						<xs:element name="modified_at" type="xs:dateTime"/>
-						<xs:element name="version" type="xs:integer" minOccurs="0"/>
-					</xs:sequence>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+
 	<xs:complexType name="IndividualRequestType">
 		<xs:annotation>
 			<xs:documentation>Service call to Individual resource</xs:documentation>
@@ -783,7 +769,7 @@
 			<xs:element name="policies" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="policy"/>
+						<xs:element name="policy" type="PolicyLinkType"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -1090,4 +1076,6 @@
 	<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
 	<xs:element name="household" type="ApplicationGroupHouseholdType"/>
+  
+
 </xs:schema>

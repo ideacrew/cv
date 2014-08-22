@@ -650,6 +650,24 @@
   <xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
   <xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
   
+	<xs:simpleType name="PolicyStateNameType">
+		<xs:annotation>
+			<xs:documentation>Enumerated list of the possible modes or status of a policy </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#submitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#resubmitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#effectuated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#carrier_rejected"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#carrier_canceled"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#carrier_terminated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_invalid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_rejected"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_canceled"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_terminated"/>
+		</xs:restriction>
+	</xs:simpleType>
+  
   <xs:simpleType name="EntityNameType">
     <xs:restriction base="xs:anyURI">
       <xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
@@ -678,4 +696,27 @@
       <xs:enumeration value="urn:openhbx:terms:v1:employment_status#retired"/>
     </xs:restriction>
   </xs:simpleType>
+  
+					<xs:complexType name="EnrolleeBenefitType">
+					<xs:sequence>
+						<xs:element name="premium_amount" type="CurrencyType"/>
+						<xs:element name="begin_date" type="SimpleDateType"/>
+						<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
+						<xs:element name="carrier_assigned_policy_id" type="xs:string" minOccurs="0"/>
+						<xs:element name="carrier_assigned_enrollee_id" type="xs:string" minOccurs="0"/>
+						<xs:element name="coverage_level" type="CoverageLevelNameType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+        
+	<xs:simpleType name="CoverageLevelNameType">
+		<xs:annotation>
+			<xs:documentation>Enumerated list of household member types included under a policy</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#individual"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#family"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#employee_only"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#employee_and_spouse"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
