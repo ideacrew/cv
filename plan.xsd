@@ -272,6 +272,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#gold"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#platinum"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#catastrophic"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="HiosPlanIdType">
