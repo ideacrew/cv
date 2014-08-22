@@ -3,6 +3,76 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
   <xs:include schemaLocation="common.xsd"/>
   
+<xs:simpleType name="PolicyStateNameType">
+		<xs:annotation>
+			<xs:documentation>Enumerated list of the possible modes or status of a policy </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#submitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#resubmitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#effectuated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#carrier_rejected"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#carrier_canceled"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#carrier_terminated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_invalid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_rejected"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_canceled"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_terminated"/>
+		</xs:restriction>
+	</xs:simpleType>
+  
+  <xs:simpleType name="EntityNameType">
+    <xs:restriction base="xs:anyURI">
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#key_person"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#parent"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#responsible_party"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#guardian"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#ex_spouse"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#significant_other"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#legal_representative"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#power_of_attorney"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="EmploymentStatusNameType">
+    <xs:annotation>
+      <xs:documentation>A subscriber's employment status at time of enrollment</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:anyURI">
+      <xs:enumeration value="urn:openhbx:terms:v1:employment_status#active"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:employment_status#full_time"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:employment_status#part_time"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:employment_status#terminated"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:employment_status#leave_of_absence"/>
+      <xs:enumeration value="urn:openhbx:terms:v1:employment_status#retired"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+					<xs:complexType name="EnrolleeBenefitType">
+					<xs:sequence>
+						<xs:element name="premium_amount" type="CurrencyType"/>
+						<xs:element name="begin_date" type="SimpleDateType"/>
+						<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
+						<xs:element name="carrier_assigned_policy_id" type="xs:string" minOccurs="0"/>
+						<xs:element name="carrier_assigned_enrollee_id" type="xs:string" minOccurs="0"/>
+						<xs:element name="coverage_level" type="CoverageLevelNameType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+        
+	<xs:simpleType name="CoverageLevelNameType">
+		<xs:annotation>
+			<xs:documentation>Enumerated list of household member types included under a policy</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#individual"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#family"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#employee_only"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#employee_and_spouse"/>
+		</xs:restriction>
+	</xs:simpleType>
+  
   	<xs:complexType name="EmployerLinkType">
 		<xs:annotation>
 			<xs:documentation>Reference to an Employer instance </xs:documentation>
