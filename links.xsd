@@ -117,7 +117,7 @@
 				<xs:sequence>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="person" type="PersonType"/>
-					<xs:element name="relationships" type="IndividualRelationshipType"/>
+					<xs:element name="relationship" type="IndividualRelationshipType" maxOccurs="unbounded"/>
 					<xs:sequence>
 						<xs:element name="created_at" type="xs:dateTime"/>
 						<xs:element name="modified_at" type="xs:dateTime"/>
