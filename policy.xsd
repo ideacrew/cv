@@ -321,14 +321,10 @@
 				<xs:sequence>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="person" type="PersonType"/>
-					<xs:element name="relationship" type="IndividualRelationshipType" maxOccurs="unbounded"/>
+					<xs:element name="relationships" type="IndividualRelationshipsType"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType"/>
 					<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
-					<xs:sequence>
-						<xs:element name="created_at" type="xs:dateTime"/>
-						<xs:element name="modified_at" type="xs:dateTime"/>
-						<xs:element name="version" type="xs:integer" minOccurs="0"/>
-					</xs:sequence>
+          <xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
