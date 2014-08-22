@@ -19,7 +19,7 @@
 			<xs:element name="carrier" type="CarrierLinkType"/>
 			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 			<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
-			<xs:element name="market" type="HbxMarketNameType"/>
+			<xs:element name="market" type="HbxMarketNameType" minOccurs="0"/>
 			<xs:element name="coverages" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -55,7 +55,6 @@
 					<xs:element name="carrier" type="CarrierLinkType"/>
 					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
-					<xs:element name="market" type="HbxMarketNameType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
