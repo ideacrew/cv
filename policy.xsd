@@ -66,12 +66,18 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="PolicyLinkType">
+	<xs:complexType name="PolicyLinkType1">
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element ref="broker" minOccurs="0"/>
-			<xs:element name="enrollees" type="EnrolleeType"/>
 			<xs:element name="plan" type="PlanLinkType"/>
+			<xs:element name="enrollees">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="enrollee" type="EnrolleeLinkType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element ref="employer" minOccurs="0"/>
 			<xs:element ref="policy_state"/>
 			<xs:group ref="ResourceTimestampGroup"/>
@@ -322,47 +328,62 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="EnrolleeIndividualType">
+		<xs:annotation>
+			<xs:documentation>An individual enrolled under a policy</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="IndividualType">
+				<xs:sequence>
+					<xs:group ref="HbxIdentifierGroup"/>
+					<xs:element name="person" type="PersonType"/>
+					<xs:element name="relationships" type="IndividualRelationshipType"/>
+					<xs:element name="hbx_roles" type="IndividualFacetType"/>
+					<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="EnrolleeType">
 		<xs:annotation>
 			<xs:documentation>An individual enrolled under a policy</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="individual">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:restriction base="IndividualType">
-							<xs:sequence>
-								<xs:group ref="HbxIdentifierGroup"/>
-								<xs:element name="person" type="PersonType"/>
-								<xs:element name="relationships" type="IndividualRelationshipType"/>
-								<xs:element name="hbx_roles" type="IndividualFacetType"/>
-								<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
-								<xs:sequence>
-									<xs:element name="created_at" type="xs:dateTime"/>
-									<xs:element name="modified_at" type="xs:dateTime"/>
-									<xs:element name="version" type="xs:integer" minOccurs="0"/>
-								</xs:sequence>
-							</xs:sequence>
-						</xs:restriction>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="individual" type="EnrolleeIndividualType"/>
 			<xs:element ref="employment_status"/>
 			<xs:element name="physically_disabled_flag" type="xs:boolean" default="false"/>
 			<xs:element name="benefit_status" type="BenefitStatusNameType" minOccurs="0"/>
-			<xs:element name="benefit">
-				<xs:complexType>
+			<xs:element name="benefit" type="EnrolleeBenefitType">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+					<xs:complexType name="EnrolleeBenefitType">
 					<xs:sequence>
 						<xs:element name="premium_amount" type="CurrencyType"/>
 						<xs:element name="begin_date" type="SimpleDateType"/>
 						<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 						<xs:element name="carrier_assigned_policy_id" type="xs:string" minOccurs="0"/>
-						<xs:element name="carrier_assigned_enrollee_id" minOccurs="0"/>
+						<xs:element name="carrier_assigned_enrollee_id" type="xs:string" minOccurs="0"/>
 						<xs:element name="coverage_level" type="CoverageLevelNameType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
+
+	<xs:complexType name="EnrolleeLinkType">
+		<xs:complexContent>
+			<xs:restriction base="EnrolleeType">
+				<xs:sequence>
+					<xs:element name="individual" type="EnrolleeIndividualType"/>
+					<xs:element ref="employment_status"/>
+					<xs:element name="physically_disabled_flag" type="xs:boolean" default="false"/>
+					<xs:element name="benefit" type="EnrolleeBenefitType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:element name="policy"/>
 	<xs:element name="policy_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">

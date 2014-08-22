@@ -13,7 +13,7 @@
 			<xs:documentation>Base class for companies and agencies</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="name" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>Organization formal name in free-form text</xs:documentation>
@@ -47,7 +47,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="version" type="xs:integer" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CarrierType">
@@ -57,7 +57,7 @@
 		<xs:complexContent>
 			<xs:restriction base="OrganizationType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="name" type="xs:string">
 						<xs:annotation>
 							<xs:documentation>Organization formal name in free-form text</xs:documentation>
@@ -84,6 +84,11 @@
 					<xs:element name="email" type="EmailType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 					<xs:element name="contacts" type="ContactListType" minOccurs="0"/>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -95,7 +100,7 @@
 		<xs:complexContent>
 			<xs:restriction base="CarrierType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="name" type="xs:string">
 						<xs:annotation>
 							<xs:documentation>Organization formal name in free-form text</xs:documentation>
@@ -117,7 +122,7 @@
 		<xs:complexContent>
 			<xs:restriction base="OrganizationType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="name" type="xs:string">
 						<xs:annotation>
 							<xs:documentation>Organization formal name in free-form text</xs:documentation>
@@ -144,7 +149,19 @@
 					<xs:element name="email" type="EmailType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 					<xs:element name="contacts" type="ContactListType" minOccurs="0"/>
-					<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					<xs:element name="extended_attributes" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="npn_id" type="NpnIdType"/>
+								<xs:element name="tpa" type="TpaType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
