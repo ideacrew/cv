@@ -410,8 +410,8 @@
   </xs:complexType>
   <xs:complexType name="DatePeriodType">
     <xs:sequence>
-      <xs:element name="begin_date" type="xs:date"/>
-      <xs:element name="end_date" type="xs:date" minOccurs="0"/>
+      <xs:element name="begin_date" type="SimpleDateType"/>
+      <xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
       <xs:element name="number_of_days" type="xs:integer" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>

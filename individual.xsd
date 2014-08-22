@@ -799,7 +799,7 @@
       <xs:element ref="employment_status"/>
       <xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
       <xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
-      <xs:element name="employment_termination_date" type="xs:date" minOccurs="0"/>
+      <xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="MedicaidRoleType">

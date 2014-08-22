@@ -39,7 +39,7 @@
 								<xs:complexContent>
 									<xs:extension base="EmployerPlanListType">
 										<xs:sequence>
-											<xs:element name="original_effective_date" type="xs:date">
+											<xs:element name="original_effective_date" type="SimpleDateType">
 												<xs:annotation>
 													<xs:documentation>Effective date coverage under this plan may begin</xs:documentation>
 												</xs:annotation>
@@ -785,22 +785,22 @@
 			<xs:documentation>Federal Employer Identification Number</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="open_enrollment_start" type="xs:date">
+	<xs:element name="open_enrollment_start" type="SimpleDateType">
 		<xs:annotation>
 			<xs:documentation>Open enrollment period start date</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="open_enrollment_end" type="xs:date">
+	<xs:element name="open_enrollment_end" type="SimpleDateType">
 		<xs:annotation>
 			<xs:documentation>Open enrollment period end date</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="plan_year_start" type="xs:date">
+	<xs:element name="plan_year_start" type="SimpleDateType">
 		<xs:annotation>
 			<xs:documentation>Date employer plan eligibility begins</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="plan_year_end" type="xs:date">
+	<xs:element name="plan_year_end" type="SimpleDateType">
 		<xs:annotation>
 			<xs:documentation>Date employer plan eligibility ends</xs:documentation>
 		</xs:annotation>
