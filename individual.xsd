@@ -775,7 +775,7 @@
       <xs:element name="policies" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="policy" type="PolicyLinkType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="policy" type="PolicyLinkType" minOccurs="0" maxOccurs="unbounded"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
