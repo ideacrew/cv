@@ -2,7 +2,7 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
-  <xs:include schemaLocation="links.xsd"/>
+	<xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="employer.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
 	<xs:complexType name="PolicyType">
@@ -35,7 +35,7 @@
 							<xs:element name="shop_market">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="employer" type="EmployerLinkType"/>
+										<xs:element name="employer_link" type="EmployerLinkType"/>
 										<xs:element name="total_employer_responsible_amount" type="CurrencyType"/>
 									</xs:sequence>
 								</xs:complexType>
@@ -54,7 +54,6 @@
 						</xs:choice>
 						<xs:element name="premium_amount_total"/>
 						<xs:element name="total_responsible_amount" type="CurrencyType"/>
-						<xs:element name="total_employer_responsible_amount" type="CurrencyType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -324,7 +323,7 @@
 					<xs:element name="relationships" type="IndividualRelationshipsType"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType"/>
 					<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
-          <xs:group ref="ResourceTimestampGroup"/>
+					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -338,18 +337,15 @@
 			<xs:element ref="employment_status"/>
 			<xs:element name="physically_disabled_flag" type="xs:boolean" default="false"/>
 			<xs:element name="benefit_status" type="BenefitStatusNameType" minOccurs="0"/>
-			<xs:element name="benefit" type="EnrolleeBenefitType">
-			</xs:element>
+			<xs:element name="benefit" type="EnrolleeBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:element name="policy"/>
 	<xs:element name="policy_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-
 	<xs:simpleType name="EnrollmentStatusNameType">
 		<xs:annotation>
 			<xs:documentation>Enumerated list of process states for a policy</xs:documentation>

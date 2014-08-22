@@ -2,7 +2,7 @@
 <!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
-  <xs:include schemaLocation="links.xsd"/>
+	<xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
@@ -439,7 +439,7 @@
 					<xs:element name="carrier" type="CarrierLinkType"/>
 					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
-					<xs:element name="market" type="HbxMarketNameType"/>
+					<xs:element name="market" type="HbxMarketNameType" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -452,7 +452,7 @@
 					<xs:element name="person" type="PersonType"/>
 					<xs:element name="relationships" type="IndividualRelationshipsType"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
-          <xs:group ref="ResourceTimestampGroup"/>
+					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
