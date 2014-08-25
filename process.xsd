@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:bt="http://dchealthlink.com/vocabularies/2.0/base_types" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
-	<xs:import namespace="http://dchealthlink.com/vocabularies/2.0/base_types" schemaLocation="base_types.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" >
+	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="process">
 		<xs:annotation>
 			<xs:documentation>Business process supporting DCHBX operations</xs:documentation>
@@ -71,7 +70,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="effective_date" type="bt:SimpleDateType"/>
+			<xs:element name="effective_date" type="SimpleDateType"/>
 			<xs:element name="category" type="OperationCategoryType"/>
 		</xs:sequence>
 	</xs:complexType>
