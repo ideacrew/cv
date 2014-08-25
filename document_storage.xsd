@@ -33,9 +33,8 @@
   <xsd:element name="get_document_request">
     <xsd:complexType>
       <xsd:complexContent>
-        <xsd:restriction base="RequestType">
+        <xsd:restriction base="ServiceRequestType">
           <xsd:sequence>
-            <xsd:element ref="hbx_id"/>
             <xsd:element name="request_name">
               <xsd:simpleType>
                   <xsd:restriction base="xsd:anyURI">
@@ -43,9 +42,12 @@
                   </xsd:restriction>
               </xsd:simpleType>
             </xsd:element>
+            <!--
+            TODO: FIGURE OUT HOW TO GET THESE IN HERE
             <xsd:element ref="correlation_id" minOccurs="0"/>
             <xsd:element ref="message_id" minOccurs="0"/>
             <xsd:element name="reply_to" type="xsd:anyURI" minOccurs="0"/>
+            -->
             <xsd:element name="parameters" type="DocumentRequestParametersType"/>
           </xsd:sequence>
         </xsd:restriction>
@@ -56,9 +58,8 @@
   <xsd:element name="create_document_request">
     <xsd:complexType>
       <xsd:complexContent>
-        <xsd:restriction base="RequestType">
+        <xsd:restriction base="ServiceRequestType">
           <xsd:sequence>
-            <xsd:element ref="hbx_id"/>
             <xsd:element name="request_name">
               <xsd:simpleType>
                   <xsd:restriction base="xsd:anyURI">
@@ -66,9 +67,12 @@
                   </xsd:restriction>
               </xsd:simpleType>
             </xsd:element>
+            <!--
+            TODO: FIGURE OUT HOW TO GET THESE IN HERE
             <xsd:element ref="correlation_id" minOccurs="0"/>
             <xsd:element ref="message_id" minOccurs="0"/>
             <xsd:element name="reply_to" type="xsd:anyURI" minOccurs="0"/>
+            -->
             <xsd:element name="body">
               <xsd:complexType>
                 <xsd:sequence>
@@ -88,4 +92,5 @@
           <xsd:element name="document_name" type="xsd:string"/>
         </xsd:sequence>
   </xsd:complexType>
+
 </xsd:schema>
