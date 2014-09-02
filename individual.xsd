@@ -373,7 +373,7 @@
 			<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
 			<xs:element name="state_of_residency" type="UsStateNameType" minOccurs="0"/>
 			<xs:element name="immigration_status" type="ImmigrationStatusNameType" minOccurs="0"/>
-			<xs:element name="incarcerated" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="incarcerated_flag" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="financial" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
