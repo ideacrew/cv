@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (DC Department of Human Services DCAS Project) -->
+<!-- edited with XMLSpy v2014 (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="links.xsd"/>
@@ -866,26 +866,14 @@
 		<xs:sequence>
 			<xs:element name="calendar_year" type="CalendarYearType"/>
 			<xs:element name="income_amount" type="CurrencyType"/>
-			<xs:element name="income_type">
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:income_type#wages_and_salaries"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="income_frequency">
+			<xs:element name="income_type" type="IncomeNameType"/>
+			<xs:element name="income_frequency" type="IncomeFrequencyNameType">
 				<xs:annotation>
-					<xs:documentation>Time interval to receive income_amount </xs:documentation>
+					<xs:documentation>Time interval between income payments</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:income_interval#annual"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:income_interval#monthly"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:income_interval#hourly"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:income_interval#weekly"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
+			<xs:element name="start_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="reported_date" type="xs:dateTime"/>
 			<xs:element name="reported_by" type="xs:anyURI">
 				<xs:annotation>
@@ -923,6 +911,50 @@
 			<xs:element name="total_income"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="IncomeNameType">
+		<xs:annotation>
+			<xs:documentation>Kinds of earnings</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:income#alimony_and_maintenance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#american_indian_and_alaskan_native"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#capital_gains"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#dividend"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#employer_funded_disability"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#estate_trust"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#farming_and_fishing"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#foreign"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#interest"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#lump_sum_amount"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#military"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#net_self_employment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#other"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#pension_retirement_benefits"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#permanent_workers_compensation"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#prizes_and_awards"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#rental_and_royalty"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#scholorship_payments"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#social_security_benefit"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#supplemental_security_income"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#tax_exempt_interest"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#unemployment_insurance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#wages_and_salaries"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IncomeFrequencyNameType">
+		<xs:annotation>
+			<xs:documentation>Time intervals between income payments</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#monthly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#biweekly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#daily"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#half_yearly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#quarterly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#weekly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#yearly"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="TobaccoUseNameType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="true"/>
