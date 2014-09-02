@@ -339,31 +339,42 @@
 	</xs:complexType>
 	<xs:complexType name="IndividualRelationshipType">
 		<xs:annotation>
-			<xs:documentation>Interpersonal relationships between this individual and others within a group</xs:documentation>
+			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="PersonRelationshipType">
 				<xs:sequence>
 					<xs:element name="subject_individual" type="xs:anyURI">
 						<xs:annotation>
-							<xs:documentation>Individual's HBX ID </xs:documentation>
+							<xs:documentation>This individual's HBX ID </xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
 					<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
-					<xs:element name="object_individual" type="xs:anyURI"/>
+					<xs:element name="object_individual" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>The target individual's HBX ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="IndividualRelationshipsType">
+		<xs:annotation>
+			<xs:documentation>A set of interpersonal relationships between one or more individuals</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="relationship" type="IndividualRelationshipType" maxOccurs="unbounded"/>
+			<xs:element name="relationship" type="IndividualRelationshipType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Relationship sets always include at least one reference to 'Self'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualType">
 		<xs:annotation>
-			<xs:documentation>Individual instance attributes</xs:documentation>
+			<xs:documentation>A person who participates in enrollments on the HBX</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
@@ -863,6 +874,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualIncomeType">
+		<xs:annotation>
+			<xs:documentation>Source and amount of income from one source for a specified period</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="calendar_year" type="CalendarYearType"/>
 			<xs:element name="income_amount" type="CurrencyType"/>
@@ -906,6 +920,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TotalIndividualIncomeType">
+		<xs:annotation>
+			<xs:documentation>Sum of income sources for an individual for a calendar year</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="calendar_year" type="CalendarYearType"/>
 			<xs:element name="total_income"/>
@@ -956,6 +973,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TobaccoUseNameType">
+		<xs:annotation>
+			<xs:documentation>Indicates whether an individual uses tobacco products</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="true"/>
 			<xs:enumeration value="false"/>
