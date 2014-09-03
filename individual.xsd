@@ -878,17 +878,41 @@
 			<xs:documentation>Source and amount of income from one source for a specified period</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="calendar_year" type="CalendarYearType"/>
-			<xs:element name="income_amount" type="CurrencyType"/>
-			<xs:element name="income_type" type="IncomeNameType"/>
-			<xs:element name="income_frequency" type="IncomeFrequencyNameType">
+			<xs:element name="amount" type="CurrencyType">
+				<xs:annotation>
+					<xs:documentation>Income value in US dollars</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="IncomeNameType">
+				<xs:annotation>
+					<xs:documentation>Source or kind of income</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="frequency" type="IncomeFrequencyNameType">
 				<xs:annotation>
 					<xs:documentation>Time interval between income payments</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="start_date" type="SimpleDateType"/>
-			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="reported_date" type="xs:dateTime"/>
+			<xs:element name="evidence_flag" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Proof of income provided?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="start_date" type="SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>Beginning date for this income </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Final date for recieving this income</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reported_date" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Timestamp when this income source was reported</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="reported_by" type="xs:anyURI">
 				<xs:annotation>
 					<xs:documentation>Individual, Representative or agent who reported value</xs:documentation>
@@ -963,10 +987,10 @@
 			<xs:documentation>Time intervals between income payments</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#monthly"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#biweekly"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#daily"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#half_yearly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#monthly"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#quarterly"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#weekly"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#yearly"/>
