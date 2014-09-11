@@ -41,7 +41,11 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="active_flag" type="xs:boolean"/>
+			<xs:element name="active_flag" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates this Application Group is operative on the HBX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -790,7 +794,7 @@
 			</xs:element>
 			<xs:element name="exemptions" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Eligible for exemption from the Exchange</xs:documentation>
+					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
