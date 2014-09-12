@@ -147,7 +147,6 @@
 							<xs:documentation>Organization name in shortened, free-form text</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
 					<xs:element name="address" type="AddressType" minOccurs="0"/>
 					<xs:element name="phone" type="PhoneType" minOccurs="0"/>
 					<xs:element name="email" type="EmailType" minOccurs="0"/>
@@ -187,7 +186,6 @@
 							<xs:documentation>Organization name as presesnted in UI</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 					<xs:element name="extended_attributes" type="BrokerAttributesType" minOccurs="0"/>
 					<xs:element name="active_flag" type="xs:boolean">
