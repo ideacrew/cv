@@ -619,6 +619,14 @@
 			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="CommentType">
+		<xs:sequence>
+			<xs:element name="content" type="xs:string"/>
+			<xs:element name="author" type="xs:string"/>
+			<xs:element name="date" type="SimpleDateType"/>
+			<xs:element name="priority_flag" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="ApprovalType">
 		<xs:annotation>
 			<xs:documentation>Base type to manage a resource's acceptance status</xs:documentation>

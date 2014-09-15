@@ -46,6 +46,13 @@
 					<xs:documentation>Indicates this Application Group is operative on the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="comments" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -316,7 +323,21 @@
 			<xs:element name="household_members" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="household_member" type="IndividualLinkType" maxOccurs="unbounded"/>
+						<xs:element name="household_member" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="IndividualLinkType">
+										<xs:sequence>
+											<xs:element name="qhp_participant_flag" type="xs:boolean">
+												<xs:annotation>
+													<xs:documentation>This person is enrolling for healtch care coverage </xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -337,7 +358,18 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="active_flag" type="xs:boolean"/>
+			<xs:element name="active_flag" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>This household is operative on the HBX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="comments" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -386,24 +418,38 @@
 			<xs:element name="relationships" type="IndividualRelationshipsType"/>
 			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
 			<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
-			<xs:element name="state_of_residency" type="UsStateNameType" minOccurs="0"/>
-			<xs:element name="immigration_status" type="ImmigrationStatusNameType" minOccurs="0"/>
+			<xs:element name="is_state_resident_flag" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Person is resident of HBX state</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citizen_status" type="ImmigrationStatusNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Individual's immigration status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="incarcerated_flag" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="financial" minOccurs="0">
+			<xs:element name="financial" type="IndividualFinancialType" minOccurs="0"/>
+			<xs:element name="comments" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="incomes" minOccurs="0">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="income" type="IndividualIncomeType" maxOccurs="unbounded"/>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="tax_file_status" type="TaxFilerNameType" minOccurs="0"/>
+						<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualFinancialType">
+		<xs:sequence>
+			<xs:element name="incomes" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="income" type="IndividualIncomeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="tax_file_status" type="TaxFilerNameType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualRequestType">
@@ -1065,6 +1111,7 @@
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#us_citizen"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#naturalized_citizen"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#alien_lawfully_present"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#lawful_permanent_resident"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#indian_tribe_member"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#undocumented_immigrant"/>
