@@ -423,9 +423,6 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="e_person_id" type="xs:string" minOccurs="0"/>
-			<xs:element name="e_concern_role_id" type="xs:string" minOccurs="0"/>
-			<xs:element name="aceds_id" type="xs:string" minOccurs="0"/>
 			<xs:element name="person" type="PersonType"/>
 			<xs:element name="relationships" type="IndividualRelationshipsType"/>
 			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
@@ -836,6 +833,9 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="e_person_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="e_concern_role_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="aceds_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="gender" type="GenderNameType"/>
 			<xs:element name="dob" type="SimpleDateType">
 				<xs:annotation>
@@ -968,7 +968,7 @@
 					<xs:documentation>Income value in US dollars</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="type" type="IncomeNameType">
+			<xs:element name="type" type="IndividualIncomeNameType">
 				<xs:annotation>
 					<xs:documentation>Source or kind of income</xs:documentation>
 				</xs:annotation>
@@ -1005,7 +1005,7 @@
 					<xs:documentation>Income value in US dollars</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="type" type="IncomeNameType">
+			<xs:element name="type" type="IndividualDeductionNameType">
 				<xs:annotation>
 					<xs:documentation>Source or kind of income</xs:documentation>
 				</xs:annotation>
@@ -1062,7 +1062,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:exemption#religious_conscience"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="IncomeNameType">
+	<xs:simpleType name="IndividualIncomeNameType">
 		<xs:annotation>
 			<xs:documentation>Kinds of earnings</xs:documentation>
 		</xs:annotation>
@@ -1405,11 +1405,6 @@
 			<xs:element name="submitted_date" type="SimpleDateType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="AlternateBenefitNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="sdfsdf"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="AlternateBenefitType">
 		<xs:sequence>
 			<xs:element name="type" type="AlternateBenefitNameType"/>
@@ -1418,4 +1413,34 @@
 			<xs:element name="submitted_date" type="SimpleDateType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="AlternateBenefitNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#acf_refugee_medical_assistance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#americorps_health_benefits"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#child_health_insurance_plan"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#medicaid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#medicare"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#medicare_advantage"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#medicare_part_b"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#private_individual_and_family_coverage"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#state_supplementary_payment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#tricare"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#veterans_benefits"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IndividualDeductionNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#alimony_paid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#deductable_part_of_self_employment_taxes"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#domestic_production_activities"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#penalty_on_early_withdrawel_of_savings"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#educator_expenses"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#rent_or_royalties"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#self_employment_sep_simple_and_qualified_plans"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#self_employed_health_insurance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#moving_expenses"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#health_savings_account"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#reservists_performing_artists_and_fee_basis_government_official_expenses"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
