@@ -19,9 +19,9 @@
 												<xs:sequence>
 													<xs:element name="participant_id"/>
 													<xs:element name="full_name"/>
-													<xs:element name="name_first" type="xs:string"/>
-													<xs:element name="name_middle" type="xs:string"/>
-													<xs:element name="name_last" type="xs:string"/>
+													<xs:element name="name_first" type="xs:string" minOccurs="0"/>
+													<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
+													<xs:element name="name_last" type="xs:string" minOccurs="0"/>
 													<xs:element name="is_primary_applicant" type="xs:string"/>
 													<xs:element name="date_of_birth"/>
 													<xs:element name="age"/>
