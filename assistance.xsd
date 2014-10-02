@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:element name="integrated_cases">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="integrated_case" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="integrated_case_reference"/>
+							<xs:element name="applicants">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="applicant" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="participant_id"/>
+													<xs:element name="full_name"/>
+													<xs:element name="name_first" type="xs:string"/>
+													<xs:element name="name_middle" type="xs:string"/>
+													<xs:element name="name_last" type="xs:string"/>
+													<xs:element name="is_primary_applicant" type="xs:string"/>
+													<xs:element name="date_of_birth"/>
+													<xs:element name="age"/>
+													<xs:element name="household_size"/>
+													<xs:element name="incomes">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="income" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="amount"/>
+																			<xs:element name="frequency"/>
+																			<xs:element name="income_type"/>
+																			<xs:element name="start_date"/>
+																			<xs:element name="end_date"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="relationships">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="relationship" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="relationship_type"/>
+																			<xs:element name="related_participant_id"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="aptc_amount"/>
+													<xs:element name="csr"/>
+													<xs:element name="is_resident" type="xs:boolean"/>
+													<xs:element name="citizen_status"/>
+													<xs:element name="tax_filing_status"/>
+													<xs:element name="tax_filing_together"/>
+													<xs:element name="incarceration_status"/>
+													<xs:element name="address">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="address_line_1"/>
+																<xs:element name="address_line_2"/>
+																<xs:element name="suite" type="xs:string"/>
+																<xs:element name="city"/>
+																<xs:element name="county"/>
+																<xs:element name="postal_code"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="email_address"/>
+													<xs:element name="telephone_number">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="country_code"/>
+																<xs:element name="area_code"/>
+																<xs:element name="number"/>
+																<xs:element name="number_full"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="product_delivery_cases">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="product_delivery_case" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="pdc_case_reference"/>
+													<xs:element name="pdc_product_type"/>
+													<xs:element name="pdc_primary_applicant_name"/>
+													<xs:element name="pdc_applicant" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="participant_id"/>
+																<xs:element name="applicant_name"/>
+																<xs:element name="person_id"/>
+																<xs:element name="aceds_id"/>
+																<xs:element name="consent_applicant"/>
+																<xs:element name="is_enrolled_for_coverage"/>
+																<xs:element name="is_without_assistance"/>
+																<xs:element name="years_to_renew_coverage"/>
+																<xs:element name="financial_assistance"/>
+																<xs:element name="ia_eligible"/>
+																<xs:element name="medicaid_chip_eligible"/>
+																<xs:element name="receiving_benefit"/>
+																<xs:element name="projected_amount"/>
+																<xs:element name="participant_projected_income"/>
+																<xs:element name="projected_income_start_date"/>
+																<xs:element name="projected_income_end_date"/>
+																<xs:element name="application_submission_date"/>
+																<xs:element name="benefits">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="benefit">
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="benefit_type"/>
+																						<xs:element name="benefit_start_date"/>
+																						<xs:element name="benefit_end_date"/>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="deductions">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="deduction">
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="type"/>
+																						<xs:element name="amount"/>
+																						<xs:element name="frequency"/>
+																						<xs:element name="start_date"/>
+																						<xs:element name="end_date"/>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
