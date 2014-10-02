@@ -11,6 +11,9 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="primary_applicant_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="consent_applicant_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="applicants">
 				<xs:annotation>
 					<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
@@ -31,7 +34,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="qualifying_life_events">
+			<xs:element name="qualifying_life_events" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
 				</xs:annotation>
@@ -41,7 +44,9 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="active_flag" type="xs:boolean">
+			<xs:element name="submitted_date" type="SimpleDateType"/>
+			<xs:element name="coverage_renewal_year" type="xs:integer" minOccurs="0"/>
+			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicates this Application Group is operative on the HBX</xs:documentation>
 				</xs:annotation>
@@ -54,12 +59,6 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
-			<xs:element name="submitted_date" type="SimpleDateType"/>
-			<xs:element name="primary_applicant_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="consent_applicant_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="coverage_renewal_year" type="xs:integer" minOccurs="0"/>
-			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="is_active" type="xs:boolean"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ApplicationGroupRequestType">
