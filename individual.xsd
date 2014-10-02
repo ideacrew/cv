@@ -54,6 +54,12 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element name="submitted_date" type="SimpleDateType"/>
+			<xs:element name="primary_applicant_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="consent_applicant_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="coverage_renewal_year" type="xs:integer" minOccurs="0"/>
+			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="is_active" type="xs:boolean"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ApplicationGroupRequestType">
@@ -318,7 +324,11 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="tax_household_size" type="xs:integer"/>
+			<xs:element name="irs_group_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="e_pdc_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="primary_applicant_id" type="xs:anyURI"/>
+			<xs:element name="type"/>
+			<xs:element name="size" type="xs:integer"/>
 			<xs:element name="head_of_household" type="IndividualLinkType"/>
 			<xs:element name="household_members" minOccurs="0">
 				<xs:complexType>
@@ -351,16 +361,10 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="eligibility_determinations" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element ref="eligibility_determination" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="active_flag" type="xs:boolean">
+			<xs:element name="csr_percent" type="xs:float" minOccurs="0"/>
+			<xs:element name="maximum_aptc" type="CurrencyType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>This household is operative on the HBX</xs:documentation>
+					<xs:documentation>Total tax credit amount</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="comments" minOccurs="0">
@@ -371,6 +375,12 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element name="submitted_date" type="SimpleDateType"/>
+			<xs:element name="is_active" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>This household is operative on the HBX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualRelationshipType">
@@ -414,11 +424,14 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="e_person_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="e_concern_role_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="aceds_id" type="xs:string" minOccurs="0"/>
 			<xs:element name="person" type="PersonType"/>
 			<xs:element name="relationships" type="IndividualRelationshipsType"/>
 			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
 			<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
-			<xs:element name="is_state_resident_flag" type="xs:boolean" minOccurs="0">
+			<xs:element name="is_state_resident" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Person is resident of HBX state</xs:documentation>
 				</xs:annotation>
@@ -428,8 +441,14 @@
 					<xs:documentation>Individual's immigration status</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="incarcerated_flag" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="financial" type="IndividualFinancialType" minOccurs="0"/>
+			<xs:element name="is_incarcerated" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="assistance_eligibilities" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="assistance_eligibility" type="AssistanceEligibilityType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="comments" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -907,16 +926,6 @@
 					<xs:documentation>Date of determination</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="maximum_aptc" type="CurrencyType">
-				<xs:annotation>
-					<xs:documentation>Total tax credit amount</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="magi_amount" type="CurrencyType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Modified Adjusted Gross Income figure used to determine elibility</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="QualifyingLifeEventType">
@@ -970,9 +979,41 @@
 					<xs:documentation>Time interval between income payments</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="evidence_flag" type="xs:boolean">
+			<xs:element name="start_date" type="SimpleDateType">
 				<xs:annotation>
-					<xs:documentation>Proof of income provided?</xs:documentation>
+					<xs:documentation>Beginning date for this income </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Final date for recieving this income</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="submitted_date" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Timestamp when this income source was reported</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualDeductionType">
+		<xs:annotation>
+			<xs:documentation>Source and deduction from one expense for a specified period</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="CurrencyType">
+				<xs:annotation>
+					<xs:documentation>Income value in US dollars</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="IncomeNameType">
+				<xs:annotation>
+					<xs:documentation>Source or kind of income</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="frequency" type="IncomeFrequencyNameType">
+				<xs:annotation>
+					<xs:documentation>Time interval between income payments</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="start_date" type="SimpleDateType">
@@ -985,38 +1026,10 @@
 					<xs:documentation>Final date for recieving this income</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="reported_date" type="xs:dateTime">
+			<xs:element name="submitted_date" type="xs:dateTime">
 				<xs:annotation>
 					<xs:documentation>Timestamp when this income source was reported</xs:documentation>
 				</xs:annotation>
-			</xs:element>
-			<xs:element name="reported_by" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Individual, Representative or agent who reported value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="verification" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="verified_flag" type="xs:boolean"/>
-						<xs:element name="source" type="xs:anyURI">
-							<xs:annotation>
-								<xs:documentation>Authority source used to verify value</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="recorded_date" type="xs:dateTime">
-							<xs:annotation>
-								<xs:documentation>Verificatiion recorded timestamp</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="recorded_by" type="xs:anyURI">
-							<xs:annotation>
-								<xs:documentation>Representative or agent who verified value</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="notes" type="xs:string" minOccurs="0"/>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -1114,6 +1127,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#alien_lawfully_present"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#lawful_permanent_resident"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#indian_tribe_member"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#not_lawfully_present_in_us"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:immigration_status#undocumented_immigrant"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -1360,4 +1374,49 @@
 	<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
 	<xs:element name="household" type="ApplicationGroupHouseholdType"/>
+	<xs:complexType name="AssistanceEligibilityType">
+		<xs:sequence>
+			<xs:element name="is_primary_applicant" type="xs:boolean"/>
+			<xs:element name="tax_filing_status" type="TaxFilerNameType"/>
+			<xs:element name="is_tax_filing_together" type="xs:boolean"/>
+			<xs:element name="is_enrolled_for_es_coverage" type="xs:boolean"/>
+			<xs:element name="is_without_assistance" type="xs:boolean"/>
+			<xs:element name="is_ia_eligible" type="xs:boolean"/>
+			<xs:element name="incomes" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="income" type="IndividualIncomeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="deductions" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="deduction" type="IndividualDeductionType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="alternative_benefits" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="alternative_benefit" type="AlternateBenefitType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="submitted_date" type="SimpleDateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AlternateBenefitNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="sdfsdf"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AlternateBenefitType">
+		<xs:sequence>
+			<xs:element name="type" type="AlternateBenefitNameType"/>
+			<xs:element name="start_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType"/>
+			<xs:element name="submitted_date" type="SimpleDateType"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
