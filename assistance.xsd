@@ -19,6 +19,7 @@
 												<xs:sequence>
 													<xs:element name="participant_id"/>
 													<xs:element name="person_id"/>
+													<xs:element name="hbx_person_id" minOccurs="0"/>
 													<xs:element name="concern_role_id"/>
 													<xs:element name="aceds_id" minOccurs="0"/>
 													<xs:element name="full_name"/>
@@ -84,6 +85,8 @@
 																		<xs:sequence>
 																			<xs:element name="relationship_type" minOccurs="0"/>
 																			<xs:element name="related_participant_id" minOccurs="0"/>
+																			<xs:element name="person_id" minOccurs="0"/>
+																			<xs:element name="hbx_person_id" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
@@ -106,6 +109,7 @@
 													<xs:element name="pdc_product_type"/>
 													<xs:element name="pdc_primary_applicant_name"/>
 													<xs:element name="pdc_primary_applicant_person_id"/>
+													<xs:element name="pdc_primary_applicant_hbx_person_id" minOccurs="0"/>
 													<xs:element name="pdc_primary_applicant_id" minOccurs="0"/>
 													<xs:element name="pdc_applicants">
 														<xs:complexType>
@@ -116,6 +120,7 @@
 																			<xs:element name="participant_id"/>
 																			<xs:element name="applicant_name"/>
 																			<xs:element name="person_id"/>
+																			<xs:element name="hbx_person_id" minOccurs="0"/>
 																			<xs:element name="consent_applicant"/>
 																			<xs:element name="consent_applicant_participant_id"/>
 																			<xs:element name="is_enrolled_for_es_coverage"/>
