@@ -102,52 +102,59 @@
 													<xs:element name="pdc_case_reference"/>
 													<xs:element name="pdc_product_type"/>
 													<xs:element name="pdc_primary_applicant_name"/>
-													<xs:element name="pdc_applicant" maxOccurs="unbounded">
+													<xs:element name="pdc_primary_applicant_id"/>
+													<xs:element name="pdc_applicants">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="participant_id"/>
-																<xs:element name="applicant_name"/>
-																<xs:element name="person_id"/>
-																<xs:element name="aceds_id"/>
-																<xs:element name="consent_applicant"/>
-																<xs:element name="is_enrolled_for_coverage"/>
-																<xs:element name="is_without_assistance"/>
-																<xs:element name="years_to_renew_coverage"/>
-																<xs:element name="financial_assistance"/>
-																<xs:element name="ia_eligible"/>
-																<xs:element name="medicaid_chip_eligible"/>
-																<xs:element name="receiving_benefit"/>
-																<xs:element name="projected_amount"/>
-																<xs:element name="participant_projected_income"/>
-																<xs:element name="projected_income_start_date"/>
-																<xs:element name="projected_income_end_date"/>
-																<xs:element name="application_submission_date"/>
-																<xs:element name="benefits">
+																<xs:element name="pdc_applicant" maxOccurs="unbounded">
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element name="benefit">
+																			<xs:element name="participant_id"/>
+																			<xs:element name="applicant_name"/>
+																			<xs:element name="person_id"/>
+																			<xs:element name="aceds_id"/>
+																			<xs:element name="consent_applicant"/>
+																			<xs:element name="is_enrolled_for_coverage"/>
+																			<xs:element name="is_without_assistance"/>
+																			<xs:element name="years_to_renew_coverage"/>
+																			<xs:element name="financial_assistance"/>
+																			<xs:element name="ia_eligible"/>
+																			<xs:element name="medicaid_chip_eligible"/>
+																			<xs:element name="receiving_benefit"/>
+																			<xs:element name="projected_amount"/>
+																			<xs:element name="participant_projected_income"/>
+																			<xs:element name="projected_income_start_date"/>
+																			<xs:element name="projected_income_end_date"/>
+																			<xs:element name="application_submission_date"/>
+																			<xs:element name="benefits">
 																				<xs:complexType>
 																					<xs:sequence>
-																						<xs:element name="benefit_type"/>
-																						<xs:element name="benefit_start_date"/>
-																						<xs:element name="benefit_end_date"/>
+																						<xs:element name="benefit">
+																							<xs:complexType>
+																								<xs:sequence>
+																									<xs:element name="benefit_type"/>
+																									<xs:element name="benefit_start_date"/>
+																									<xs:element name="benefit_end_date"/>
+																								</xs:sequence>
+																							</xs:complexType>
+																						</xs:element>
 																					</xs:sequence>
 																				</xs:complexType>
 																			</xs:element>
-																		</xs:sequence>
-																	</xs:complexType>
-																</xs:element>
-																<xs:element name="deductions">
-																	<xs:complexType>
-																		<xs:sequence>
-																			<xs:element name="deduction">
+																			<xs:element name="deductions">
 																				<xs:complexType>
 																					<xs:sequence>
-																						<xs:element name="type"/>
-																						<xs:element name="amount"/>
-																						<xs:element name="frequency"/>
-																						<xs:element name="start_date"/>
-																						<xs:element name="end_date"/>
+																						<xs:element name="deduction">
+																							<xs:complexType>
+																								<xs:sequence>
+																									<xs:element name="type"/>
+																									<xs:element name="amount"/>
+																									<xs:element name="frequency"/>
+																									<xs:element name="start_date"/>
+																									<xs:element name="end_date"/>
+																								</xs:sequence>
+																							</xs:complexType>
+																						</xs:element>
 																					</xs:sequence>
 																				</xs:complexType>
 																			</xs:element>
