@@ -17,10 +17,10 @@
 										<xs:element name="applicant" maxOccurs="unbounded">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="participant_id"/>
 													<xs:element name="person_id"/>
 													<xs:element name="hbx_person_id" minOccurs="0"/>
 													<xs:element name="concern_role_id"/>
+													<xs:element name="participant_id"/>
 													<xs:element name="aceds_id" minOccurs="0"/>
 													<xs:element name="full_name"/>
 													<xs:element name="name_first" type="xs:string" minOccurs="0"/>
@@ -108,23 +108,24 @@
 												<xs:sequence>
 													<xs:element name="pdc_case_reference"/>
 													<xs:element name="pdc_product_type"/>
+													<xs:element name="pdc_product_type_description"/>
 													<xs:element name="pdc_primary_applicant_name"/>
+													<xs:element name="pdc_primary_applicant_id" minOccurs="0"/>
 													<xs:element name="pdc_primary_applicant_person_id"/>
 													<xs:element name="pdc_primary_applicant_hbx_person_id" minOccurs="0"/>
-													<xs:element name="pdc_primary_applicant_id" minOccurs="0"/>
 													<xs:element name="pdc_applicants">
 														<xs:complexType>
 															<xs:sequence>
 																<xs:element name="pdc_applicant" maxOccurs="unbounded">
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element name="participant_id"/>
-																			<xs:element name="applicant_name"/>
 																			<xs:element name="person_id"/>
 																			<xs:element name="hbx_person_id" minOccurs="0"/>
+																			<xs:element name="participant_id"/>
+																			<xs:element name="applicant_name"/>
 																			<xs:element name="consent_applicant"/>
-																			<xs:element name="consent_applicant_participant_id"/>
 																			<xs:element name="is_enrolled_for_es_coverage"/>
+																			<xs:element name="consent_applicant_participant_id" minOccurs="0"/>
 																			<xs:element name="is_without_assistance"/>
 																			<xs:element name="years_to_renew_coverage"/>
 																			<xs:element name="financial_assistance"/>
