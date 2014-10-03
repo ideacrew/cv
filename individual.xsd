@@ -1348,6 +1348,13 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:element name="application_group" type="ApplicationGroupType"/>
+	<xs:element name="application_groups">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="application_group" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="application_group_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for an application group</xs:documentation>
