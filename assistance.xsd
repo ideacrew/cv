@@ -18,6 +18,9 @@
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="participant_id"/>
+													<xs:element name="person_id"/>
+													<xs:element name="concern_role_id"/>
+													<xs:element name="aceds_id" minOccurs="0"/>
 													<xs:element name="full_name"/>
 													<xs:element name="name_first" type="xs:string" minOccurs="0"/>
 													<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
@@ -50,15 +53,17 @@
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
-													<xs:element name="address_line_1" minOccurs="0"/>
-													<xs:element name="address_line_2" minOccurs="0"/>
-													<xs:element name="suite" type="xs:string" minOccurs="0"/>
-													<xs:element name="city" minOccurs="0"/>
-													<xs:element name="county" minOccurs="0"/>
-													<xs:element name="postal_code" minOccurs="0"/>
 													<xs:element name="address" minOccurs="0">
 														<xs:complexType>
-															<xs:sequence/>
+															<xs:sequence>
+																<xs:element name="address_line_1" minOccurs="0"/>
+																<xs:element name="address_line_2" minOccurs="0"/>
+																<xs:element name="suite" type="xs:string" minOccurs="0"/>
+																<xs:element name="city" minOccurs="0"/>
+																<xs:element name="county" minOccurs="0"/>
+																<xs:element name="state" minOccurs="0"/>
+																<xs:element name="postal_code" minOccurs="0"/>
+															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
 													<xs:element name="email_address" minOccurs="0"/>
@@ -100,6 +105,7 @@
 													<xs:element name="pdc_case_reference"/>
 													<xs:element name="pdc_product_type"/>
 													<xs:element name="pdc_primary_applicant_name"/>
+													<xs:element name="pdc_primary_applicant_person_id"/>
 													<xs:element name="pdc_primary_applicant_id" minOccurs="0"/>
 													<xs:element name="pdc_applicants">
 														<xs:complexType>
@@ -109,9 +115,9 @@
 																		<xs:sequence>
 																			<xs:element name="participant_id"/>
 																			<xs:element name="applicant_name"/>
-																			<xs:element name="person_id" minOccurs="0"/>
-																			<xs:element name="aceds_id" minOccurs="0"/>
+																			<xs:element name="person_id"/>
 																			<xs:element name="consent_applicant"/>
+																			<xs:element name="consent_applicant_participant_id"/>
 																			<xs:element name="is_enrolled_for_es_coverage"/>
 																			<xs:element name="is_without_assistance"/>
 																			<xs:element name="years_to_renew_coverage"/>
