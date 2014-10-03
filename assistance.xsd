@@ -29,6 +29,8 @@
 													<xs:element name="is_primary_applicant" type="xs:string"/>
 													<xs:element name="date_of_birth"/>
 													<xs:element name="age"/>
+													<xs:element name="gender" type="xs:string"/>
+													<xs:element name="ssn" type="xs:string"/>
 													<xs:element name="aptc_amount" minOccurs="0"/>
 													<xs:element name="csr" minOccurs="0"/>
 													<xs:element name="is_resident" type="EmptyBooleanType" minOccurs="0"/>
