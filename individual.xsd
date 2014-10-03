@@ -1388,6 +1388,7 @@
 			<xs:element name="is_enrolled_for_es_coverage" type="xs:boolean"/>
 			<xs:element name="is_without_assistance" type="xs:boolean"/>
 			<xs:element name="is_ia_eligible" type="xs:boolean"/>
+			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean"/>
 			<xs:element name="incomes" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
