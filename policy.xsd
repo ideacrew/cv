@@ -347,7 +347,7 @@
 			<xs:element name="benefit" type="EnrolleeBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="policy"/>
+	<xs:element name="policy" type="PolicyType"/>
 	<xs:element name="policy_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
