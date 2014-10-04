@@ -56,6 +56,38 @@
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
+													<xs:element name="benefits">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="benefit" minOccurs="0" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="type" minOccurs="0"/>
+																			<xs:element name="start_date" minOccurs="0"/>
+																			<xs:element name="end_date" minOccurs="0"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="deductions">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="deduction" minOccurs="0" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="type" minOccurs="0"/>
+																			<xs:element name="amount" minOccurs="0"/>
+																			<xs:element name="frequency" minOccurs="0"/>
+																			<xs:element name="start_date" minOccurs="0"/>
+																			<xs:element name="end_date" minOccurs="0"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
 													<xs:element name="address" minOccurs="0">
 														<xs:complexType>
 															<xs:sequence>
@@ -139,38 +171,6 @@
 																			<xs:element name="projected_income_start_date"/>
 																			<xs:element name="projected_income_end_date"/>
 																			<xs:element name="application_submission_date"/>
-																			<xs:element name="benefits">
-																				<xs:complexType>
-																					<xs:sequence>
-																						<xs:element name="benefit">
-																							<xs:complexType>
-																								<xs:sequence>
-																									<xs:element name="type" minOccurs="0"/>
-																									<xs:element name="start_date" minOccurs="0"/>
-																									<xs:element name="end_date" minOccurs="0"/>
-																								</xs:sequence>
-																							</xs:complexType>
-																						</xs:element>
-																					</xs:sequence>
-																				</xs:complexType>
-																			</xs:element>
-																			<xs:element name="deductions">
-																				<xs:complexType>
-																					<xs:sequence>
-																						<xs:element name="deduction">
-																							<xs:complexType>
-																								<xs:sequence>
-																									<xs:element name="type" minOccurs="0"/>
-																									<xs:element name="amount" minOccurs="0"/>
-																									<xs:element name="frequency" minOccurs="0"/>
-																									<xs:element name="start_date" minOccurs="0"/>
-																									<xs:element name="end_date" minOccurs="0"/>
-																								</xs:sequence>
-																							</xs:complexType>
-																						</xs:element>
-																					</xs:sequence>
-																				</xs:complexType>
-																			</xs:element>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
