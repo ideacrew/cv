@@ -57,7 +57,7 @@
 	</xs:complexType>
 	<xs:complexType name="RatesType">
 		<xs:sequence>
-			<xs:element name="rate" type="RateType" maxOccurs="unbounded"/>
+			<xs:element name="rate" type="RateType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PlanLinkType">
@@ -74,7 +74,7 @@
 					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
 					<xs:element name="carrier" type="CarrierLinkType"/>
 					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
-					<xs:element name="rates" type="RatesType" minOccurs="0"/>
+					<xs:element name="rates" type="RatesType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
