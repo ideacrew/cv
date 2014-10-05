@@ -13,6 +13,7 @@
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="primary_applicant_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="consent_applicant_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="consent_renewal_year" type="xs:integer" minOccurs="0"/>
 			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="applicants">
 				<xs:annotation>
