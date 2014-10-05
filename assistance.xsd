@@ -51,6 +51,7 @@
 																			<xs:element name="income_type" minOccurs="0"/>
 																			<xs:element name="start_date" minOccurs="0"/>
 																			<xs:element name="end_date" minOccurs="0"/>
+																			<xs:element name="source_case_id" type="xs:string" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
@@ -66,6 +67,7 @@
 																			<xs:element name="type" minOccurs="0"/>
 																			<xs:element name="start_date" minOccurs="0"/>
 																			<xs:element name="end_date" minOccurs="0"/>
+																			<xs:element name="source_case_id" type="xs:string" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
@@ -83,6 +85,7 @@
 																			<xs:element name="frequency" minOccurs="0"/>
 																			<xs:element name="start_date" minOccurs="0"/>
 																			<xs:element name="end_date" minOccurs="0"/>
+																			<xs:element name="source_case_id" type="xs:string" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
