@@ -34,6 +34,7 @@
 													<xs:element name="aptc_amount" minOccurs="0"/>
 													<xs:element name="csr" minOccurs="0"/>
 													<xs:element name="is_resident" type="EmptyBooleanType" minOccurs="0"/>
+													<xs:element name="is_applicant"/>
 													<xs:element name="citizen_status"/>
 													<xs:element name="tax_filing_status"/>
 													<xs:element name="tax_filing_together"/>
