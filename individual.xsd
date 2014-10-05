@@ -426,7 +426,11 @@
 			<xs:element name="person" type="PersonType"/>
 			<xs:element name="relationships" type="IndividualRelationshipsType"/>
 			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
-			<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
+			<xs:element name="other_coverage" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Individual qualifies for alternative benefits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="is_applicant" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
