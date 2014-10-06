@@ -375,6 +375,7 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element name="status_code"/>
 			<xs:element name="submitted_date" type="SimpleDateType"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>

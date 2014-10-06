@@ -11,6 +11,7 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="integrated_case_reference"/>
+							<xs:element name="application_submission_date"/>
 							<xs:element name="applicants">
 								<xs:complexType>
 									<xs:sequence>
@@ -51,7 +52,6 @@
 																			<xs:element name="income_type" minOccurs="0"/>
 																			<xs:element name="start_date" minOccurs="0"/>
 																			<xs:element name="end_date" minOccurs="0"/>
-																			<xs:element name="source_case_id" type="xs:string" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
@@ -67,7 +67,6 @@
 																			<xs:element name="type" minOccurs="0"/>
 																			<xs:element name="start_date" minOccurs="0"/>
 																			<xs:element name="end_date" minOccurs="0"/>
-																			<xs:element name="source_case_id" type="xs:string" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
@@ -85,7 +84,6 @@
 																			<xs:element name="frequency" minOccurs="0"/>
 																			<xs:element name="start_date" minOccurs="0"/>
 																			<xs:element name="end_date" minOccurs="0"/>
-																			<xs:element name="source_case_id" type="xs:string" minOccurs="0"/>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
@@ -97,7 +95,7 @@
 															<xs:sequence>
 																<xs:element name="address_line_1" minOccurs="0"/>
 																<xs:element name="address_line_2" minOccurs="0"/>
-																<xs:element name="suite" type="xs:string" minOccurs="0"/>
+																<xs:element name="address_line_3" minOccurs="0"/>
 																<xs:element name="city" minOccurs="0"/>
 																<xs:element name="county" minOccurs="0"/>
 																<xs:element name="state" minOccurs="0"/>
@@ -166,6 +164,7 @@
 																			<xs:element name="consent_applicant_participant_id" minOccurs="0"/>
 																			<xs:element name="is_without_assistance"/>
 																			<xs:element name="years_to_renew_coverage"/>
+																			<xs:element name="coverage_renewal_year"/>
 																			<xs:element name="financial_assistance"/>
 																			<xs:element name="ia_eligible"/>
 																			<xs:element name="medicaid_chip_eligible"/>
@@ -181,6 +180,8 @@
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
+													<xs:element name="pdc_status_code"/>
+													<xs:element name="pdc_registration_date"/>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
