@@ -376,7 +376,7 @@
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
 			<xs:element name="status_code"/>
-			<xs:element name="submitted_date" type="SimpleDateType"/>
+			<xs:element name="eligibility_date" type="SimpleDateType"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>This household is operative on the HBX</xs:documentation>
@@ -1399,6 +1399,13 @@
 			<xs:element name="is_without_assistance" type="xs:boolean"/>
 			<xs:element name="is_ia_eligible" type="xs:boolean"/>
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean"/>
+			<xs:element name="total_incomes" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="total_income" type="TotalIndividualIncomeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="incomes" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
