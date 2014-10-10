@@ -698,4 +698,64 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  
+	<xs:complexType name="IndividualRelationshipType">
+		<xs:annotation>
+			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="PersonRelationshipType">
+				<xs:sequence>
+					<xs:element name="subject_individual" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>This individual's HBX ID </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
+					<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
+					<xs:element name="object_individual" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>The target individual's HBX ID</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PeopleRelationshipNameType">
+		<xs:annotation>
+			<xs:documentation>Interpersonal relationship names between connected individuals</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#self"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#father_or_mother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#grandfather_or_grandmother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#grandson_or_granddaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#uncle_or_aunt"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#nephew_or_niece"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#cousin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#adopted_child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#foster_child"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#son-in-law_or_daughter-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#brother-in-law_or_sister-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#mother-in-law_or_father-in-law"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#brother_or_sister"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#ward"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#stepparent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#stepson_or_stepdaughter"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#sponsored_dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#dependent_of_a_minor_dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#ex-spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#court_appointed_guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#collateral dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#life_partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#annuitant"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#trustee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#other_relationship"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#other_relative"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
