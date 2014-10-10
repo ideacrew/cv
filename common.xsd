@@ -664,4 +664,38 @@
 	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
 	<xs:complexType name="ServiceErrorType"/>
+  
+  <xs:complexType name="BrokerAttributesType">
+    <xs:sequence>
+      <xs:element name="npn_id" type="NpnIdType"/>
+      <xs:element name="tpa" type="TpaType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+    <xs:simpleType name="NpnIdType">
+    <xs:annotation>
+      <xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="TpaType">
+    <xs:annotation>
+      <xs:documentation>Third Party Administrator</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="tpa_name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>TPA or GA name in free-form text</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tpa_fein" type="FederalTaxIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>TPA or GA federal tax ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

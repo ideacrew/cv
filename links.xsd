@@ -112,15 +112,43 @@
   </xs:complexType>
   
   <xs:complexType name="IndividualLinkType">
-    <xs:complexContent>
-      <xs:restriction base="IndividualType">
-        <xs:sequence>
-          <xs:group ref="HbxIdentifierGroup"/>
-          <xs:element name="person" type="PersonType"/>
-          <xs:element name="relationships" type="IndividualRelationshipsType"/>
-          <xs:group ref="ResourceTimestampGroup"/>
-        </xs:sequence>
-      </xs:restriction>
-    </xs:complexContent>
+    <xs:sequence>
+      <xs:group ref="HbxIdentifierGroup"/>
+      <xs:element name="person" type="PersonType"/>
+      <xs:element name="relationships" type="IndividualRelationshipsType"/>
+      <xs:group ref="ResourceTimestampGroup"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="BrokerLinkType">
+    <xs:annotation>
+      <xs:documentation>Reference to a Broker instance</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="HbxIdentifierGroup"/>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Organization formal name in free-form text</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dba" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Doing Business As in free-form text</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="display_name" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Organization name as presesnted in UI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="website" type="xs:anyURI" minOccurs="0"/>
+      <xs:element name="extended_attributes" type="BrokerAttributesType" minOccurs="0"/>
+      <xs:element name="active_flag" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>
