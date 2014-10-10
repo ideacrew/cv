@@ -230,15 +230,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="BenefitCoverageNameType">
-		<xs:annotation>
-			<xs:documentation>Kind of medical insurance provided under plan</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#dental"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="PlanMetalLevelNameType">
 		<xs:annotation>
 			<xs:documentation>ACA plan category designation</xs:documentation>
