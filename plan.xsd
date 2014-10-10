@@ -2,6 +2,7 @@
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
+  <xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:element name="plan">
 		<xs:annotation>
@@ -53,40 +54,6 @@
 			</xs:element>
 			<xs:element name="deductables" type="DeductableType" minOccurs="0"/>
 			<xs:element name="metadata" type="xs:string" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="RatesType">
-		<xs:sequence>
-			<xs:element name="rate" type="RateType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PlanLinkType">
-		<xs:complexContent>
-			<xs:restriction base="PlanType">
-				<xs:sequence>
-					<xs:group ref="HbxIdentifierGroup"/>
-					<xs:element name="qhp_id" type="HiosPlanIdType">
-						<xs:annotation>
-							<xs:documentation>HIOS Plan Identifier</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="name" type="xs:string"/>
-					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
-					<xs:element name="carrier" type="CarrierLinkType"/>
-					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
-					<xs:element name="rates" type="RatesType"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="RateType">
-		<xs:sequence>
-			<xs:element name="age"/>
-			<xs:element name="effective_date" type="SimpleDateType"/>
-			<xs:element name="expire_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="rate" type="CurrencyType"/>
-			<xs:element name="rating_area" minOccurs="0"/>
-			<xs:element name="tobacco_use" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CostStructureType">

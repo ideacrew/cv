@@ -92,33 +92,6 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="CarrierLinkType">
-    <xs:annotation>
-      <xs:documentation>Reference to a Carrier instance</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:restriction base="CarrierType">
-        <xs:sequence>
-          <xs:group ref="HbxIdentifierGroup"/>
-          <xs:element name="name" type="xs:string">
-            <xs:annotation>
-              <xs:documentation>Organization formal name in free-form text</xs:documentation>
-            </xs:annotation>
-          </xs:element>
-          <xs:element name="display_name" type="xs:string" minOccurs="0">
-            <xs:annotation>
-              <xs:documentation>Organization name as presesnted in UI</xs:documentation>
-            </xs:annotation>
-          </xs:element>
-          <xs:element name="active_flag" type="xs:boolean">
-            <xs:annotation>
-              <xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
-            </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:restriction>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:complexType name="BrokerType">
     <xs:annotation>
       <xs:documentation>An insurance specialist who provides advice and sells insurance to businesses and consumers</xs:documentation>

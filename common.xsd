@@ -758,4 +758,19 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#other_relative"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="RatesType">
+		<xs:sequence>
+			<xs:element name="rate" type="RateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RateType">
+		<xs:sequence>
+			<xs:element name="age"/>
+			<xs:element name="effective_date" type="SimpleDateType"/>
+			<xs:element name="expire_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="rate" type="CurrencyType"/>
+			<xs:element name="rating_area" minOccurs="0"/>
+			<xs:element name="tobacco_use" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
