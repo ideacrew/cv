@@ -329,7 +329,6 @@
 					<xs:element name="person" type="PersonType"/>
 					<xs:element name="relationships" type="IndividualRelationshipsType"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType"/>
-					<xs:element name="other_coverage" type="MinimumEssentialCoverageType" minOccurs="0"/>
 					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
