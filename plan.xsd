@@ -252,10 +252,4 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="HiosPlanIdType">
-		<xs:annotation>
-			<xs:documentation>Health Insurance Oversight System (HIOS) plan identifier</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
 </xs:schema>

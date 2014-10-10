@@ -153,8 +153,6 @@
   </xs:complexType>
   
 <xs:complexType name="PlanLinkType">
-		<xs:complexContent>
-			<xs:restriction base="PlanType">
 				<xs:sequence>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="qhp_id" type="HiosPlanIdType">
@@ -168,8 +166,6 @@
 					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
 					<xs:element name="rates" type="RatesType"/>
 				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
 	</xs:complexType>
   
 <xs:complexType name="CarrierLinkType">

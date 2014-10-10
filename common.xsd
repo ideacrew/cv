@@ -773,4 +773,11 @@
 			<xs:element name="tobacco_use" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+  
+	<xs:simpleType name="HiosPlanIdType">
+		<xs:annotation>
+			<xs:documentation>Health Insurance Oversight System (HIOS) plan identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 </xs:schema>
