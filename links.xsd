@@ -105,7 +105,7 @@
   <xs:complexType name="EnrolleeLinkType">
     <xs:sequence>
       <xs:element name="individual" type="IndividualLinkType"/>
-      <xs:element ref="employment_status"/>
+      <xs:element name="employment_status" type="EmploymentStatusNameType"/>
       <xs:element name="physically_disabled_flag" type="xs:boolean" default="false"/>
       <xs:element name="benefit" type="EnrolleeBenefitType"/>
     </xs:sequence>
