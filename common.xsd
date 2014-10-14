@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
 	<xs:complexType name="PersonType">
 		<xs:annotation>
 			<xs:documentation>Name and contact information for an individual</xs:documentation>
@@ -44,12 +44,13 @@
 			<xs:documentation>Base type for components of an individual's name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
-			<xs:element name="name_first" type="xs:string"/>
-			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
-			<xs:element name="name_last" type="xs:string"/>
-			<xs:element name="name_suffix" type="xs:string" minOccurs="0"/>
-			<xs:element name="name_full" type="xs:string" minOccurs="0"/>
+			<xs:element name="prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="given_name" type="xs:string"/>
+			<xs:element name="middle_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="surname" type="xs:string"/>
+			<xs:element name="suffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="full_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="alternate_name" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AddressType">
@@ -57,7 +58,7 @@
 			<xs:documentation>Physical street or mailing address</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="address_type">
+			<xs:element name="type">
 				<xs:simpleType>
 					<xs:restriction base="xs:anyURI">
 						<xs:enumeration value="urn:openhbx:terms:v1:address_type#billing"/>
@@ -66,13 +67,24 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="address_1" type="xs:string"/>
-			<xs:element name="address_2" type="xs:string" minOccurs="0"/>
+			<xs:element name="address_line_1" type="xs:string"/>
+			<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
+			<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
 			<xs:element name="city" type="xs:string"/>
-			<xs:element name="state" type="xs:string"/>
-			<xs:element name="postal_code" type="xs:string"/>
+			<xs:element name="state_name" type="UsStateNameType"/>
+			<xs:element name="state_code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="zip_code" type="xs:integer"/>
+			<xs:element name="zip_code_extension" type="xs:integer" minOccurs="0"/>
+			<xs:element name="country_name" type="xs:string" minOccurs="0"/>
 			<xs:element name="country_code" type="xs:string" minOccurs="0"/>
-			<xs:element name="coordinates" type="PositionPointType" minOccurs="0"/>
+			<xs:element name="address_full_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="location" type="LocationNameType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PhoneType">
@@ -80,7 +92,7 @@
 			<xs:documentation>Telephone communication number and kind</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="phone_type">
+			<xs:element name="type">
 				<xs:simpleType>
 					<xs:restriction base="xs:anyURI">
 						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#home"/>
@@ -88,16 +100,16 @@
 						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#mobile"/>
 						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#pager"/>
 						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#main"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#extension"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#fax"/>
 						<xs:enumeration value="urn:openhbx:terms:v1:phone_type#other"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="phone_number" type="TelephoneNumberType"/>
 			<xs:element name="extension" type="xs:string" minOccurs="0"/>
-			<xs:element name="preferred" type="xs:boolean" minOccurs="0">
+			<xs:element name="is_preferred" type="xs:boolean" default="false">
 				<xs:annotation>
-					<xs:documentation>Flag indicating preferred contact number</xs:documentation>
+					<xs:documentation>Flag indicating contact number of choice</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -107,7 +119,7 @@
 			<xs:documentation>Email communication address and kind</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="email_type">
+			<xs:element name="type">
 				<xs:simpleType>
 					<xs:restriction base="xs:anyURI">
 						<xs:enumeration value="urn:openhbx:terms:v1:email_type#home"/>
@@ -124,6 +136,23 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="contact" type="PersonType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationNameType">
+		<xs:sequence>
+			<xs:element name="rating_area" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Adminstrative area for determining individual or family premium amounts</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="coordinates" type="PositionPointType" minOccurs="0"/>
+			<xs:element name="census_tract" type="xs:string" minOccurs="0"/>
+			<xs:element name="county" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PositionPointType">
@@ -165,16 +194,6 @@
 				<xs:annotation>
 					<xs:documentation>Exchange's Federal tax ID</xs:documentation>
 				</xs:annotation>
-			</xs:element>
-			<xs:element name="rating_area" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Adminstrative area for determining individual or family premium amounts</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:length value="7"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
@@ -638,6 +657,7 @@
 						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#pending"/>
 						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#approved"/>
 						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#denied"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#appealed"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -664,41 +684,37 @@
 	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
 	<xs:complexType name="ServiceErrorType"/>
-  
-  <xs:complexType name="BrokerAttributesType">
-    <xs:sequence>
-      <xs:element name="npn_id" type="NpnIdType"/>
-      <xs:element name="tpa" type="TpaType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  
-    <xs:simpleType name="NpnIdType">
-    <xs:annotation>
-      <xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="10"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
-  <xs:complexType name="TpaType">
-    <xs:annotation>
-      <xs:documentation>Third Party Administrator</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="tpa_name" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>TPA or GA name in free-form text</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="tpa_fein" type="FederalTaxIdType" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>TPA or GA federal tax ID</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  
+	<xs:complexType name="BrokerAttributesType">
+		<xs:sequence>
+			<xs:element name="npn_id" type="NpnIdType"/>
+			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NpnIdType">
+		<xs:annotation>
+			<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TpaType">
+		<xs:annotation>
+			<xs:documentation>Third Party Administrator</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpa_name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TPA or GA name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tpa_fein" type="FederalTaxIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TPA or GA federal tax ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="IndividualRelationshipType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
@@ -773,14 +789,12 @@
 			<xs:element name="tobacco_use" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-  
 	<xs:simpleType name="HiosPlanIdType">
 		<xs:annotation>
 			<xs:documentation>Health Insurance Oversight System (HIOS) plan identifier</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-  
 	<xs:simpleType name="BenefitCoverageNameType">
 		<xs:annotation>
 			<xs:documentation>Kind of medical insurance provided under plan</xs:documentation>
@@ -788,6 +802,933 @@
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#dental"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LanguageNameType">
+		<xs:annotation>
+			<xs:documentation>Language classification per ISO 639-1 standard</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/aa">
+				<xs:annotation>
+					<xs:documentation>Afar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ab">
+				<xs:annotation>
+					<xs:documentation>Abkhazian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ae">
+				<xs:annotation>
+					<xs:documentation>Avestan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/af">
+				<xs:annotation>
+					<xs:documentation>Afrikaans</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ak">
+				<xs:annotation>
+					<xs:documentation>Akan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/am">
+				<xs:annotation>
+					<xs:documentation>Amharic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/an">
+				<xs:annotation>
+					<xs:documentation>Aragonese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ar">
+				<xs:annotation>
+					<xs:documentation>Arabic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/as">
+				<xs:annotation>
+					<xs:documentation>Assamese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/av">
+				<xs:annotation>
+					<xs:documentation>Avaric</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ay">
+				<xs:annotation>
+					<xs:documentation>Aymara</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/az">
+				<xs:annotation>
+					<xs:documentation>Azerbaijani</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ba">
+				<xs:annotation>
+					<xs:documentation>Bashkir</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/be">
+				<xs:annotation>
+					<xs:documentation>Belarusian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bg">
+				<xs:annotation>
+					<xs:documentation>Bulgarian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bh">
+				<xs:annotation>
+					<xs:documentation>Bihari languages</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bi">
+				<xs:annotation>
+					<xs:documentation>Bislama</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bm">
+				<xs:annotation>
+					<xs:documentation>Bambara</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bn">
+				<xs:annotation>
+					<xs:documentation>Bengali</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bo">
+				<xs:annotation>
+					<xs:documentation>Tibetan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/br">
+				<xs:annotation>
+					<xs:documentation>Breton</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/bs">
+				<xs:annotation>
+					<xs:documentation>Bosnian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ca">
+				<xs:annotation>
+					<xs:documentation>Catalan | Valencian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ce">
+				<xs:annotation>
+					<xs:documentation>Chechen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ch">
+				<xs:annotation>
+					<xs:documentation>Chamorro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/co">
+				<xs:annotation>
+					<xs:documentation>Corsican</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/cr">
+				<xs:annotation>
+					<xs:documentation>Cree</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/cs">
+				<xs:annotation>
+					<xs:documentation>Czech</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/cu">
+				<xs:annotation>
+					<xs:documentation>Church Slavic |  Old Slavonic |  Church Slavonic |  Old Bulgarian |  Old Church Slavonic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/cv">
+				<xs:annotation>
+					<xs:documentation>Chuvash</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/cy">
+				<xs:annotation>
+					<xs:documentation>Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/da">
+				<xs:annotation>
+					<xs:documentation>Danish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/de">
+				<xs:annotation>
+					<xs:documentation>German</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/dv">
+				<xs:annotation>
+					<xs:documentation>Divehi | Dhivehi | Maldivian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/dz">
+				<xs:annotation>
+					<xs:documentation>Dzongkha</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ee">
+				<xs:annotation>
+					<xs:documentation>Ewe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/el">
+				<xs:annotation>
+					<xs:documentation>Greek, Modern (1453-)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/en">
+				<xs:annotation>
+					<xs:documentation>English</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/eo">
+				<xs:annotation>
+					<xs:documentation>Esperanto</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/es">
+				<xs:annotation>
+					<xs:documentation>Spanish | Castilian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/et">
+				<xs:annotation>
+					<xs:documentation>Estonian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/eu">
+				<xs:annotation>
+					<xs:documentation>Basque</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/fa">
+				<xs:annotation>
+					<xs:documentation>Persian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ff">
+				<xs:annotation>
+					<xs:documentation>Fulah</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/fi">
+				<xs:annotation>
+					<xs:documentation>Finnish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/fj">
+				<xs:annotation>
+					<xs:documentation>Fijian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/fo">
+				<xs:annotation>
+					<xs:documentation>Faroese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/fr">
+				<xs:annotation>
+					<xs:documentation>French</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/fy">
+				<xs:annotation>
+					<xs:documentation>Western Frisian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ga">
+				<xs:annotation>
+					<xs:documentation>Irish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/gd">
+				<xs:annotation>
+					<xs:documentation>Gaelic | Scottish Gaelic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/gl">
+				<xs:annotation>
+					<xs:documentation>Galician</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/gn">
+				<xs:annotation>
+					<xs:documentation>Guarani</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/gu">
+				<xs:annotation>
+					<xs:documentation>Gujarati</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/gv">
+				<xs:annotation>
+					<xs:documentation>Manx</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ha">
+				<xs:annotation>
+					<xs:documentation>Hausa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/he">
+				<xs:annotation>
+					<xs:documentation>Hebrew</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/hi">
+				<xs:annotation>
+					<xs:documentation>Hindi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ho">
+				<xs:annotation>
+					<xs:documentation>Hiri Motu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/hr">
+				<xs:annotation>
+					<xs:documentation>Croatian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ht">
+				<xs:annotation>
+					<xs:documentation>Haitian | Haitian Creole</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/hu">
+				<xs:annotation>
+					<xs:documentation>Hungarian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/hy">
+				<xs:annotation>
+					<xs:documentation>Armenian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/hz">
+				<xs:annotation>
+					<xs:documentation>Herero</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ia">
+				<xs:annotation>
+					<xs:documentation>Interlingua (International Auxiliary Language Association)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/id">
+				<xs:annotation>
+					<xs:documentation>Indonesian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ie">
+				<xs:annotation>
+					<xs:documentation>Interlingue | Occidental</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ig">
+				<xs:annotation>
+					<xs:documentation>Igbo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ii">
+				<xs:annotation>
+					<xs:documentation>Sichuan Yi | Nuosu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ik">
+				<xs:annotation>
+					<xs:documentation>Inupiaq</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/io">
+				<xs:annotation>
+					<xs:documentation>Ido</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/is">
+				<xs:annotation>
+					<xs:documentation>Icelandic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/it">
+				<xs:annotation>
+					<xs:documentation>Italian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/iu">
+				<xs:annotation>
+					<xs:documentation>Inuktitut</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ja">
+				<xs:annotation>
+					<xs:documentation>Japanese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/jv">
+				<xs:annotation>
+					<xs:documentation>Javanese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ka">
+				<xs:annotation>
+					<xs:documentation>Georgian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kg">
+				<xs:annotation>
+					<xs:documentation>Kongo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ki">
+				<xs:annotation>
+					<xs:documentation>Kikuyu |  Gikuyu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kj">
+				<xs:annotation>
+					<xs:documentation>Kuanyama |  Kwanyama</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kk">
+				<xs:annotation>
+					<xs:documentation>Kazakh</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kl">
+				<xs:annotation>
+					<xs:documentation>Kalaallisut |  Greenlandic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/km">
+				<xs:annotation>
+					<xs:documentation>Central Khmer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kn">
+				<xs:annotation>
+					<xs:documentation>Kannada</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ko">
+				<xs:annotation>
+					<xs:documentation>Korean</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kr">
+				<xs:annotation>
+					<xs:documentation>Kanuri</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ks">
+				<xs:annotation>
+					<xs:documentation>Kashmiri</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ku">
+				<xs:annotation>
+					<xs:documentation>Kurdish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kv">
+				<xs:annotation>
+					<xs:documentation>Komi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/kw">
+				<xs:annotation>
+					<xs:documentation>Cornish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ky">
+				<xs:annotation>
+					<xs:documentation>Kirghiz |  Kyrgyz</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/la">
+				<xs:annotation>
+					<xs:documentation>Latin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/lb">
+				<xs:annotation>
+					<xs:documentation>Luxembourgish |  Letzeburgesch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/lg">
+				<xs:annotation>
+					<xs:documentation>Ganda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/li">
+				<xs:annotation>
+					<xs:documentation>Limburgan |  Limburger |  Limburgish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ln">
+				<xs:annotation>
+					<xs:documentation>Lingala</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/lo">
+				<xs:annotation>
+					<xs:documentation>Lao</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/lt">
+				<xs:annotation>
+					<xs:documentation>Lithuanian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/lu">
+				<xs:annotation>
+					<xs:documentation>Luba-Katanga</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/lv">
+				<xs:annotation>
+					<xs:documentation>Latvian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mg">
+				<xs:annotation>
+					<xs:documentation>Malagasy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mh">
+				<xs:annotation>
+					<xs:documentation>Marshallese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mi">
+				<xs:annotation>
+					<xs:documentation>Maori</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mk">
+				<xs:annotation>
+					<xs:documentation>Macedonian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ml">
+				<xs:annotation>
+					<xs:documentation>Malayalam</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mn">
+				<xs:annotation>
+					<xs:documentation>Mongolian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mr">
+				<xs:annotation>
+					<xs:documentation>Marathi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ms">
+				<xs:annotation>
+					<xs:documentation>Malay</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/mt">
+				<xs:annotation>
+					<xs:documentation>Maltese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/my">
+				<xs:annotation>
+					<xs:documentation>Burmese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/na">
+				<xs:annotation>
+					<xs:documentation>Nauru</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/nb">
+				<xs:annotation>
+					<xs:documentation>Bokmål, Norwegian |  Norwegian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/nd">
+				<xs:annotation>
+					<xs:documentation>Ndebele, North |  North Ndebele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ne">
+				<xs:annotation>
+					<xs:documentation>Nepali</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ng">
+				<xs:annotation>
+					<xs:documentation>Ndonga</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/nl">
+				<xs:annotation>
+					<xs:documentation>Dutch |  Flemish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/nn">
+				<xs:annotation>
+					<xs:documentation>Norwegian Nynorsk |  Nynorsk, Norwegian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/no">
+				<xs:annotation>
+					<xs:documentation>Norwegian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/nr">
+				<xs:annotation>
+					<xs:documentation>Ndebele, South |  South Ndebele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/nv">
+				<xs:annotation>
+					<xs:documentation>Navajo |  Navaho</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ny">
+				<xs:annotation>
+					<xs:documentation>Chichewa | Chewa | Nyanja</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/oc">
+				<xs:annotation>
+					<xs:documentation>Occitan (post 1500)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/oj">
+				<xs:annotation>
+					<xs:documentation>Ojibwa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/om">
+				<xs:annotation>
+					<xs:documentation>Oromo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/or">
+				<xs:annotation>
+					<xs:documentation>Oriya</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/os">
+				<xs:annotation>
+					<xs:documentation>Ossetian |  Ossetic</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/pa">
+				<xs:annotation>
+					<xs:documentation>Panjabi |  Punjabi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/pi">
+				<xs:annotation>
+					<xs:documentation>Pali</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/pl">
+				<xs:annotation>
+					<xs:documentation>Polish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ps">
+				<xs:annotation>
+					<xs:documentation>Pushto |  Pashto</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/pt">
+				<xs:annotation>
+					<xs:documentation>Portuguese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/qu">
+				<xs:annotation>
+					<xs:documentation>Quechua</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/rm">
+				<xs:annotation>
+					<xs:documentation>Romansh</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/rn">
+				<xs:annotation>
+					<xs:documentation>Rundi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ro">
+				<xs:annotation>
+					<xs:documentation>Romanian |  Moldavian |  Moldovan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ru">
+				<xs:annotation>
+					<xs:documentation>Russian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/rw">
+				<xs:annotation>
+					<xs:documentation>Kinyarwanda	rwanda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sa">
+				<xs:annotation>
+					<xs:documentation>Sanskrit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sc">
+				<xs:annotation>
+					<xs:documentation>Sardinian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sd">
+				<xs:annotation>
+					<xs:documentation>Sindhi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/se">
+				<xs:annotation>
+					<xs:documentation>Northern Sami</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sg">
+				<xs:annotation>
+					<xs:documentation>Sango</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/si">
+				<xs:annotation>
+					<xs:documentation>Sinhala |  Sinhalese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sk">
+				<xs:annotation>
+					<xs:documentation>Slovak</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sl">
+				<xs:annotation>
+					<xs:documentation>Slovenian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sm">
+				<xs:annotation>
+					<xs:documentation>Samoan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sn">
+				<xs:annotation>
+					<xs:documentation>Shona</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/so">
+				<xs:annotation>
+					<xs:documentation>Somali</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sq">
+				<xs:annotation>
+					<xs:documentation>Albanian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sr">
+				<xs:annotation>
+					<xs:documentation>Serbian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ss">
+				<xs:annotation>
+					<xs:documentation>Swati</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/st">
+				<xs:annotation>
+					<xs:documentation>Sotho, Southern</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/su">
+				<xs:annotation>
+					<xs:documentation>Sundanese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sv">
+				<xs:annotation>
+					<xs:documentation>Swedish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/sw">
+				<xs:annotation>
+					<xs:documentation>Swahili</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ta">
+				<xs:annotation>
+					<xs:documentation>Tamil</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/te">
+				<xs:annotation>
+					<xs:documentation>Telugu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tg">
+				<xs:annotation>
+					<xs:documentation>Tajik</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/th">
+				<xs:annotation>
+					<xs:documentation>Thai</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ti">
+				<xs:annotation>
+					<xs:documentation>Tigrinya</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tk">
+				<xs:annotation>
+					<xs:documentation>Turkmen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tl">
+				<xs:annotation>
+					<xs:documentation>Tagalog</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tn">
+				<xs:annotation>
+					<xs:documentation>Tswana</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/to">
+				<xs:annotation>
+					<xs:documentation>Tonga (Tonga Islands)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tr">
+				<xs:annotation>
+					<xs:documentation>Turkish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ts">
+				<xs:annotation>
+					<xs:documentation>Tsonga</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tt">
+				<xs:annotation>
+					<xs:documentation>Tatar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/tw">
+				<xs:annotation>
+					<xs:documentation>Twi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ty">
+				<xs:annotation>
+					<xs:documentation>Tahitian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ug">
+				<xs:annotation>
+					<xs:documentation>Uighur | Uyghur</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/uk">
+				<xs:annotation>
+					<xs:documentation>Ukrainian</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ur">
+				<xs:annotation>
+					<xs:documentation>Urdu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/uz">
+				<xs:annotation>
+					<xs:documentation>Uzbek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/ve">
+				<xs:annotation>
+					<xs:documentation>Venda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/vi">
+				<xs:annotation>
+					<xs:documentation>Vietnamese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/vo">
+				<xs:annotation>
+					<xs:documentation>Volapük</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/wa">
+				<xs:annotation>
+					<xs:documentation>Walloon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/wo">
+				<xs:annotation>
+					<xs:documentation>Wolof</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/xh">
+				<xs:annotation>
+					<xs:documentation>Xhosa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/yi">
+				<xs:annotation>
+					<xs:documentation>Yiddish</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/yo">
+				<xs:annotation>
+					<xs:documentation>Yoruba</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/za">
+				<xs:annotation>
+					<xs:documentation>Zhuang | Chuang</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/zh">
+				<xs:annotation>
+					<xs:documentation>Chinese</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="http://id.loc.gov/vocabulary/iso639-1/zu">
+				<xs:annotation>
+					<xs:documentation>Zulu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
