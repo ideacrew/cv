@@ -11,11 +11,22 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eligibility system integrated case identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="primary_applicant_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="consent_applicant_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="consent_renewal_year" type="xs:integer" minOccurs="0"/>
-			<xs:element name="coverage_renewal_year" type="xs:string" minOccurs="0"/>
-			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="renewal_consent_applicant_id" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Applicant who approved automatic renewal/eligibilty check</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renewal_consent_through_year" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Calendar year through which automatic renewal check is approved</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="applicants">
 				<xs:annotation>
 					<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
@@ -52,13 +63,7 @@
 					<xs:documentation>Indicates this Application Group is operative on the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="comments" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -323,65 +328,73 @@
 			<xs:documentation>Applicant sub-grouping for purpose of financial eligibility determination and enrollment</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="household_id" type="IdentifierType"/>
 			<xs:element name="irs_group_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="e_pdc_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="primary_applicant_id" type="xs:anyURI"/>
-			<xs:element name="type"/>
-			<xs:element name="size" type="xs:integer"/>
-			<xs:element name="head_of_household" type="IndividualLinkType"/>
-			<xs:element name="household_members" minOccurs="0">
+			<xs:element name="type" type="HouseholdNameType"/>
+			<xs:element name="size" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Household member count</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="members">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="household_member" maxOccurs="unbounded">
+						<xs:element name="member" maxOccurs="unbounded">
 							<xs:complexType>
-								<xs:complexContent>
-									<xs:extension base="IndividualLinkType">
-										<xs:sequence>
-											<xs:element name="qhp_participant_flag" type="xs:boolean">
-												<xs:annotation>
-													<xs:documentation>This person is enrolling for healtch care coverage </xs:documentation>
-												</xs:annotation>
-											</xs:element>
-										</xs:sequence>
-									</xs:extension>
-								</xs:complexContent>
+								<xs:sequence>
+									<xs:element name="is_head_of_household" type="xs:boolean"/>
+									<xs:element ref="individual_id">
+										<xs:annotation>
+											<xs:documentation>Application Group applicant reference</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="total_incomes" minOccurs="0">
+			<xs:element name="adjusted_incomes" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Sum of household member income amounts by calendar year</xs:documentation>
+					<xs:documentation>Sum of household member income, less deductions, by calendar year</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="total_income" type="TotalIndividualIncomeType" maxOccurs="unbounded"/>
+						<xs:element name="adjusted_income" type="CurrencyAmountPerAnnumType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="csr_percent" type="xs:float" minOccurs="0"/>
-			<xs:element name="maximum_aptc" type="CurrencyType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Total tax credit amount</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="comments" minOccurs="0">
+			<xs:element name="eligibility_determinations">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
+						<xs:element ref="eligibility_determination" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:group ref="ResourceTimestampGroup"/>
-			<xs:element name="status_code"/>
-			<xs:element name="eligibility_date" type="SimpleDateType"/>
+			<xs:element name="exemptions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="exemption" type="ExemptionType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="status_code" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eligibility system status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="comments" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>This household is operative on the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualType">
@@ -391,21 +404,26 @@
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="person" type="PersonType"/>
+			<xs:element name="demographics" type="IndividualIdentityType"/>
 			<xs:element name="relationships" type="IndividualRelationshipsType"/>
 			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
-			<xs:element name="is_applicant" type="xs:boolean" minOccurs="0">
+			<xs:element name="policies" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="health_information" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tobacco_user" type="TobaccoUseNameType" default="unknown" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="is_state_resident" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Person is resident of HBX state</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="citizen_status" type="ImmigrationStatusNameType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Individual's immigration status</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="is_incarcerated" type="xs:boolean" minOccurs="0"/>
@@ -416,14 +434,46 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="comments" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualIdentityType">
+		<xs:sequence>
+			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Social Security Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="gender" type="GenderNameType"/>
+			<xs:element name="date_of_birth" type="SimpleDateType"/>
+			<xs:element name="date_of_death" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="language_code" type="LanguageNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Preferred language</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="birth_place" type="xs:string" minOccurs="0"/>
+			<xs:element name="ethnicity" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="AI"/>
+						<xs:enumeration value="AS"/>
+						<xs:enumeration value="BL"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="is_married" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="citizenship_status" type="UsCitizenStatusNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Individual's immigration status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="is_state_resident" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Person is resident of HBX state</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualFinancialType">
@@ -806,44 +856,6 @@
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="e_person_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="e_concern_role_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="aceds_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="gender" type="GenderNameType"/>
-			<xs:element name="dob" type="SimpleDateType">
-				<xs:annotation>
-					<xs:documentation>Date of Birth</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Social Security Number</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="tobacco_user" type="TobaccoUseNameType" default="unknown" minOccurs="0"/>
-			<xs:element name="language" type="LanguageType" minOccurs="0"/>
-			<xs:element name="policies" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="exemptions" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="exemption" type="ExemptionType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="qhp_quotes" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="qhp_quote" type="PlanLinkType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployeeRoleType">
@@ -872,7 +884,7 @@
 			<xs:documentation>An Individual's HBX activity assocaited with Medicaid assistance</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="aceds_id" type="xs:anyURI"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -888,11 +900,12 @@
 	</xs:complexType>
 	<xs:complexType name="EligibilityDeterminationType">
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType">
+			<xs:element name="maximum_aptc" type="CurrencyType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>reference number for determination</xs:documentation>
+					<xs:documentation>Household's total tax credit amount based on eligibility determination</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="csr_percent" type="xs:float" minOccurs="0"/>
 			<xs:element name="authority_source_uri" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>URN reference to service or agency responsible for determination results</xs:documentation>
@@ -911,14 +924,14 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="kind" type="QualifyingLifeEventNameType">
+			<xs:element name="type" type="QualifyingLifeEventNameType">
 				<xs:annotation>
-					<xs:documentation>QLE type</xs:documentation>
+					<xs:documentation>Qualifying Life Event kind</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="event_date" type="SimpleDateType">
 				<xs:annotation>
-					<xs:documentation>Date event occured</xs:documentation>
+					<xs:documentation>Date QLE occured</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="submitted_date" type="xs:dateTime" minOccurs="0">
@@ -926,13 +939,13 @@
 					<xs:documentation>Date HBX was notified of event</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="sep_dates" type="DatePeriodType">
+			<xs:element name="special_enrollment_period" type="DatePeriodType">
 				<xs:annotation>
-					<xs:documentation>Date period that group is eligible to enroll or change enrollment</xs:documentation>
+					<xs:documentation>Special Enrollment Period (SEP) date range when group is eligible to enroll or change enrollment</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="approval" type="ApprovalType" minOccurs="0"/>
-			<xs:element name="notes" type="xs:string" minOccurs="0"/>
+			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -1022,15 +1035,6 @@
 			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="TotalIndividualIncomeType">
-		<xs:annotation>
-			<xs:documentation>Sum of income sources for an individual for a calendar year</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="calendar_year" type="CalendarYearType"/>
-			<xs:element name="total_income"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:simpleType name="ExemptionNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:exemption#hardship"/>
@@ -1038,50 +1042,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:exemption#incarceration"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:exemption#indian_tribe_member"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:exemption#religious_conscience"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="IndividualIncomeNameType">
-		<xs:annotation>
-			<xs:documentation>Kinds of earnings</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:income#alimony_and_maintenance"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#american_indian_and_alaskan_native"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#capital_gains"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#dividend"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#employer_funded_disability"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#estate_trust"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#farming_and_fishing"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#foreign"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#interest"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#lump_sum_amount"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#military"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#net_self_employment"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#other"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#pension_retirement_benefits"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#permanent_workers_compensation"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#prizes_and_awards"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#rental_and_royalty"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#scholorship_payments"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#social_security_benefit"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#supplemental_security_income"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#tax_exempt_interest"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#unemployment_insurance"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income#wages_and_salaries"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="IncomeFrequencyNameType">
-		<xs:annotation>
-			<xs:documentation>Time intervals between income payments</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#biweekly"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#daily"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#half_yearly"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#monthly"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#quarterly"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#weekly"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#yearly"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TobaccoUseNameType">
@@ -1094,7 +1054,7 @@
 			<xs:enumeration value="unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="ImmigrationStatusNameType">
+	<xs:simpleType name="UsCitizenStatusNameType">
 		<xs:annotation>
 			<xs:documentation>Enumerated list of citizenship/residency modes</xs:documentation>
 		</xs:annotation>
@@ -1323,16 +1283,10 @@
 			<xs:element name="is_without_assistance" type="xs:boolean"/>
 			<xs:element name="is_ia_eligible" type="xs:boolean"/>
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean"/>
-			<xs:element name="total_incomes" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="total_income" type="TotalIndividualIncomeType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="incomes" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="total_income" type="CurrencyAmountPerAnnumType" maxOccurs="unbounded"/>
 						<xs:element name="income" type="IndividualIncomeType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
@@ -1340,6 +1294,7 @@
 			<xs:element name="deductions" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="total_deductions" type="CurrencyAmountPerAnnumType" maxOccurs="unbounded"/>
 						<xs:element name="deduction" type="IndividualDeductionType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
@@ -1377,6 +1332,36 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#veterans_benefits"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="IndividualIncomeNameType">
+		<xs:annotation>
+			<xs:documentation>Kinds of earnings</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:income#alimony_and_maintenance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#american_indian_and_alaskan_native"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#capital_gains"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#dividend"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#employer_funded_disability"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#estate_trust"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#farming_and_fishing"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#foreign"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#interest"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#lump_sum_amount"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#military"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#net_self_employment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#other"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#pension_retirement_benefits"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#permanent_workers_compensation"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#prizes_and_awards"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#rental_and_royalty"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#scholorship_payments"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#social_security_benefit"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#supplemental_security_income"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#tax_exempt_interest"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#unemployment_insurance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#wages_and_salaries"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="IndividualDeductionNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#alimony_paid"/>
@@ -1392,4 +1377,26 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_deduction#reservists_performing_artists_and_fee_basis_government_official_expenses"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="IncomeFrequencyNameType">
+		<xs:annotation>
+			<xs:documentation>Time intervals between income payments</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#biweekly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#daily"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#half_yearly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#monthly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#quarterly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#weekly"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#yearly"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HouseholdNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:household#unassisted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household#insurance_assisted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household#medicaid"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="individual_id" type="xs:anyURI"/>
 </xs:schema>
