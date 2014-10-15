@@ -765,11 +765,6 @@
 			<xs:documentation>SHOP employee event instance </xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="extended_resource_instance_uri">
-		<xs:annotation>
-			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
-		</xs:annotation>
-	</xs:element>
 	<xs:element name="sic_code" type="xs:string">
 		<xs:annotation>
 			<xs:documentation>Employer's Standard Industrial Code (SIC)</xs:documentation>
