@@ -7,7 +7,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="name" type="NameType"/>
+			<xs:element name="person_name" type="PersonNameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
 			<xs:element name="addresses" minOccurs="0">
@@ -31,7 +31,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="active_flag" type="xs:boolean">
+			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
 				</xs:annotation>
@@ -39,18 +39,18 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:complexType name="PersonNameType">
 		<xs:annotation>
 			<xs:documentation>Base type for components of an individual's name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="prefix" type="xs:string" minOccurs="0"/>
-			<xs:element name="given_name" type="xs:string"/>
-			<xs:element name="middle_name" type="xs:string" minOccurs="0"/>
-			<xs:element name="surname" type="xs:string"/>
-			<xs:element name="suffix" type="xs:string" minOccurs="0"/>
-			<xs:element name="full_name" type="xs:string" minOccurs="0"/>
-			<xs:element name="alternate_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_surname" type="xs:string"/>
+			<xs:element name="person_given_name" type="xs:string"/>
+			<xs:element name="person_middle_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_full_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_name_prefix_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_name_suffix_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_alternate_name" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AddressType">
@@ -70,19 +70,19 @@
 			<xs:element name="address_line_1" type="xs:string"/>
 			<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
 			<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
-			<xs:element name="city" type="xs:string"/>
-			<xs:element name="state_name" type="UsStateNameType"/>
-			<xs:element name="state_code" minOccurs="0">
+			<xs:element name="location_city_name" type="xs:string"/>
+			<xs:element name="location_state" type="UsStateNameType"/>
+			<xs:element name="location_state_code" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:length value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="zip_code" type="xs:integer"/>
-			<xs:element name="zip_code_extension" type="xs:integer" minOccurs="0"/>
-			<xs:element name="country_name" type="xs:string" minOccurs="0"/>
-			<xs:element name="country_code" type="xs:string" minOccurs="0"/>
+			<xs:element name="location_postal_code" type="xs:integer"/>
+			<xs:element name="location_postal_extension_code" type="xs:integer" minOccurs="0"/>
+			<xs:element name="location_country_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="location_country_code" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="address_full_text" type="xs:string" minOccurs="0"/>
 			<xs:element name="location" type="LocationNameType" minOccurs="0"/>
 		</xs:sequence>
@@ -177,22 +177,17 @@
 	</xs:complexType>
 	<xs:group name="HbxIdentifierGroup">
 		<xs:annotation>
-			<xs:documentation>Identifier for an individual Health Benefit Exchange</xs:documentation>
+			<xs:documentation>Resource identifier that is unique across all Exchanges</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="hbx_id" type="HbxCmsNameType">
+				<xs:annotation>
+					<xs:documentation>Identifier for Exchange where this record originated (CMS-assigned ID)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="id" type="xs:anyURI">
 				<xs:annotation>
 					<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="hbx_id" type="HbxCmsNameType">
-				<xs:annotation>
-					<xs:documentation>Source Exchange (CMS-assigned ID)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="hbx_fein" type="FederalTaxIdType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Exchange's Federal tax ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -433,13 +428,6 @@
 			<xs:element name="body" type="xs:anyType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="DatePeriodType">
-		<xs:sequence>
-			<xs:element name="begin_date" type="SimpleDateType"/>
-			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="number_of_days" type="xs:integer" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ServiceEndPointType">
 		<xs:annotation>
 			<xs:documentation>Attributes for registering and publishing a service on the system</xs:documentation>
@@ -459,6 +447,7 @@
 			<xs:group ref="ServiceEndpointGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="ServiceErrorType"/>
 	<xs:group name="ServiceEndpointGroup">
 		<xs:annotation>
 			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
@@ -476,11 +465,126 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
-	<xs:simpleType name="IdentifierType">
+	<xs:complexType name="ApprovalType">
 		<xs:annotation>
-			<xs:documentation>Base type for unique, dereferenceable instance identifiers </xs:documentation>
+			<xs:documentation>Base type to manage a resource's acceptance status</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:anyURI"/>
+		<xs:sequence>
+			<xs:element name="status">
+				<xs:simpleType>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#pending"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#approved"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#denied"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#appealed"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="determined_by" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Individual, Representative or agent who adjudicated approval</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="determination_date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="notes" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BrokerAttributesType">
+		<xs:sequence>
+			<xs:element name="npn_id" type="NpnIdType"/>
+			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CurrencyAmountPerAnnumType">
+		<xs:annotation>
+			<xs:documentation>Sum of currency amount for a calendar year</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="calendar_year" type="CalendarYearType"/>
+			<xs:element name="total_amount" type="CurrencyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommentType">
+		<xs:sequence>
+			<xs:element name="content" type="xs:string"/>
+			<xs:element name="author" type="xs:string"/>
+			<xs:element name="date" type="SimpleDateType"/>
+			<xs:element name="is_priority" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateRangeType">
+		<xs:sequence>
+			<xs:element name="begin_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="number_of_days" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RateType">
+		<xs:sequence>
+			<xs:element name="age"/>
+			<xs:element name="effective_date" type="SimpleDateType"/>
+			<xs:element name="expire_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="rate" type="CurrencyType"/>
+			<xs:element name="rating_area" minOccurs="0"/>
+			<xs:element name="tobacco_use" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TpaType">
+		<xs:annotation>
+			<xs:documentation>Third Party Administrator</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpa_name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TPA or GA name in free-form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tpa_fein" type="FederalTaxIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TPA or GA federal tax ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="approvals">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="approval" type="ApprovalType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="comments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="resource_instance_uri" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="extended_resource_instance_uri" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="rates">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="rate" type="RateType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="AcaMarketPlaceNameType">
+		<xs:annotation>
+			<xs:documentation>ACA marketplace categories where consumers may enroll in QHPs</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:aca_marketplace#individual"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:aca_marketplace#shop"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="CalendarYearType">
 		<xs:annotation>
@@ -491,6 +595,32 @@
 			<xs:maxInclusive value="2020"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="CurrencyType">
+		<xs:annotation>
+			<xs:documentation>Monetary value. Positive and negative values are valid</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FederalTaxIdType">
+		<xs:annotation>
+			<xs:documentation>IRS-assigned Identifier for an individual or organization. Matches: 01-1234567, 011234567, 123-45-6789</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{3}-[0-9]{2}-[0-9]{4})|([0-9]{9})|([0-9]{2}-[0-9]{7})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GenderNameType">
+		<xs:annotation>
+			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:dc0:terms:gender#male"/>
+			<xs:enumeration value="urn:dc0:terms:gender#female"/>
+			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="HbxCmsNameType">
 		<xs:annotation>
 			<xs:documentation>CMS-assigned Health Benefit Exchange identifier in URN form</xs:documentation>
@@ -499,12 +629,61 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:hbx_cms_name#dc0"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="TelephoneNumberType">
+	<xs:simpleType name="HbxResourceNameType">
 		<xs:annotation>
-			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
+			<xs:documentation>Resources in OpenHBX services model</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#application_group"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#individual"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#employer"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#policy"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#plan"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#carrier"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:resource#broker"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HiosPlanIdType">
+		<xs:annotation>
+			<xs:documentation>Health Insurance Oversight System (HIOS) identifier for QHP</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="IdentifierType">
+		<xs:annotation>
+			<xs:documentation>Base type for unique, dereferenceable instance identifiers </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	<xs:simpleType name="NpnIdType">
+		<xs:annotation>
+			<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{7,11}"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QhpBenefitCoverageNameType">
+		<xs:annotation>
+			<xs:documentation>Kind of medical insurance provided under QHP</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#dental"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health_and_dental"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QualfiedBenefitNameType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#unassisted_qhp"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#insurance_assisted_qhp"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#employer_sponsored"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#streamlined_medicaid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#emergency_medicaid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#hcr_chip"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="SimpleDateType">
@@ -515,12 +694,12 @@
 			<xs:pattern value="([1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="FederalTaxIdType">
+	<xs:simpleType name="TelephoneNumberType">
 		<xs:annotation>
-			<xs:documentation>IRS-assigned Identifier for an individual or organization. Matches: 01-1234567, 011234567, 123-45-6789</xs:documentation>
+			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="([0-9]{3}-[0-9]{2}-[0-9]{4})|([0-9]{9})|([0-9]{2}-[0-9]{7})"/>
+			<xs:pattern value="\d{7,11}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="UsStateNameType">
@@ -581,256 +760,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Wyoming"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="CurrencyType">
-		<xs:annotation>
-			<xs:documentation>Monetary value. Positive and negative values are valid</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:decimal">
-			<xs:fractionDigits value="2"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="LanguageType">
-		<xs:annotation>
-			<xs:documentation>Language expressed in ISO 639-1 standard, e.g. en = English, es = Spanish</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
-	<xs:simpleType name="GenderNameType">
-		<xs:annotation>
-			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:terms:gender#male"/>
-			<xs:enumeration value="urn:dc0:terms:gender#female"/>
-			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="HbxMarketNameType">
-		<xs:annotation>
-			<xs:documentation>URIs for Individual and SHOP markets</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#unassisted_qhp"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#insurance_assisted_qhp"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#shop"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#medicaid"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#chip"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="HbxResourceNameType">
-		<xs:annotation>
-			<xs:documentation>Resources in OpenHBX services model</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#application_groups"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#individuals"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#employers"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#policies"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#carriers"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#plans"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:resource#brokers"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:element name="resource_instance_uri" type="xs:anyURI">
-		<xs:annotation>
-			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="extended_resource_instance_uri" type="xs:anyURI">
-		<xs:annotation>
-			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="CommentType">
-		<xs:sequence>
-			<xs:element name="content" type="xs:string"/>
-			<xs:element name="author" type="xs:string"/>
-			<xs:element name="date" type="SimpleDateType"/>
-			<xs:element name="priority_flag" type="xs:boolean"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:element name="comments">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="approvals">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="approval" type="ApprovalType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:complexType name="ApprovalType">
-		<xs:annotation>
-			<xs:documentation>Base type to manage a resource's acceptance status</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="status">
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#pending"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#approved"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#denied"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#appealed"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="determined_by" type="xs:anyURI" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Individual, Representative or agent who adjudicated approval</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="determination_date" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="notes" type="xs:string" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PersonRelationshipType">
-		<xs:annotation>
-			<xs:documentation>Interpersonal relationship state between two individuals</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="subject_individual" type="xs:anyURI"/>
-			<xs:element name="relationship_uri" type="xs:anyURI"/>
-			<xs:element name="inverse_relationship_uri" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="object_individual" type="xs:anyURI"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
-	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
-	<xs:complexType name="ServiceErrorType"/>
-	<xs:complexType name="BrokerAttributesType">
-		<xs:sequence>
-			<xs:element name="npn_id" type="NpnIdType"/>
-			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:simpleType name="NpnIdType">
-		<xs:annotation>
-			<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="10"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="TpaType">
-		<xs:annotation>
-			<xs:documentation>Third Party Administrator</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="tpa_name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>TPA or GA name in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="tpa_fein" type="FederalTaxIdType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>TPA or GA federal tax ID</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="IndividualRelationshipType">
-		<xs:annotation>
-			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="PersonRelationshipType">
-				<xs:sequence>
-					<xs:element name="subject_individual" type="xs:anyURI">
-						<xs:annotation>
-							<xs:documentation>This individual's HBX ID </xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="relationship_uri" type="PeopleRelationshipNameType"/>
-					<xs:element name="inverse_relationship_uri" type="PeopleRelationshipNameType" minOccurs="0"/>
-					<xs:element name="object_individual" type="xs:anyURI">
-						<xs:annotation>
-							<xs:documentation>The target individual's HBX ID</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:simpleType name="PeopleRelationshipNameType">
-		<xs:annotation>
-			<xs:documentation>Interpersonal relationship names between connected individuals</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#self"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#spouse"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#child"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#father_or_mother"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#grandfather_or_grandmother"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#grandson_or_granddaughter"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#uncle_or_aunt"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#nephew_or_niece"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#cousin"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#adopted_child"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#foster_child"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#son-in-law_or_daughter-in-law"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#brother-in-law_or_sister-in-law"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#mother-in-law_or_father-in-law"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#brother_or_sister"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#ward"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#stepparent"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#stepson_or_stepdaughter"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#sponsored_dependent"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#dependent_of_a_minor_dependent"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#ex-spouse"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#guardian"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#court_appointed_guardian"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#collateral dependent"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#life_partner"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#annuitant"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#trustee"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#other_relationship"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#other_relative"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="RatesType">
-		<xs:sequence>
-			<xs:element name="rate" type="RateType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="RateType">
-		<xs:sequence>
-			<xs:element name="age"/>
-			<xs:element name="effective_date" type="SimpleDateType"/>
-			<xs:element name="expire_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="rate" type="CurrencyType"/>
-			<xs:element name="rating_area" minOccurs="0"/>
-			<xs:element name="tobacco_use" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:simpleType name="HiosPlanIdType">
-		<xs:annotation>
-			<xs:documentation>Health Insurance Oversight System (HIOS) plan identifier</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
-	<xs:simpleType name="BenefitCoverageNameType">
-		<xs:annotation>
-			<xs:documentation>Kind of medical insurance provided under plan</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#dental"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_coverage#health_and_dental"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="CurrencyAmountPerAnnumType">
-		<xs:annotation>
-			<xs:documentation>Sum of currency amount for a calendar year</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="calendar_year" type="CalendarYearType"/>
-			<xs:element name="total_amount" type="CurrencyType"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:simpleType name="LanguageNameType">
 		<xs:annotation>
 			<xs:documentation>Language classification per ISO 639-1 standard</xs:documentation>

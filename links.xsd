@@ -85,14 +85,14 @@
 	</xs:complexType>
 	<xs:complexType name="PolicyLinkType">
 		<xs:sequence>
-			<xs:element name="hbx_policy_id" type="xs:anyURI"/>
+			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="plan_name" type="xs:string"/>
 			<xs:element name="hbx_plan_id"/>
 			<xs:element name="hios_id" type="HiosPlanIdType"/>
-			<xs:element name="market" type="HbxMarketNameType"/>
+			<xs:element name="market" type="AcaMarketPlaceNameType"/>
 			<xs:element name="policy_state" type="PolicyStateNameType"/>
-			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
-			<xs:element name="coverage_period" type="DatePeriodType"/>
+			<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
+			<xs:element name="coverage_period" type="DateRangeType"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -100,7 +100,7 @@
 		<xs:sequence>
 			<xs:element name="individual" type="IndividualLinkType"/>
 			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
-			<xs:element name="physically_disabled_flag" type="xs:boolean" default="false"/>
+			<xs:element name="is_physically_disabled" type="xs:boolean" default="false"/>
 			<xs:element name="benefit" type="EnrolleeBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -108,7 +108,7 @@
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="person" type="PersonType"/>
-			<xs:element name="relationships" type="IndividualRelationshipsType"/>
+			<xs:element ref="person_relationships"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -135,7 +135,7 @@
 			</xs:element>
 			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="extended_attributes" type="BrokerAttributesType" minOccurs="0"/>
-			<xs:element name="active_flag" type="xs:boolean">
+			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
 				</xs:annotation>
@@ -151,11 +151,15 @@
 					<xs:documentation>HIOS Plan Identifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="name" type="xs:string"/>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Display name for plan in free form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="is_dental_only" type="xs:boolean"/>
 			<xs:element name="carrier" type="CarrierLinkType"/>
-			<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
-			<xs:element name="rates" type="RatesType"/>
+			<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
+			<xs:element ref="rates"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CarrierLinkType">
@@ -174,21 +178,9 @@
 					<xs:documentation>Organization name as presesnted in UI</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="active_flag" type="xs:boolean">
+			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="IndividualRelationshipsType">
-		<xs:annotation>
-			<xs:documentation>A set of interpersonal relationships between one or more individuals</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="relationship" type="IndividualRelationshipType" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Relationship sets always include at least one reference to 'Self'</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

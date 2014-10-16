@@ -69,8 +69,8 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="notes" type="xs:string" minOccurs="0"/>
-			<xs:element name="active_flag" type="xs:boolean">
+			<xs:element ref="comments" minOccurs="0"/>
+			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicates this Employer is operative on the HBX</xs:documentation>
 				</xs:annotation>
@@ -440,11 +440,11 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="name" type="xs:string"/>
-					<xs:element name="is_dental_only_flag" type="xs:boolean"/>
+					<xs:element name="is_dental_only" type="xs:boolean"/>
 					<xs:element name="carrier" type="CarrierLinkType"/>
-					<xs:element name="coverage_type" type="BenefitCoverageNameType"/>
+					<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
 					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
-					<xs:element name="market" type="HbxMarketNameType" minOccurs="0"/>
+					<xs:element name="market" type="AcaMarketPlaceNameType" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -455,8 +455,10 @@
 				<xs:sequence>
 					<xs:group ref="HbxIdentifierGroup"/>
 					<xs:element name="person" type="PersonType"/>
-					<xs:element name="relationships" type="IndividualRelationshipsType"/>
+					<xs:element name="person_demographics" type="PersonDemographicsType"/>
+					<xs:element ref="person_relationships"/>
 					<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
+					<xs:element ref="comments" minOccurs="0"/>
 					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
