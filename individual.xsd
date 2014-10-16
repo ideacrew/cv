@@ -1393,4 +1393,5 @@
 				<xs:element ref="individual" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
-	</xs:schema>
+	</xs:element>
+</xs:schema>
