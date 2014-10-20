@@ -24,13 +24,39 @@
 			</xs:element>
 			<xs:element ref="fein"/>
 			<xs:element ref="sic_code" minOccurs="0"/>
+			<xs:element name="plan_years" type="PlanYearType"/>
+			<xs:element name="contacts">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="contact" type="PersonType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="comments" minOccurs="0"/>
+			<xs:element name="is_active" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates this Employer is operative on the HBX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="plan_years">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="plan_year" type="PlanYearType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PlanYearType">
+		<xs:sequence>
+			<xs:element ref="plan_year_start"/>
+			<xs:element ref="plan_year_end" minOccurs="0"/>
 			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
 			<xs:element ref="fte_count"/>
 			<xs:element ref="pte_count"/>
 			<xs:element ref="open_enrollment_start"/>
 			<xs:element ref="open_enrollment_end"/>
-			<xs:element ref="plan_year_start"/>
-			<xs:element ref="plan_year_end" minOccurs="0"/>
 			<xs:element name="plans">
 				<xs:complexType>
 					<xs:sequence>
@@ -62,20 +88,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="contacts">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="contact" type="PersonType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element ref="comments" minOccurs="0"/>
-			<xs:element name="is_active" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates this Employer is operative on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerRequestType">
