@@ -13,7 +13,7 @@
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Eligibility system integrated case identifier</xs:documentation>
+					<xs:documentation>Eligibility system integrated case dereferenceable ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="primary_applicant_id" type="xs:anyURI" minOccurs="0"/>
@@ -332,7 +332,7 @@
 			<xs:element name="irs_group_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="e_pdc_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="primary_applicant_id" type="xs:anyURI"/>
-			<xs:element name="type" type="HouseholdNameType"/>
+			<xs:element name="type" type="QualfiedBenefitNameType"/>
 			<xs:element name="size" type="xs:integer">
 				<xs:annotation>
 					<xs:documentation>Household member count</xs:documentation>
@@ -388,12 +388,12 @@
 					<xs:documentation>Eligibility system status</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="comments" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>This household is operative on the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -403,14 +403,58 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="person" type="PersonType"/>
-			<xs:element name="person_demographics" type="PersonDemographicsType"/>
-			<xs:element ref="person_relationships"/>
-			<xs:element name="hbx_roles" type="IndividualFacetType" minOccurs="0"/>
-			<xs:element name="policies" minOccurs="0">
+			<xs:element name="is_authoritative" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates this record ID is source of reliable information for this resource</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="aliases" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Use when an individual has multiple system accounts or IDs</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
+						<xs:element name="alias" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>List of all known record IDs (including this one) for this resource</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:group ref="HbxIdentifierGroup"/>
+									<xs:element name="is_authoritative" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>Indicates this record ID is source of reliable information for this resource</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="person">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="PersonType">
+							<xs:sequence>
+								<xs:group ref="HbxIdentifierGroup"/>
+								<xs:element name="person_name" type="PersonNameType"/>
+								<xs:element name="addresses" type="AddressType" minOccurs="0"/>
+								<xs:element name="emails" type="EmailType" minOccurs="0"/>
+								<xs:element name="phones" type="PhoneType" minOccurs="0"/>
+								<xs:group ref="ResourceTimestampGroup"/>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="person_relationships"/>
+			<xs:element name="person_demographics" type="PersonDemographicsType"/>
+			<xs:element name="hbx_roles" type="IndividualHbxRoleType" minOccurs="0"/>
+			<xs:element name="responsible_party_roles" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="responsible_party_role" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -420,6 +464,11 @@
 						<xs:element name="tobacco_user" type="TobaccoUseNameType" default="unknown" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
+			</xs:element>
+			<xs:element name="application_group_id" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Application group resource dereferenceable ID to which this person belongs</xs:documentation>
+				</xs:annotation>
 			</xs:element>
 			<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
@@ -433,6 +482,11 @@
 						<xs:element name="assistance_eligibility" type="AssistanceEligibilityType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
+			</xs:element>
+			<xs:element name="is_active" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
+				</xs:annotation>
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
@@ -479,6 +533,7 @@
 					<xs:documentation>Person is resident of HBX state</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualFinancialType">
@@ -747,53 +802,46 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="IndividualFacetType">
+	<xs:complexType name="IndividualHbxRoleType">
 		<xs:annotation>
 			<xs:documentation>An individual's role(s) on the HBX</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authority_qhp_role_id" type="IdentifierType" minOccurs="0">
+			<xs:element name="hbx_role" type="QualfiedBenefitNameType"/>
+			<xs:element name="e_person_id" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>ID of the authority QHP Role (disambiguates multiple QHP roles)</xs:documentation>
+					<xs:documentation>Eligibility system dereferenceable ID </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="qhp_roles" minOccurs="0">
+			<xs:element name="e_concern_role_id" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eligibility system rollup dereferenceable ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="aceds_id" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Medicaid system dereferenceable ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="e_pdc_id" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="employer_sponsored_roles" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="qhp_role" maxOccurs="unbounded"/>
+						<xs:element ref="employer_sponsored_role" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="responsible_party_roles" minOccurs="0">
+			<xs:element name="policies" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="responsible_party_role" maxOccurs="unbounded"/>
+						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="medicaid_roles" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element ref="medicaid_role" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="employee_roles" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element ref="employee_role" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="IndividualIndexType">
-		<xs:annotation>
-			<xs:documentation>Subset of Individual attributes for summary</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="person" type="PersonType"/>
-			<xs:element name="roles" type="IndividualFacetType"/>
+			<xs:element name="is_active" type="xs:boolean"/>
+			<xs:element ref="comments" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualUpdateType">
@@ -853,16 +901,6 @@
 	</xs:simpleType>
 	<xs:element name="person_relationship_uri" type="PersonRelationshipNameType" substitutionGroup="relationship_uri"/>
 	<xs:element name="person_inverse_relationship_uri" type="PersonRelationshipNameType" substitutionGroup="inverse_relationship_uri"/>
-	<xs:complexType name="QhpRoleType">
-		<xs:annotation>
-			<xs:documentation>An Individual's HBX activity associated with Qualified Health Plans</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="e_person_id" type="xs:anyURI" minOccurs="0"/>
-			<xs:element name="e_concern_role_id" type="xs:anyURI" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="EmployeeRoleType">
 		<xs:annotation>
 			<xs:documentation>An Individual's HBX activity assocaited with SHOP employers</xs:documentation>
@@ -892,23 +930,20 @@
 			<xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="MedicaidRoleType">
-		<xs:annotation>
-			<xs:documentation>An Individual's HBX activity assocaited with Medicaid assistance</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="aceds_id" type="xs:anyURI"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ResponsiblePartyRoleType">
 		<xs:annotation>
 			<xs:documentation>An Individual's HBX activity assocaited with sponsoring insurance coverage for others</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="policy_id" type="IdentifierType"/>
 			<xs:element name="entity_identifier" type="EntityNameType"/>
 			<xs:element name="organization_id" type="IdentifierType" minOccurs="0"/>
+			<xs:element name="policies" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EligibilityDeterminationType">
@@ -958,6 +993,11 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="approval" type="ApprovalType" minOccurs="0"/>
+			<xs:element name="is_active" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>This QLE is in process on the HBX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
@@ -1281,9 +1321,7 @@
 	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="individual_update" type="IndividualUpdateType"/>
 	<xs:element name="responsible_party_role" type="ResponsiblePartyRoleType"/>
-	<xs:element name="employee_role" type="EmployeeRoleType"/>
-	<xs:element name="medicaid_role" type="MedicaidRoleType"/>
-	<xs:element name="qhp_role" type="QhpRoleType"/>
+	<xs:element name="employer_sponsored_role" type="EmployeeRoleType"/>
 	<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
 	<xs:element name="household" type="ApplicationGroupHouseholdType"/>

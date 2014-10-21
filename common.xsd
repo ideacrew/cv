@@ -10,32 +10,9 @@
 			<xs:element name="person_name" type="PersonNameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element name="addresses" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="emails" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="email" type="EmailType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="phones" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="phone" type="PhoneType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="is_active" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element name="addresses" type="AddressType" minOccurs="0"/>
+			<xs:element name="emails" type="EmailType" minOccurs="0"/>
+			<xs:element name="phones" type="PhoneType" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -109,9 +86,10 @@
 			<xs:element name="extension" type="xs:string" minOccurs="0"/>
 			<xs:element name="is_preferred" type="xs:boolean" default="false">
 				<xs:annotation>
-					<xs:documentation>Flag indicating contact number of choice</xs:documentation>
+					<xs:documentation>Flag indicating this is contact number of choice</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="country_code" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmailType">
