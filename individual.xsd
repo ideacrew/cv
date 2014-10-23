@@ -159,7 +159,8 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:application_group#split"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:application_group#merge"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:application_group#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:application_group#submit_sep"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#submit_qle"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group#renew_enrollment"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:application_group#adjudicate_sep"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -332,7 +333,7 @@
 			<xs:element name="irs_group_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="e_pdc_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="primary_applicant_id" type="xs:anyURI"/>
-			<xs:element name="type" type="QualfiedBenefitNameType"/>
+			<xs:element name="type" type="HbxServiceNameType"/>
 			<xs:element name="size" type="xs:integer">
 				<xs:annotation>
 					<xs:documentation>Household member count</xs:documentation>
@@ -383,7 +384,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="status_code" type="xs:string" minOccurs="0">
+			<xs:element name="status_code" type="ApplicationGroupHouseholdStatusNameType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Eligibility system status</xs:documentation>
 				</xs:annotation>
@@ -397,6 +398,35 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="ApplicationGroupHouseholdRequestNameType">
+		<xs:annotation>
+			<xs:documentation>Request methods supported by Application Group Household resource</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_households"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#by_id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#split"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#merge"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#select_qhp"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#initial_enrollment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#renew_qhp_enrollment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#auto_renew_qhp_enrollment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#qle_enrollment"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#adjudicate_sep"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplicationGroupHouseholdEventNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:application_group_household#qhp_selected"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#enrolled"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#qhp_enrollment_renewed"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#qhp_enrollment_auto_renewed"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#qle_enrolled"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="IndividualType">
 		<xs:annotation>
 			<xs:documentation>A Person who participates in online health insurance marketplace</xs:documentation>
@@ -408,30 +438,7 @@
 					<xs:documentation>Indicates this record ID is source of reliable information for this resource</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="aliases" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Use when an individual has multiple system accounts or IDs</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="alias" maxOccurs="unbounded">
-							<xs:annotation>
-								<xs:documentation>List of all known record IDs (including this one) for this resource</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:group ref="HbxIdentifierGroup"/>
-									<xs:element name="is_authoritative" type="xs:boolean">
-										<xs:annotation>
-											<xs:documentation>Indicates this record ID is source of reliable information for this resource</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="aliases" minOccurs="0"/>
 			<xs:element name="person">
 				<xs:complexType>
 					<xs:complexContent>
@@ -450,14 +457,8 @@
 			</xs:element>
 			<xs:element ref="person_relationships"/>
 			<xs:element name="person_demographics" type="PersonDemographicsType"/>
-			<xs:element name="hbx_roles" type="IndividualHbxRoleType" minOccurs="0"/>
-			<xs:element name="responsible_party_roles" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element ref="responsible_party_role" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="hbx_roles" type="IndividualHbxServiceType" minOccurs="0"/>
+			<xs:element ref="responsible_parties" minOccurs="0"/>
 			<xs:element name="person_health" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -802,12 +803,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="IndividualHbxRoleType">
+	<xs:complexType name="IndividualHbxServiceType">
 		<xs:annotation>
 			<xs:documentation>An individual's role(s) on the HBX</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="hbx_role" type="QualfiedBenefitNameType"/>
+			<xs:element name="hbx_service" type="HbxServiceNameType"/>
 			<xs:element name="e_person_id" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Eligibility system dereferenceable ID </xs:documentation>
@@ -930,14 +931,14 @@
 			<xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ResponsiblePartyRoleType">
+	<xs:complexType name="ResponsiblePartyType">
 		<xs:annotation>
 			<xs:documentation>An Individual's HBX activity assocaited with sponsoring insurance coverage for others</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="entity_identifier" type="EntityNameType"/>
 			<xs:element name="organization_id" type="IdentifierType" minOccurs="0"/>
-			<xs:element name="policies" minOccurs="0">
+			<xs:element name="policies" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
@@ -1320,7 +1321,7 @@
 	</xs:element>
 	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="individual_update" type="IndividualUpdateType"/>
-	<xs:element name="responsible_party_role" type="ResponsiblePartyRoleType"/>
+	<xs:element name="responsible_party" type="ResponsiblePartyType"/>
 	<xs:element name="employer_sponsored_role" type="EmployeeRoleType"/>
 	<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
@@ -1462,13 +1463,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:income_frequency#yearly"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="HouseholdNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:household#unassisted"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:household#insurance_assisted"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:household#medicaid"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="PersonRelationshipNameType">
 		<xs:annotation>
 			<xs:documentation>Interpersonal relationship names between connected individuals</xs:documentation>
@@ -1527,6 +1521,45 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="aliases">
+		<xs:annotation>
+			<xs:documentation>Use when an individual has multiple system accounts or IDs</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="alias" type="AliasType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="responsible_parties">
+		<xs:annotation>
+			<xs:documentation>Use when an individual has multiple system accounts or IDs</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="responsible_party" type="ResponsiblePartyType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="AliasType">
+		<xs:annotation>
+			<xs:documentation>List of all known record IDs (including this one) for this resource</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="is_authoritative" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates this record ID is source of reliable information for this resource</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
+	<xs:simpleType name="ApplicationGroupHouseholdStatusNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:application_group_household_status#approved"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:application_group_household_status#active"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

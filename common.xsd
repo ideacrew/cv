@@ -82,14 +82,16 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="phone_number" type="TelephoneNumberType"/>
+			<xs:element name="country_code" minOccurs="0"/>
+			<xs:element name="area_code" minOccurs="0"/>
+			<xs:element name="phone_number" type="TelephoneNumberType" minOccurs="0"/>
+			<xs:element name="full_phone_number"/>
 			<xs:element name="extension" type="xs:string" minOccurs="0"/>
 			<xs:element name="is_preferred" type="xs:boolean" default="false">
 				<xs:annotation>
 					<xs:documentation>Flag indicating this is contact number of choice</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="country_code" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmailType">
@@ -594,9 +596,9 @@
 			<xs:documentation>Identification of an individual as masculine or feminine</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:dc0:terms:gender#male"/>
-			<xs:enumeration value="urn:dc0:terms:gender#female"/>
-			<xs:enumeration value="urn:dc0:terms:gender#unknown"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:gender#male"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:gender#female"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:gender#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="HbxCmsNameType">
@@ -651,17 +653,17 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health_and_dental"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="QualfiedBenefitNameType">
+	<xs:simpleType name="HbxServiceNameType">
 		<xs:annotation>
 			<xs:documentation/>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#unassisted_qhp"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#insurance_assisted_qhp"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#employer_sponsored"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#streamlined_medicaid"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#emergency_medicaid"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:approval_type#hcr_chip"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#unassisted_qhp"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#insurance_assisted_qhp"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#employer_sponsored"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#streamlined_medicaid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#emergency_medicaid"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#hcr_chip"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="SimpleDateType">
