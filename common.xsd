@@ -10,9 +10,9 @@
 			<xs:element name="person_name" type="PersonNameType"/>
 			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element name="addresses" type="AddressType" minOccurs="0"/>
-			<xs:element name="emails" type="EmailType" minOccurs="0"/>
-			<xs:element name="phones" type="PhoneType" minOccurs="0"/>
+			<xs:element ref="addresses" minOccurs="0"/>
+			<xs:element ref="emails"  minOccurs="0"/>
+			<xs:element ref="phones" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -30,6 +30,27 @@
 			<xs:element name="person_alternate_name" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="addresses">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="address" type="AddressType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="emails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="email" type="EmailType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="phones">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="phone" type="PhoneType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:complexType name="AddressType">
 		<xs:annotation>
 			<xs:documentation>Physical street or mailing address</xs:documentation>
@@ -687,57 +708,57 @@
 			<xs:documentation>US state names</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Alabama"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Alaska"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Arizona"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Arkansas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#California"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Colorado"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Connecticut"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Delaware"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#District Of Columbia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Florida"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Georgia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Hawaii"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Idaho"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Illinois"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Indiana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Iowa"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Kansas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Kentucky"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Louisiana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Maine"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Maryland"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Massachusetts"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Michigan"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Minnesota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Mississippi"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Missouri"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Montana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Nebraska"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Nevada"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New Hampshire"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New Jersey"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New Mexico"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#New York"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#North Carolina"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#North Dakota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Ohio"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Oklahoma"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Oregon"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Pennsylvania"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Rhode Island"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#South Carolina"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#South Dakota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Tennessee"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Texas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Utah"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Vermont"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Virginia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Washington"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#West Virginia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Wisconsin"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#Wyoming"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#alabama"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#alaska"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#arizona"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#arkansas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#california"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#colorado"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#connecticut"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#delaware"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#district_of_columbia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#florida"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#georgia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#hawaii"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#idaho"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#illinois"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#indiana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#iowa"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#kansas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#kentucky"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#louisiana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#maine"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#maryland"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#massachusetts"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#michigan"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#minnesota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#mississippi"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#missouri"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#montana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#nebraska"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#nevada"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_hampshire"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_jersey"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_mexico"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_york"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#north_carolina"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#north_dakota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#ohio"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#oklahoma"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#oregon"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#pennsylvania"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#rhode_island"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#south_carolina"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#south_dakota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#tennessee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#texas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#utah"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#vermont"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#virginia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#washington"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#west_virginia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wisconsin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wyoming"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LanguageNameType">
