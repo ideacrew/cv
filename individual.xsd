@@ -1321,6 +1321,7 @@
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#entering_domestic_partnership"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#employee_gaining_medicare"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#employer_cobra_non_payment"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#release_from_incarceration"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitMaintenanceNameType">
