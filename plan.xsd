@@ -14,47 +14,70 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
-	<xs:complexType name="PlanType">
+	<xs:complexType name="PlanBaseType">
 		<xs:annotation>
 			<xs:documentation>Individual or group insurance product that provides, or pays the cost of, health care</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:group ref="HbxIdentifierGroup"/>
-			<xs:element name="qhp_id" type="HiosPlanIdType">
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="name" type="xs:string">
 				<xs:annotation>
-					<xs:documentation>HIOS Plan Identifier</xs:documentation>
+					<xs:documentation>Name of plan in free form text</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="name" type="xs:string"/>
 			<xs:element name="is_dental_only" type="xs:boolean"/>
 			<xs:element name="carrier" type="CarrierLinkType"/>
+			<xs:element name="market" type="AcaMarketPlaceNameType" minOccurs="0"/>
+			<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
 			<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
 			<xs:element ref="rates" minOccurs="0"/>
-			<xs:element name="metal_level" type="PlanMetalLevelNameType" minOccurs="0"/>
 			<xs:element name="ehb_percent" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Essential Health Benefit factor</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="market" type="AcaMarketPlaceNameType" minOccurs="0"/>
-			<xs:element name="coverages" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="coverage" type="CoverageType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="coverages" minOccurs="0"/>
 			<xs:element name="cost_structure" type="CostStructureType" minOccurs="0"/>
-			<xs:element name="maximums" minOccurs="0">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="MaximumType"/>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="deductables" type="DeductableType" minOccurs="0"/>
+			<xs:element ref="maximums" minOccurs="0"/>
+			<xs:element ref="deductables" minOccurs="0"/>
 			<xs:element name="metadata" type="xs:string" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PlanType">
+		<xs:complexContent>
+			<xs:restriction base="PlanBaseType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Name of plan in free form text</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="is_dental_only" type="xs:boolean"/>
+					<xs:element name="carrier" type="CarrierLinkType"/>
+					<xs:element name="market" type="AcaMarketPlaceNameType" minOccurs="0"/>
+					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
+					<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
+					<xs:element ref="rates" minOccurs="0"/>
+					<xs:element name="ehb_percent" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Essential Health Benefit factor</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="coverages" minOccurs="0"/>
+					<xs:element name="cost_structure" type="CostStructureType" minOccurs="0"/>
+					<xs:element ref="maximums" minOccurs="0"/>
+					<xs:element ref="deductables" minOccurs="0"/>
+					<xs:element name="metadata" type="xs:string" minOccurs="0"/>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="CostStructureType">
 		<xs:sequence>
@@ -243,4 +266,25 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:element name="coverages">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="coverage" type="CoverageType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="maximums">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="maximum" type="MaximumType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="deductables">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="deductables" type="DeductableType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>

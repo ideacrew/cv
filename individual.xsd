@@ -27,6 +27,7 @@
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
 			<xs:element name="tax_households" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Tax household breakout for this application group based on applied ACA and HBX rules</xs:documentation>
@@ -394,13 +395,26 @@
 					<xs:documentation>Services supplied by the exchange available or used by this household</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="policies" minOccurs="0">
+			<xs:element name="enrollments" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
+						<xs:element name="enrollment" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="policies" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element ref="employer_sponsored_coverage" minOccurs="0"/>
 			<xs:element name="exemptions" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
@@ -420,18 +434,25 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="members">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="member" type="TaxHouseholdMemberType" minOccurs="1" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:complexType name="TaxHouseholdMemberType">
+	<xs:complexType name="ApplicantType">
 		<xs:complexContent>
-			<xs:restriction base="ApplicantType">
+			<xs:restriction base="IndividualType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="id" type="IdentifierType">
+						<xs:annotation>
+							<xs:documentation>Include URIs for system components when known, e.g. person_id, concern_role_id, aceds_id, gdb_id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="group_id" type="IdentifierType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Application group to which this person belongs</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tax household  to which this person belongs</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="person" type="PersonType"/>
 					<xs:element ref="person_relationships"/>
 					<xs:element name="person_demographics" type="PersonDemographicsType"/>
@@ -442,8 +463,63 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="is_ia_eligible" type="xs:boolean"/>
-					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean"/>
+					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
+					<xs:element ref="financial_resources" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="is_active" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="comments" minOccurs="0"/>
+					<xs:group ref="ResourceTimestampGroup"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ApplicantLinkType">
+		<xs:complexContent>
+			<xs:restriction base="IndividualType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="group_id" type="IdentifierType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Application group to which this person belongs</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Tax household  to which this person belongs</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="person" type="PersonLinkType"/>
+					<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_active" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:sequence>
+						<xs:element name="created_at" type="xs:dateTime"/>
+						<xs:element name="modified_at" type="xs:dateTime"/>
+						<xs:element name="version" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TaxHouseholdMemberType">
+		<xs:complexContent>
+			<xs:restriction base="IndividualType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="person" type="PersonLinkType"/>
+					<xs:element ref="person_relationships"/>
+					<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
 						<xs:annotation>
 							<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
@@ -487,28 +563,13 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:application_group_household#qle_enrolled"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="IndividualType">
+	<xs:complexType name="IndividualType" abstract="true">
 		<xs:annotation>
-			<xs:documentation>A Person who participates in online health insurance marketplace</xs:documentation>
+			<xs:documentation>Base type for a Person who participates in online health insurance marketplace</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="e_person_id" type="IdentifierType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Eligibility system dereferenceable ID </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="e_concern_role_id" type="IdentifierType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Eligibility system rollup dereferenceable ID</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="aceds_id" type="IdentifierType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Medicaid system dereferenceable ID</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
+			<xs:element name="group_id" type="IdentifierType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Application group to which this person belongs</xs:documentation>
 				</xs:annotation>
@@ -519,9 +580,9 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="person" type="PersonType"/>
-			<xs:element ref="person_relationships"/>
-			<xs:element name="person_demographics" type="PersonDemographicsType"/>
-			<xs:element name="is_primary_applicant" type="xs:boolean"/>
+			<xs:element ref="person_relationships" minOccurs="0"/>
+			<xs:element name="person_demographics" type="PersonDemographicsType" minOccurs="0"/>
+			<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
@@ -547,6 +608,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonDemographicsType">
+		<xs:annotation>
+			<xs:documentation>Identifying and classification information about an individual</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0">
 				<xs:annotation>
@@ -589,18 +653,6 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="IndividualFinancialType">
-		<xs:sequence>
-			<xs:element name="incomes" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="income" type="IndividualIncomeType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="tax_file_status" type="TaxFilerNameType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IndividualRequestType">
@@ -865,7 +917,6 @@
 			<xs:group ref="HbxIdentifierGroup"/>
 			<xs:element name="type" type="HbxServiceNameType"/>
 			<xs:element name="is_active" type="xs:boolean" minOccurs="0"/>
-			<xs:element ref="comments" minOccurs="0"/>
 			<xs:element name="employer_sponsored_coverages" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -873,6 +924,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -947,11 +999,6 @@
 								<xs:documentation>Dereferencable ID for this Employer</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="hbx_id" type="IdentifierType">
-							<xs:annotation>
-								<xs:documentation>HBX identifier</xs:documentation>
-							</xs:annotation>
-						</xs:element>
 						<xs:element name="name" type="xs:string"/>
 						<xs:element name="dba" type="xs:string" minOccurs="0"/>
 					</xs:sequence>
@@ -999,11 +1046,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="maximum_aptc" type="CurrencyType">
-				<xs:annotation>
-					<xs:documentation>Premium tax credit assistance eligibility.  Available to household with income between 100% and 400% of the Federal Poverty Level (FPL)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element ref="maximum_aptc" />
 			<xs:element name="csr_percent" type="xs:float">
 				<xs:annotation>
 					<xs:documentation>Cost-sharing reduction assistance eligibility for co-pays, etc.  Available to households with income between 100-250% of FPL and enrolled in Silver plan.
@@ -1316,12 +1359,12 @@
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#child_age_off"/>
-			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#newly_eligible"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#add_child_through_marriage"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#entering_domestic_partnership"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#employee_gaining_medicare"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#employer_cobra_non_payment"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#release_from_incarceration"/>
+			<xs:enumeration value="urn:cms:terms:v1:qualifying_life_event#newly_eligible"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitMaintenanceNameType">
@@ -1369,7 +1412,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="application_group_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+	<xs:element name="application_group_uri" type="IdentifierSimpleType" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for an application group</xs:documentation>
 		</xs:annotation>
@@ -1380,7 +1423,7 @@
 			<xs:documentation>Instance of an Individual type</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="individual_uri" type="xs:anyURI" substitutionGroup="resource_instance_uri">
+	<xs:element name="individual_uri" type="IdentifierSimpleType" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for individual instance, e.g. urn:dc0:resources:individual:_id</xs:documentation>
 		</xs:annotation>
@@ -1442,7 +1485,7 @@
 			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="subject_individual" type="xs:anyURI">
+			<xs:element name="subject_individual" type="IdentifierSimpleType">
 				<xs:annotation>
 					<xs:documentation>This individual's ID</xs:documentation>
 				</xs:annotation>
@@ -1457,7 +1500,7 @@
 					<xs:documentation>Interpersonal relationship from object to subject individual</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="object_individual" type="xs:anyURI">
+			<xs:element name="object_individual" type="IdentifierSimpleType">
 				<xs:annotation>
 					<xs:documentation>Pointer ID to the referenced individual in the relationship</xs:documentation>
 				</xs:annotation>
@@ -1618,6 +1661,13 @@
 	</xs:element>
 	<xs:element name="relationship_uri" type="xs:anyURI" abstract="true"/>
 	<xs:element name="inverse_relationship_uri" type="xs:anyURI"/>
+	<xs:element name="members">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="member" type="TaxHouseholdMemberType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:simpleType name="HouseholdStatusNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:household_state#approved"/>
@@ -1650,79 +1700,10 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:complexType name="ApplicantType">
-		<xs:complexContent>
-			<xs:restriction base="IndividualType">
-				<xs:sequence>
-					<xs:element name="id" type="IdentifierType">
-						<xs:annotation>
-							<xs:documentation>Include URIs for system components when known, e.g. person_id, concern_role_id, aceds_id, gdb_id</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Application group to which this person belongs</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Tax household  to which this person belongs</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="person" type="PersonType"/>
-					<xs:element ref="person_relationships"/>
-					<xs:element name="person_demographics" type="PersonDemographicsType"/>
-					<xs:element name="is_primary_applicant" type="xs:boolean"/>
-					<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Individual is applying for health coverage</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
-					<xs:element ref="responsible_parties" minOccurs="0"/>
-					<xs:element ref="financial_resources" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="is_active" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element ref="comments" minOccurs="0"/>
-					<xs:group ref="ResourceTimestampGroup"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="ApplicantLinkType">
-		<xs:complexContent>
-			<xs:restriction base="ApplicantType">
-				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
-					<xs:element name="person" type="PersonType"/>
-					<xs:element ref="person_relationships"/>
-					<xs:element name="person_demographics" type="PersonDemographicsType"/>
-					<xs:element name="is_primary_applicant" type="xs:boolean"/>
-					<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Individual is applying for health coverage</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="is_active" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:group ref="ResourceTimestampGroup"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+				<xs:element name="maximum_aptc" type="CurrencyType">
+				<xs:annotation>
+					<xs:documentation>Premium tax credit assistance eligibility.  Available to household with income between 100% and 400% of the Federal Poverty Level (FPL)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
 </xs:schema>
