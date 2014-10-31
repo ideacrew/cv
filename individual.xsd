@@ -441,7 +441,6 @@
 		<xs:complexContent>
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
 					<xs:element name="person" type="PersonLinkType"/>
 					<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
@@ -483,7 +482,7 @@
 			<xs:documentation>Base type for a Person who participates in online health insurance marketplace</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Application group to which this person belongs</xs:documentation>

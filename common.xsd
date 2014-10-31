@@ -13,7 +13,7 @@
 			<xs:element ref="addresses" minOccurs="0"/>
 			<xs:element ref="emails" minOccurs="0"/>
 			<xs:element ref="phones" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonNameType">
@@ -47,7 +47,6 @@
 							</xs:complexContent>
 						</xs:complexType>
 					</xs:element>
-					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
