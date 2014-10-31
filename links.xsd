@@ -88,8 +88,8 @@
 			<xs:element name="enrollees"/>
 			<xs:element name="plan" type="PlanLinkType"/>
 			<xs:element name="market" type="AcaMarketPlaceNameType"/>
-			<xs:element name="policy_state" type="PolicyStateNameType"/>
 			<xs:element name="coverage_period" type="DateRangeType"/>
+			<xs:element name="policy_state" type="PolicyStateNameType"/>
 			<xs:element name="is_active" type="xs:boolean"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>

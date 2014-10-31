@@ -323,7 +323,7 @@
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdType">
 		<xs:annotation>
-			<xs:documentation>Applicant sub-grouping for purpose of financial eligibility determination and enrollment</xs:documentation>
+			<xs:documentation>Applicant sub-grouping for purpose of financial_report eligibility determination and enrollment</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -361,8 +361,6 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element ref="eligibility_determinations" minOccurs="0"/>
-			<xs:element ref="policies" minOccurs="0"/>
-			<xs:element ref="employments" minOccurs="0"/>
 			<xs:element name="exemptions" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
@@ -373,6 +371,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element ref="hbx_enrollments" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>This tax household is operative on the HBX</xs:documentation>
@@ -412,8 +411,7 @@
 					</xs:element>
 					<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
-					<xs:element ref="employments" minOccurs="0"/>
-					<xs:element ref="financials" minOccurs="0">
+					<xs:element ref="financial_reports" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 						</xs:annotation>
@@ -510,8 +508,7 @@
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 			<xs:element ref="responsible_parties" minOccurs="0"/>
-			<xs:element ref="employments" minOccurs="0"/>
-			<xs:element ref="financials" minOccurs="0">
+			<xs:element ref="financial_reports" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 				</xs:annotation>
@@ -827,19 +824,107 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="HbxServiceType">
+	<xs:complexType name="HbxEnrollmentType">
 		<xs:annotation>
 			<xs:documentation>An individual's role(s) on the HBX</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:group ref="HbxIdentifierGroup"/>
+			<xs:element name="id" type="IdentifierSimpleType"/>
 			<xs:element name="type" type="HbxServiceNameType"/>
-			<xs:element name="is_active" type="xs:boolean" minOccurs="0"/>
+			<xs:choice>
+				<xs:element ref="uqhp_enrollments" minOccurs="0"/>
+				<xs:element ref="ia_enrollments" minOccurs="0"/>
+				<xs:element ref="shop_enrollments" minOccurs="0"/>
+				<xs:element ref="hcr_chip_enrollments" minOccurs="0"/>
+				<xs:element ref="emergency_medicaid_enrollments" minOccurs="0"/>
+				<xs:element ref="streamlined_medicaid_enrollments" minOccurs="0"/>
+			</xs:choice>
+			<xs:element name="status" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Enrollment workflow state</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IaEnrollmentType">
+		<xs:sequence>
+			<xs:element name="policy" type="PolicyLinkType"/>
+			<xs:element name="allocated_aptc" type="CurrencyType"/>
+			<xs:element name="csr_percent" type="xs:float"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShopEnrollmentType">
+		<xs:annotation>
+			<xs:documentation>An Individual's HBX activity associated with SHOP employers</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="employer" type="EmployerLinkType"/>
+			<xs:element ref="employment_status"/>
+			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="employer_contribution_amount" type="CurrencyType"/>
+			<xs:element name="policy" type="PolicyLinkType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UQhpEnrollmentType">
+		<xs:sequence>
+			<xs:element name="policy" type="PolicyLinkType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StreamlinedMedicaidEnrollmentType">
+		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="EmergencyMedicaidEnrollmentType">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HcrChipEnrollmentType">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="uqhp_enrollments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="uqhp_enrollment" type="UQhpEnrollmentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ia_enrollments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ia_enrollment" type="IaEnrollmentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="streamlined_medicaid_enrollments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="streamlined_medicaid_enrollment" type="StreamlinedMedicaidEnrollmentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="emergency_medicaid_enrollments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="emergency_medicaid_enrollment" type="EmergencyMedicaidEnrollmentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hcr_chip_enrollments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="hcr_chip_enrollment" type="HcrChipEnrollmentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hcr_chip_enrollment" type="HcrChipEnrollmentType"/>
 	<xs:complexType name="IndividualUpdateType">
 		<xs:sequence>
 			<xs:element name="change_type" type="IndividualUpdateNameType" maxOccurs="unbounded"/>
@@ -897,19 +982,6 @@
 	</xs:simpleType>
 	<xs:element name="person_relationship_uri" type="PersonRelationshipNameType" substitutionGroup="relationship_uri"/>
 	<xs:element name="person_inverse_relationship_uri" type="PersonRelationshipNameType" substitutionGroup="inverse_relationship_uri"/>
-	<xs:complexType name="EmploymentType">
-		<xs:annotation>
-			<xs:documentation>An Individual's HBX activity associated with SHOP employers</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="employer" type="EmployerLinkType"/>
-			<xs:element ref="employment_status"/>
-			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element ref="policies" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ResponsiblePartyType">
 		<xs:annotation>
 			<xs:documentation>An Individual's HBX activity assocaited with sponsoring insurance coverage for others</xs:documentation>
@@ -958,7 +1030,6 @@
 					<xs:documentation>Date eligibility was established</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="is_active" type="xs:boolean"/>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
@@ -1327,12 +1398,11 @@
 	<xs:element name="individual_event" type="IndividualEventType"/>
 	<xs:element name="individual_update" type="IndividualUpdateType"/>
 	<xs:element name="responsible_party" type="ResponsiblePartyType"/>
-	<xs:element name="employment" type="EmploymentType"/>
 	<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 	<xs:element name="eligibility_determination" type="EligibilityDeterminationType"/>
 	<xs:element name="tax_household" type="TaxHouseholdType"/>
 	<xs:element name="individual_id" type="IdentifierType"/>
-	<xs:complexType name="FinancialType">
+	<xs:complexType name="FinancialReportType">
 		<xs:sequence>
 			<xs:element name="tax_filing_status" type="TaxFilerNameType"/>
 			<xs:element name="is_tax_filing_together" type="xs:boolean"/>
@@ -1545,13 +1615,13 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="hbx_services">
+	<xs:element name="hbx_enrollments">
 		<xs:annotation>
-			<xs:documentation>Services supplied by the exchange available or used by this individual</xs:documentation>
+			<xs:documentation>Exchange-sponsored services used by this household</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="hbx_service" type="HbxServiceType" maxOccurs="unbounded"/>
+				<xs:element name="hbx_enrollment" type="HbxEnrollmentType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -1586,13 +1656,13 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="financials">
+	<xs:element name="financial_reports">
 		<xs:annotation>
 			<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="financial" type="FinancialType" maxOccurs="unbounded"/>
+				<xs:element name="financial_report" type="FinancialReportType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -1601,18 +1671,16 @@
 			<xs:documentation>Premium tax credit assistance eligibility.  Available to household with income between 100% and 400% of the Federal Poverty Level (FPL)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="employments">
+	<xs:element name="shop_enrollments">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="employment" type="EmploymentType" maxOccurs="unbounded"/>
+				<xs:element name="shop_enrollment" type="ShopEnrollmentType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="policies">
 		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
-			</xs:sequence>
+			<xs:sequence/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="eligibility_determinations">
