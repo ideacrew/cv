@@ -59,12 +59,14 @@
 													</xs:element>
 													<xs:element name="pdc_status_code"/>
 													<xs:element name="pdc_registration_date"/>
+													<xs:group ref="ResourceTimestampGroup"/>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
+							<xs:group ref="ResourceTimestampGroup"/>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -193,6 +195,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CuramIntegratedCaseType">
@@ -206,4 +209,11 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:group name="ResourceTimestampGroup">
+		<xs:sequence>
+			<xs:element name="created_at" type="xs:dateTime"/>
+			<xs:element name="modified_at" type="xs:dateTime"/>
+			<xs:element name="version" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
 </xs:schema>
