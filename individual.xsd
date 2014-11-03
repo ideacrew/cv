@@ -361,13 +361,13 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element ref="eligibility_determinations" minOccurs="0"/>
-			<xs:element name="exemptions" minOccurs="0">
+			<xs:element name="enrollment_exemptions" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="exemption" type="ExemptionType" maxOccurs="unbounded"/>
+						<xs:element name="enrollment_exemption" type="EnrollmentExemptionType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -442,7 +442,6 @@
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="person" type="PersonLinkType"/>
-					<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 				</xs:sequence>
@@ -1144,9 +1143,9 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ExemptionType">
+	<xs:complexType name="EnrollmentExemptionType">
 		<xs:sequence>
-			<xs:element name="kind" type="ExemptionNameType"/>
+			<xs:element name="type" type="EnrollmentExemptionNameType"/>
 			<xs:element name="certificate_number" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>HBX-assigned exemption certificate number</xs:documentation>
@@ -1156,13 +1155,13 @@
 			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="ExemptionNameType">
+	<xs:simpleType name="EnrollmentExemptionNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:exemption#hardship"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:exemption#health_care_ministry_member"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:exemption#incarceration"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:exemption#indian_tribe_member"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:exemption#religious_conscience"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#hardship"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#health_care_ministry_member"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#incarceration"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#indian_tribe_member"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#religious_conscience"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TobaccoUseNameType">
@@ -1201,7 +1200,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#lost_access_to_mec">
 				<xs:annotation>
-					<xs:documentation>Loss of other health coverage or volutary dropping of COBRA</xs:documentation>
+					<xs:documentation>Loss of other health coverage</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#adoption">
@@ -1319,18 +1318,28 @@
 					<xs:documentation>Exceptional circumstance for start or end of service with AmeriCorps State and National, VISTA, or NCCC service</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="urn:cms:terms:v1:qualifying_life_event#exceptional_circumstances"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#medical_coverage_order">
 				<xs:annotation>
 					<xs:documentation>Mandated medical coverage order</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#child_age_off"/>
-			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#add_child_through_marriage"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#add_child_due_to_marriage"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#entering_domestic_partnership"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#employee_gaining_medicare"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#employer_cobra_non_payment"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#voluntary_dropping_cobra">
+				<xs:annotation>
+					<xs:documentation>Loss of other health coverage due to voluntary dropping of COBRA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#release_from_incarceration"/>
-			<xs:enumeration value="urn:cms:terms:v1:qualifying_life_event#newly_eligible"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#death"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#drop_person_due_to_divorce"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#termination_of_domestic_partnership"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#drop_self_due_to_new_eligibility"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#drop_family_member_due_to_new_eligibility"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="BenefitMaintenanceNameType">
