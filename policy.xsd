@@ -24,21 +24,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="responsible_party" minOccurs="0">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:restriction base="PersonType">
-							<xs:sequence>
-								<xs:element name="id" type="IdentifierType"/>
-								<xs:element name="person_name" type="PersonNameType"/>
-								<xs:element ref="addresses" minOccurs="0"/>
-								<xs:element ref="emails" minOccurs="0"/>
-								<xs:element ref="phones" minOccurs="0"/>
-								<xs:group ref="ResourceTimestampGroup"/>
-							</xs:sequence>
-						</xs:restriction>
-					</xs:complexContent>
-				</xs:complexType>
+			<xs:element name="responsible_party" type="ResponsiblePartyType" minOccurs="0">
 			</xs:element>
 			<xs:element name="enrollment">
 				<xs:complexType>

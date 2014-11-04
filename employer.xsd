@@ -29,29 +29,7 @@
 			<xs:element ref="fein"/>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
 			<xs:element ref="plan_years"/>
-			<xs:element name="contacts">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="contact" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:complexContent>
-									<xs:restriction base="PersonType">
-										<xs:sequence>
-											<xs:element name="id" type="IdentifierType"/>
-											<xs:element name="person_name" type="PersonNameType"/>
-											<xs:element name="job_title" type="xs:string" minOccurs="0"/>
-											<xs:element name="department" type="xs:string" minOccurs="0"/>
-											<xs:element ref="addresses"/>
-											<xs:element ref="emails" minOccurs="0"/>
-											<xs:element ref="phones"/>
-											<xs:group ref="ResourceTimestampGroup"/>
-										</xs:sequence>
-									</xs:restriction>
-								</xs:complexContent>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
+			<xs:element ref="contacts">
 			</xs:element>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
