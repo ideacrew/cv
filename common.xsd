@@ -1,56 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
-	<xs:complexType name="PersonType">
+	<xs:element name="addresses">
 		<xs:annotation>
-			<xs:documentation>Name and contact information for an individual</xs:documentation>
+			<xs:documentation>Collection of places where an individual or organization is situated</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="alias_ids">
+		<xs:annotation>
+			<xs:documentation>Additional keys or system identifiers for a known resource</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="alias_id" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:anyURI">
+								<xs:annotation>
+									<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="approvals">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="approval" type="ApprovalType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="comments">
+		<xs:annotation>
+			<xs:documentation>Collection of comment instances</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="contacts">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="contact" type="ContactType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="emails">
+		<xs:annotation>
+			<xs:documentation>Collection of email addresses for an individual or organization</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="email" type="EmailType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="extended_resource_instance_uri" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="phones">
+		<xs:annotation>
+			<xs:documentation>Collection of phone numbers for an individual or oranization</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="phone" type="PhoneType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="rates">
+		<xs:annotation>
+			<xs:documentation>Factors and price of a particular plan</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="rate" type="RateType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="resource_instance_uri" type="IdentifierSimpleType">
+		<xs:annotation>
+			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:group name="HbxIdentifierGroup">
+		<xs:annotation>
+			<xs:documentation>Resource identifier that is unique across all Exchanges</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="person_name" type="PersonNameType"/>
-			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
-			<xs:element name="department" type="xs:string" minOccurs="0"/>
-			<xs:element ref="addresses" minOccurs="0"/>
-			<xs:element ref="emails" minOccurs="0"/>
-			<xs:element ref="phones" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+			<xs:element name="identifier" type="IdentifierType"/>
+			<xs:element ref="alias_ids" minOccurs="0"/>
 		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PersonNameType">
+	</xs:group>
+	<xs:group name="ResourceTimestampGroup">
+		<xs:sequence>
+			<xs:element name="created_at" type="xs:dateTime"/>
+			<xs:element name="modified_at" type="xs:dateTime"/>
+			<xs:element name="version" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="ServiceEndpointGroup">
 		<xs:annotation>
-			<xs:documentation>Base type for components of an individual's name</xs:documentation>
+			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="person_surname" type="xs:string"/>
-			<xs:element name="person_given_name" type="xs:string"/>
-			<xs:element name="person_middle_name" type="xs:string" minOccurs="0"/>
-			<xs:element name="person_full_name" type="xs:string" minOccurs="0"/>
-			<xs:element name="person_name_prefix_text" type="xs:string" minOccurs="0"/>
-			<xs:element name="person_name_suffix_text" type="xs:string" minOccurs="0"/>
-			<xs:element name="person_alternate_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="urn" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Unique reference for this service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uri" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Derefernceable URI for this service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PersonLinkType">
-		<xs:complexContent>
-			<xs:restriction base="PersonType">
-				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
-					<xs:element name="person_name">
-						<xs:complexType>
-							<xs:complexContent>
-								<xs:restriction base="PersonNameType">
-									<xs:sequence>
-										<xs:element name="person_surname" type="xs:string"/>
-										<xs:element name="person_given_name" type="xs:string"/>
-									</xs:sequence>
-								</xs:restriction>
-							</xs:complexContent>
-						</xs:complexType>
-					</xs:element>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+	</xs:group>
 	<xs:complexType name="AddressType">
 		<xs:annotation>
 			<xs:documentation>Physical street or mailing address</xs:documentation>
@@ -85,6 +167,234 @@
 			<xs:element name="location" type="LocationNameType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="ApprovalType">
+		<xs:annotation>
+			<xs:documentation>Base type to manage a resource's acceptance status</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="status">
+				<xs:simpleType>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#pending"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#approved"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#denied"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#appealed"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="determined_by" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Individual, Representative or agent who adjudicated approval</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="determination_date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="notes" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommentType">
+		<xs:sequence>
+			<xs:element name="content" type="xs:string"/>
+			<xs:element name="author" type="xs:string"/>
+			<xs:element name="date" type="SimpleDateType"/>
+			<xs:element name="is_priority" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactType">
+		<xs:complexContent>
+			<xs:restriction base="PersonType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="person_name" type="PersonNameType"/>
+					<xs:element name="job_title" type="xs:string" minOccurs="0"/>
+					<xs:element name="department" type="xs:string" minOccurs="0"/>
+					<xs:element ref="addresses"/>
+					<xs:element ref="emails" minOccurs="0"/>
+					<xs:element ref="phones"/>
+					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CurrencyAmountPerAnnumType">
+		<xs:annotation>
+			<xs:documentation>Sum of currency amount for a calendar year</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="calendar_year" type="CalendarYearType"/>
+			<xs:element name="total_amount" type="CurrencyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateRangeType">
+		<xs:annotation>
+			<xs:documentation>Time period expressed to precision of one day</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="begin_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="number_of_days" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmailType">
+		<xs:annotation>
+			<xs:documentation>Email communication address and kind</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:anyURI">
+						<xs:enumeration value="urn:openhbx:terms:v1:email_type#home"/>
+						<xs:enumeration value="urn:openhbx:terms:v1:email_type#work"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="email_address" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentifierBaseType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>List of all known record IDs (including this one) for this resource</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="hbx_id" type="HbxCmsNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier for Exchange where this record originated (CMS-assigned ID)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="id" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="alias_ids" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentifierFullyQualifiedType">
+		<xs:complexContent>
+			<xs:restriction base="IdentifierBaseType">
+				<xs:sequence>
+					<xs:element name="hbx_id" type="HbxCmsNameType">
+						<xs:annotation>
+							<xs:documentation>Identifier for Exchange where this record originated (CMS-assigned ID)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="id" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IdentifierSimpleType">
+		<xs:complexContent>
+			<xs:restriction base="IdentifierBaseType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IdentifierType">
+		<xs:complexContent>
+			<xs:restriction base="IdentifierBaseType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:anyURI">
+						<xs:annotation>
+							<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="alias_ids" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LocationNameType">
+		<xs:sequence>
+			<xs:element name="rating_area" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Adminstrative area for determining individual or family premium amounts</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="coordinates" type="PositionPointType" minOccurs="0"/>
+			<xs:element name="census_tract" type="xs:string" minOccurs="0"/>
+			<xs:element name="county" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonLinkType">
+		<xs:complexContent>
+			<xs:restriction base="PersonType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="person_name">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:restriction base="PersonNameType">
+									<xs:sequence>
+										<xs:element name="person_surname" type="xs:string"/>
+										<xs:element name="person_given_name" type="xs:string"/>
+									</xs:sequence>
+								</xs:restriction>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation>Base type for components of an individual's name</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="person_surname" type="xs:string"/>
+			<xs:element name="person_given_name" type="xs:string"/>
+			<xs:element name="person_middle_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_full_name" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_name_prefix_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_name_suffix_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="person_alternate_name" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonType">
+		<xs:annotation>
+			<xs:documentation>Name and contact information for an individual</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="person_name" type="PersonNameType"/>
+			<xs:element name="job_title" type="xs:string" minOccurs="0"/>
+			<xs:element name="department" type="xs:string" minOccurs="0"/>
+			<xs:element ref="addresses" minOccurs="0"/>
+			<xs:element ref="emails" minOccurs="0"/>
+			<xs:element ref="phones" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="PhoneType">
 		<xs:annotation>
 			<xs:documentation>Telephone communication number and kind</xs:documentation>
@@ -115,68 +425,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EmailType">
-		<xs:annotation>
-			<xs:documentation>Email communication address and kind</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="type">
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:email_type#home"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:email_type#work"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="email_address" type="xs:string"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:element name="addresses">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="emails">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="email" type="EmailType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="phones">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="phone" type="PhoneType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:complexType name="ContactListType">
-		<xs:annotation>
-			<xs:documentation>Collection of Persons</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="contact" type="PersonType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="LocationNameType">
-		<xs:sequence>
-			<xs:element name="rating_area" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Adminstrative area for determining individual or family premium amounts</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:length value="7"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="coordinates" type="PositionPointType" minOccurs="0"/>
-			<xs:element name="census_tract" type="xs:string" minOccurs="0"/>
-			<xs:element name="county" type="xs:string" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="PositionPointType">
 		<xs:annotation>
 			<xs:documentation>Location cooordinate expressed as a GeoJSON Point.  See: http://www.geojson.org/geojson-spec.html#positions</xs:documentation>
@@ -188,31 +436,72 @@
 			<xs:element name="coordinate_system_reference" type="xs:anyURI" default=" urn:ogc:def:crs:EPSG::4326"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="SimpleDateRangeType">
-		<xs:annotation>
-			<xs:documentation>Time period expressed in SimpleDateType format</xs:documentation>
-		</xs:annotation>
+	<xs:complexType name="RateType">
 		<xs:sequence>
-			<xs:element name="start" type="SimpleDateType"/>
-			<xs:element name="end" type="SimpleDateType"/>
+			<xs:element name="age"/>
+			<xs:element name="effective_date" type="SimpleDateType"/>
+			<xs:element name="expire_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="rate" type="CurrencyType"/>
+			<xs:element name="rating_area" minOccurs="0"/>
+			<xs:element name="tobacco_use" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:group name="HbxIdentifierGroup">
+	<xs:complexType name="ServiceBodyType">
 		<xs:annotation>
-			<xs:documentation>Resource identifier that is unique across all Exchanges</xs:documentation>
+			<xs:documentation>Base type of body component properties for a SOA service call or response</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="identifier" type="IdentifierType"/>
-			<xs:element ref="alias_ids" minOccurs="0"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
 		</xs:sequence>
-	</xs:group>
-	<xs:group name="ResourceTimestampGroup">
+	</xs:complexType>
+	<xs:complexType name="ServiceEndPointType">
+		<xs:annotation>
+			<xs:documentation>Attributes for registering and publishing a service on the system</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="created_at" type="xs:dateTime"/>
-			<xs:element name="modified_at" type="xs:dateTime"/>
-			<xs:element name="version" type="xs:integer" minOccurs="0"/>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name for this service in free form text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Release number associated with this service instance</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:group ref="ServiceEndpointGroup"/>
 		</xs:sequence>
-	</xs:group>
+	</xs:complexType>
+	<xs:complexType name="ServiceErrorType"/>
+	<xs:complexType name="ServiceEventType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="event_name" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="qualifying_reason" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="resource_instance_uri" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>URN(s) for the resource instance that is subject of this event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="extended_resource_instance_uri" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>URN(s) for other resource instances assocated with this event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="body" type="ServiceBodyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="ServiceHeaderType">
 		<xs:annotation>
 			<xs:documentation>Base type of header component properties for SOA service call or response</xs:documentation>
@@ -268,6 +557,19 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceMetadataType">
+		<xs:annotation>
+			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="result_set" type="ServiceResultSetType"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Wildcard to support schema extension</xs:documentation>
+				</xs:annotation>
+			</xs:any>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ServiceStatusType">
@@ -346,77 +648,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ServiceMetadataType">
-		<xs:annotation>
-			<xs:documentation>Base type of descriptive data about the data returned in a service</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="result_set" type="ServiceResultSetType"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Wildcard to support schema extension</xs:documentation>
-				</xs:annotation>
-			</xs:any>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ServiceResultSetType">
-		<xs:annotation>
-			<xs:documentation>Base type of service result propoerties for SOA service call</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="count" type="xs:integer">
-				<xs:annotation>
-					<xs:documentation>Total number of items in the result set</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="limit" type="xs:integer">
-				<xs:annotation>
-					<xs:documentation>Number of items returned in this payload</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="offset" type="xs:integer">
-				<xs:annotation>
-					<xs:documentation>Position in the result set of the first record in this payload</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ServiceBodyType">
-		<xs:annotation>
-			<xs:documentation>Base type of body component properties for a SOA service call or response</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ServiceEventType" abstract="true">
-		<xs:annotation>
-			<xs:documentation>Base type to publish resource events to message systems</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="event_name" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="qualifying_reason" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="resource_instance_uri" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>URN(s) for the resource instance that is subject of this event</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="extended_resource_instance_uri" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>URN(s) for other resource instances assocated with this event</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="body" type="ServiceBodyType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ServiceRequestType" abstract="true">
 		<xs:annotation>
 			<xs:documentation>Base type to call a SOA service</xs:documentation>
@@ -442,183 +673,35 @@
 			<xs:element name="body" type="xs:anyType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ServiceEndPointType">
+	<xs:complexType name="ServiceResultSetType">
 		<xs:annotation>
-			<xs:documentation>Attributes for registering and publishing a service on the system</xs:documentation>
+			<xs:documentation>Base type of service result propoerties for SOA service call</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="name" type="xs:string">
+			<xs:element name="count" type="xs:integer">
 				<xs:annotation>
-					<xs:documentation>Name for this service in free form text</xs:documentation>
+					<xs:documentation>Total number of items in the result set</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="version" type="xs:string">
+			<xs:element name="limit" type="xs:integer">
 				<xs:annotation>
-					<xs:documentation>Release number associated with this service instance</xs:documentation>
+					<xs:documentation>Number of items returned in this payload</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="description" type="xs:string" minOccurs="0"/>
-			<xs:group ref="ServiceEndpointGroup"/>
+			<xs:element name="offset" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Position in the result set of the first record in this payload</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ServiceErrorType"/>
-	<xs:group name="ServiceEndpointGroup">
+	<xs:complexType name="SimpleDateRangeType">
 		<xs:annotation>
-			<xs:documentation>Identifier pair for a single Exchange resource in both enterprise URI and local service form</xs:documentation>
+			<xs:documentation>Time period expressed in SimpleDateType format</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="urn" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Unique reference for this service</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="uri" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Derefernceable URI for this service</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:group>
-	<xs:complexType name="ApprovalType">
-		<xs:annotation>
-			<xs:documentation>Base type to manage a resource's acceptance status</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="status">
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#pending"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#approved"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#denied"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:approval_type#appealed"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="determined_by" type="xs:anyURI" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Individual, Representative or agent who adjudicated approval</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="determination_date" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="notes" type="xs:string" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="BrokerAttributesType">
-		<xs:sequence>
-			<xs:element name="npn_id" type="NpnIdType"/>
-			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="CurrencyAmountPerAnnumType">
-		<xs:annotation>
-			<xs:documentation>Sum of currency amount for a calendar year</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="calendar_year" type="CalendarYearType"/>
-			<xs:element name="total_amount" type="CurrencyType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="CommentType">
-		<xs:sequence>
-			<xs:element name="content" type="xs:string"/>
-			<xs:element name="author" type="xs:string"/>
-			<xs:element name="date" type="SimpleDateType"/>
-			<xs:element name="is_priority" type="xs:boolean"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="DateRangeType">
-		<xs:sequence>
-			<xs:element name="begin_date" type="SimpleDateType"/>
-			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="number_of_days" type="xs:integer" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="IdentifierBaseType" abstract="true">
-		<xs:annotation>
-			<xs:documentation>List of all known record IDs (including this one) for this resource</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="hbx_id" type="HbxCmsNameType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Identifier for Exchange where this record originated (CMS-assigned ID)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="id" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="alias_ids" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="IdentifierSimpleType">
-		<xs:complexContent>
-			<xs:restriction base="IdentifierBaseType">
-				<xs:sequence>
-					<xs:element name="id" type="xs:anyURI">
-						<xs:annotation>
-							<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="IdentifierType">
-		<xs:complexContent>
-			<xs:restriction base="IdentifierBaseType">
-				<xs:sequence>
-					<xs:element name="id" type="xs:anyURI">
-						<xs:annotation>
-							<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element ref="alias_ids" minOccurs="0"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="IdentifierFullyQualifiedType">
-		<xs:complexContent>
-			<xs:restriction base="IdentifierBaseType">
-				<xs:sequence>
-					<xs:element name="hbx_id" type="HbxCmsNameType">
-						<xs:annotation>
-							<xs:documentation>Identifier for Exchange where this record originated (CMS-assigned ID)</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="id" type="xs:anyURI">
-						<xs:annotation>
-							<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="RateType">
-		<xs:sequence>
-			<xs:element name="age"/>
-			<xs:element name="effective_date" type="SimpleDateType"/>
-			<xs:element name="expire_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="rate" type="CurrencyType"/>
-			<xs:element name="rating_area" minOccurs="0"/>
-			<xs:element name="tobacco_use" minOccurs="0"/>
+			<xs:element name="start" type="SimpleDateType"/>
+			<xs:element name="end" type="SimpleDateType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TpaType">
@@ -704,30 +787,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:resource#broker"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="HiosPlanIdType">
-		<xs:annotation>
-			<xs:documentation>Health Insurance Oversight System (HIOS) identifier for QHP</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
-	<xs:simpleType name="NpnIdType">
-		<xs:annotation>
-			<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="10"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="QhpBenefitCoverageNameType">
-		<xs:annotation>
-			<xs:documentation>Kind of medical insurance provided under QHP</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#dental"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health_and_dental"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="HbxServiceNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#unassisted_qhp"/>
@@ -738,85 +797,11 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:hbx_service#hcr_chip"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="SicCodeType">
+	<xs:simpleType name="HiosPlanIdType">
 		<xs:annotation>
-			<xs:documentation>Standard Industrial Code classification</xs:documentation>
+			<xs:documentation>Health Insurance Oversight System (HIOS) identifier for QHP</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
-	<xs:simpleType name="SimpleDateType">
-		<xs:annotation>
-			<xs:documentation>A simple date format: CCYYMMDD, e.g. 20140601</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:pattern value="([1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="TelephoneNumberType">
-		<xs:annotation>
-			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{7,11}"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="UsStateNameType">
-		<xs:annotation>
-			<xs:documentation>US state names</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#alabama"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#alaska"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#arizona"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#arkansas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#california"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#colorado"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#connecticut"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#delaware"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#district_of_columbia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#florida"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#georgia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#hawaii"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#idaho"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#illinois"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#indiana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#iowa"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#kansas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#kentucky"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#louisiana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#maine"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#maryland"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#massachusetts"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#michigan"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#minnesota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#mississippi"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#missouri"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#montana"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#nebraska"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#nevada"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_hampshire"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_jersey"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_mexico"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_york"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#north_carolina"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#north_dakota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#ohio"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#oklahoma"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#oregon"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#pennsylvania"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#rhode_island"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#south_carolina"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#south_dakota"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#tennessee"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#texas"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#utah"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#vermont"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#virginia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#washington"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#west_virginia"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wisconsin"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wyoming"/>
-		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LanguageNameType">
 		<xs:annotation>
@@ -1745,60 +1730,102 @@
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:element name="alias_ids">
+	<xs:simpleType name="NpnIdType">
 		<xs:annotation>
-			<xs:documentation>Use when a resource has multiple keys or system identifiers</xs:documentation>
+			<xs:documentation>Broker National Producer Number (NPN) identifier</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="alias_id" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="id" type="xs:anyURI">
-								<xs:annotation>
-									<xs:documentation>Dereferenceable ID for this resource</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="is_authoritative" type="xs:boolean" minOccurs="0">
-								<xs:annotation>
-									<xs:documentation>Indicates this record is: 1) obtained from the authority source for this resource, and 2) this instance is the authority record for this individual</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="approvals">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="approval" type="ApprovalType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="comments">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="comment" type="CommentType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="rates">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="rate" type="RateType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="resource_instance_uri" type="IdentifierSimpleType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QhpBenefitCoverageNameType">
 		<xs:annotation>
-			<xs:documentation>Dereferenceable resource identifier</xs:documentation>
+			<xs:documentation>Kind of medical insurance provided under QHP</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-	<xs:element name="extended_resource_instance_uri" type="xs:anyURI">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#dental"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health_and_dental"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SicCodeType">
 		<xs:annotation>
-			<xs:documentation>Optional, additional dereferenceable resource identifier(s)</xs:documentation>
+			<xs:documentation>Standard Industrial Code classification</xs:documentation>
 		</xs:annotation>
-	</xs:element>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleDateType">
+		<xs:annotation>
+			<xs:documentation>A simple date format: CCYYMMDD, e.g. 20140601</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([1-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TelephoneNumberType">
+		<xs:annotation>
+			<xs:documentation>US Telephone number format. Matches: (999)999-9999, 9999999999, 999-999-9999</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{7,11}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UsStateNameType">
+		<xs:annotation>
+			<xs:documentation>US state names</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#alabama"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#alaska"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#arizona"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#arkansas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#california"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#colorado"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#connecticut"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#delaware"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#district_of_columbia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#florida"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#georgia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#hawaii"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#idaho"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#illinois"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#indiana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#iowa"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#kansas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#kentucky"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#louisiana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#maine"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#maryland"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#massachusetts"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#michigan"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#minnesota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#mississippi"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#missouri"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#montana"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#nebraska"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#nevada"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_hampshire"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_jersey"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_mexico"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#new_york"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#north_carolina"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#north_dakota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#ohio"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#oklahoma"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#oregon"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#pennsylvania"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#rhode_island"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#south_carolina"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#south_dakota"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#tennessee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#texas"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#utah"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#vermont"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#virginia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#washington"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#west_virginia"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wisconsin"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wyoming"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
