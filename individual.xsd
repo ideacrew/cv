@@ -584,12 +584,6 @@
 		<xs:sequence>
 			<xs:element name="tax_filing_status" type="TaxFilerNameType"/>
 			<xs:element name="is_tax_filing_together" type="xs:boolean"/>
-			<xs:element name="has_employer_coverage_available" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Has access to employer sponsored insurance with premiums less than 9.5% of income and meets ACA minimum value standard</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="is_without_assistance" type="xs:boolean"/>
 			<xs:element name="incomes" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -607,6 +601,9 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="alternative_benefits" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Has access to employer sponsored insurance with premiums less than 9.5% of income and meets ACA minimum value standard</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="alternative_benefit" type="AlternateBenefitType" maxOccurs="unbounded"/>
@@ -988,7 +985,9 @@
 			</xs:element>
 			<xs:element name="employer" type="EmployerLinkType" minOccurs="0"/>
 			<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 			<xs:element ref="responsible_parties" minOccurs="0"/>
@@ -1241,7 +1240,9 @@
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="person" type="PersonLinkType"/>
-					<xs:element name="is_ia_eligible" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
