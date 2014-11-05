@@ -148,7 +148,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="tax_household" type="TaxHouseholdType">
+	<xs:element name="tax_household" type="TaxHouseholdLinkType">
 		<xs:annotation>
 			<xs:documentation>An instance of an Application Group that is subdivided based on tax filing relationships</xs:documentation>
 		</xs:annotation>
@@ -159,10 +159,11 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="tax_household_members" type="TaxHouseholdMemberType" maxOccurs="unbounded"/>
+				<xs:element name="tax_household_member" type="TaxHouseholdMemberType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="tax_household_size" type="TaxHouseholdSizeType"/>
 	<xs:element name="uqhp_enrollments">
 		<xs:annotation>
 			<xs:documentation>Unassisted Qualified Health Plan enrollments</xs:documentation>
@@ -194,6 +195,7 @@
 			</xs:element>
 			<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
 			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
+			<xs:element name="irs_group_id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="tax_households" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Tax household breakout for this application group based on applied ACA and HBX rules</xs:documentation>
@@ -238,6 +240,7 @@
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element name="irs_groups"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ApplicationGroupRequestType">
@@ -1005,6 +1008,20 @@
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="IrsGroupType">
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierSimpleType"/>
+			<xs:element name="tax_households">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="tax_household" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="comments"/>
+			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="MinimumEssentialCoverageType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -1181,29 +1198,9 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="irs_group_id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
 			<xs:element ref="tax_household_members"/>
-			<xs:element name="size">
-				<xs:annotation>
-					<xs:documentation>tax household member count</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="adult_count" type="xs:integer">
-							<xs:annotation>
-								<xs:documentation>Number of family members age 21 and older</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="child_count" type="xs:integer">
-							<xs:annotation>
-								<xs:documentation>Number of family members age 20 and under</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="total_count" type="xs:integer"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="tax_household_size"/>
 			<xs:element name="total_incomes_by_year" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Sum of all qualified household income sources, including incomes of person who pays taxes, spouse and dependents, less qualified deductions, by calendar year</xs:documentation>
@@ -1235,6 +1232,24 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="TaxHouseholdLinkType">
+		<xs:complexContent>
+			<xs:restriction base="TaxHouseholdType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
+					<xs:element ref="tax_household_members"/>
+					<xs:element ref="tax_household_size"/>
+					<xs:element name="is_active" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>This tax household is operative on the HBX</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="ResourceTimestampGroup"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="TaxHouseholdMemberType">
 		<xs:complexContent>
 			<xs:restriction base="IndividualType">
@@ -1247,6 +1262,24 @@
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TaxHouseholdSizeType">
+		<xs:annotation>
+			<xs:documentation>Tax Household counts by category</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="adult_count" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of family members age 21 and older</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="child_count" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of family members age 20 and under</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="total_count" type="xs:integer"/>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShopEnrollmentType">
 		<xs:annotation>
