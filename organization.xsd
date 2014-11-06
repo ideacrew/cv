@@ -2,6 +2,7 @@
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
+	<xs:include schemaLocation="policy.xsd"/>
 	<xs:element name="organization">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
@@ -179,4 +180,34 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+		<xs:complexType name="ResponsibleEntityType">
+		<xs:annotation>
+			<xs:documentation>An Entitity's HBX activity associated with sponsoring insurance coverage for others</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="entity_identifier" type="EntityNameType"/>
+			<xs:element name="organization" type="OrganizationType" minOccurs="0"/>
+			<xs:element name="policies" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EntityNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#key_person"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#parent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#responsible_party"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#guardian"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#ex_spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#significant_other"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#legal_representative"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#power_of_attorney"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
