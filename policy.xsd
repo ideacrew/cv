@@ -16,7 +16,6 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
-			<xs:element ref="members"/>
 			<xs:element name="enrollees">
 				<xs:complexType>
 					<xs:sequence>
