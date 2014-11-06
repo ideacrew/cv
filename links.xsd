@@ -24,20 +24,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="EntityNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#case_manager"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#key_person"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#parent"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#responsible_party"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#guardian"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#ex_spouse"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#significant_other"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#legal_representative"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#power_of_attorney"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
-		</xs:restriction>
-	</xs:simpleType>
+
 	<xs:simpleType name="EmploymentStatusNameType">
 		<xs:annotation>
 			<xs:documentation>A subscriber's employment status at time of enrollment</xs:documentation>
