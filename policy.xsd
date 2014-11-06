@@ -24,8 +24,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="responsible_party" type="ResponsiblePartyType" minOccurs="0">
-			</xs:element>
+			<xs:element name="responsible_party" type="ResponsiblePartyType" minOccurs="0"/>
 			<xs:element name="enrollment">
 				<xs:complexType>
 					<xs:sequence>

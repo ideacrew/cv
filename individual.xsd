@@ -104,12 +104,14 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="inverse_relationship_uri" type="PersonRelationshipNameType"/>
-	<xs:element name="policies">
+	<xs:element name="irs_groups">
 		<xs:annotation>
-			<xs:documentation>Collection of health care policy instances</xs:documentation>
+			<xs:documentation>Collection of IRS reporting groups</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:sequence/>
+			<xs:sequence>
+				<xs:element name="irs_group" type="IrsGroupType" maxOccurs="unbounded"/>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="person_inverse_relationship_uri" type="PersonRelationshipNameType" substitutionGroup="inverse_relationship_uri"/>
@@ -178,7 +180,7 @@
 		<xs:sequence>
 			<xs:element name="type" type="AlternateBenefitNameType"/>
 			<xs:element name="start_date" type="SimpleDateType"/>
-			<xs:element name="end_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="submitted_date" type="xs:dateTime"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -188,14 +190,14 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
 			<xs:element ref="applicants">
 				<xs:annotation>
 					<xs:documentation>Set of individuals who applying for health benefits</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
-			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
-			<xs:element name="irs_group_id" type="IdentifierType" minOccurs="0"/>
+			<xs:element ref="irs_groups" minOccurs="0"/>
 			<xs:element name="tax_households" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Tax household breakout for this application group based on applied ACA and HBX rules</xs:documentation>
@@ -203,6 +205,17 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="tax_household" type="TaxHouseholdType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="hbx_enrollments" minOccurs="0"/>
+			<xs:element name="enrollment_exemptions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="enrollment_exemption" type="EnrollmentExemptionType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -240,7 +253,6 @@
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
-			<xs:element name="irs_groups"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ApplicationGroupRequestType">
@@ -1159,22 +1171,6 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ResponsibleEntityType">
-		<xs:annotation>
-			<xs:documentation>An Entitity's HBX activity associated with sponsoring insurance coverage for others</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="entity_identifier" type="EntityNameType"/>
-			<xs:element name="organization_id" type="IdentifierType" minOccurs="0"/>
-			<xs:element name="policies" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="policy" type="PolicyLinkType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ResponsiblePartyType">
 		<xs:annotation>
 			<xs:documentation>An Individual's HBX activity associated with sponsoring insurance coverage for others</xs:documentation>
@@ -1212,17 +1208,6 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element ref="eligibility_determinations" minOccurs="0"/>
-			<xs:element name="enrollment_exemptions" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="enrollment_exemption" type="EnrollmentExemptionType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element ref="hbx_enrollments" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>This tax household is operative on the HBX</xs:documentation>
