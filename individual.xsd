@@ -15,6 +15,16 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="applicant_links">
+		<xs:annotation>
+			<xs:documentation>Set of Individual references</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="applicant_link" type="ApplicantLinkType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="application_group" type="ApplicationGroupType">
 		<xs:annotation>
 			<xs:documentation>Set of consumers who apply together for HBX services</xs:documentation>
@@ -50,6 +60,16 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="eligibility_determination_applicants">
+		<xs:annotation>
+			<xs:documentation>Set of Applicants evaluated under an eligibility determation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="eligibility_determination_applicant" type="EligibilityDeterminationApplicantType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="emergency_medicaid_enrollments">
 		<xs:complexType>
 			<xs:sequence>
@@ -57,6 +77,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="hbx_enrollment" type="HbxEnrollmentType"/>
 	<xs:element name="financial_reports">
 		<xs:annotation>
 			<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
@@ -161,7 +182,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="tax_household_member" type="TaxHouseholdMemberType" maxOccurs="unbounded"/>
+				<xs:element name="tax_household_member" type="ApplicantLinkType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -208,14 +229,15 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element ref="eligibility_determinations" minOccurs="0"/>
 			<xs:element ref="hbx_enrollments" minOccurs="0"/>
-			<xs:element name="enrollment_exemptions" minOccurs="0">
+			<xs:element name="hbx_enrollment_exemptions" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="enrollment_exemption" type="EnrollmentExemptionType" maxOccurs="unbounded"/>
+						<xs:element name="hbx_enrollment_exemption" type="HbxEnrollmentExemptionType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -549,7 +571,7 @@
 			<xs:element name="applicants">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="applicant" type="ApplicantLinkType" maxOccurs="unbounded"/>
+						<xs:element name="applicant" type="EligibilityDeterminationApplicantType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -564,7 +586,7 @@
 			</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="benchmark_plan" type="PlanLinkType">
+			<xs:element name="benchmark_plan" type="PlanLinkType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Silver plan used to calculate assistance values</xs:documentation>
 				</xs:annotation>
@@ -583,7 +605,7 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EnrollmentExemptionType">
+	<xs:complexType name="HbxEnrollmentExemptionType">
 		<xs:sequence>
 			<xs:element name="type" type="EnrollmentExemptionNameType"/>
 			<xs:element name="certificate_number" type="xs:string">
@@ -637,8 +659,16 @@
 			<xs:element name="type" type="HbxServiceNameType"/>
 			<xs:choice>
 				<xs:element ref="uqhp_enrollments" minOccurs="0"/>
-				<xs:element ref="ia_enrollments" minOccurs="0"/>
-				<xs:element ref="shop_enrollments" minOccurs="0"/>
+				<xs:element ref="ia_enrollments" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Insurance Assisted Qualified Health Plan enrollments</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="shop_enrollments" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Employer Sponsored Qualified Health Plan enrollments</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				<xs:element ref="hcr_chip_enrollments" minOccurs="0"/>
 				<xs:element ref="emergency_medicaid_enrollments" minOccurs="0"/>
 				<xs:element ref="streamlined_medicaid_enrollments" minOccurs="0"/>
@@ -1207,7 +1237,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element ref="eligibility_determinations" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>This tax household is operative on the HBX</xs:documentation>
@@ -1248,17 +1277,30 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="EligibilityDeterminationApplicantType">
+		<xs:complexContent>
+			<xs:restriction base="IndividualType">
+				<xs:sequence>
+					<xs:element name="person" type="PersonLinkType"/>
+					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="TaxHouseholdSizeType">
 		<xs:annotation>
 			<xs:documentation>Tax Household counts by category</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="adult_count" type="xs:integer">
+			<xs:element name="adult_count" type="xs:integer" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Number of family members age 21 and older</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="child_count" type="xs:integer">
+			<xs:element name="child_count" type="xs:integer" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Number of family members age 20 and under</xs:documentation>
 				</xs:annotation>

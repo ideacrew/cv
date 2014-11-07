@@ -24,7 +24,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:simpleType name="EmploymentStatusNameType">
 		<xs:annotation>
 			<xs:documentation>A subscriber's employment status at time of enrollment</xs:documentation>
@@ -59,6 +58,16 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:coverage_level#employee_and_spouse"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:element name="enrollees">
+		<xs:annotation>
+			<xs:documentation>Collection of policy enrollee member instances</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="enrollee" type="EnrolleeType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:complexType name="EmployerLinkType">
 		<xs:annotation>
 			<xs:documentation>Reference to an Employer instance </xs:documentation>
@@ -72,7 +81,7 @@
 	<xs:complexType name="PolicyLinkType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="enrollees"/>
+			<xs:element ref="enrollees"/>
 			<xs:element name="plan" type="PlanLinkType"/>
 			<xs:element name="market" type="AcaMarketPlaceNameType"/>
 			<xs:element name="coverage_period" type="DateRangeType"/>

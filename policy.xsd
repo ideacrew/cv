@@ -334,10 +334,10 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="person" type="PersonType"/>
-					<xs:element ref="person_relationships" minOccurs="0"/>
-					<xs:element name="person_demographics" type="PersonDemographicsType" minOccurs="0"/>
+					<xs:element ref="person_relationships"/>
+					<xs:element name="person_demographics" type="PersonDemographicsType"/>
 					<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
-					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
+					<xs:element name="person_health" type="IndividualHealthType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -404,9 +404,9 @@
 	</xs:simpleType>
 	<xs:complexType name="EnrollmentType">
 		<xs:sequence>
+			<xs:element name="type" type="EnrollmentNameType"/>
 			<xs:element name="market"/>
 			<xs:element ref="policy"/>
-			<xs:element name="type" type="EnrollmentNameType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="EnrollmentNameType">
