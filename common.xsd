@@ -539,7 +539,12 @@
 			</xs:element>
 			<xs:element name="reply_to" type="xs:anyURI" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Designates the consumer service urn endpoint where to transmit response</xs:documentation>
+					<xs:documentation>Designates the consumer service endpoint where to transmit response</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fault_to" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Endpoint to transmit unrecoverable error</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="correlation_id" type="xs:string" minOccurs="0">
