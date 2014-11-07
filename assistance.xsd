@@ -73,7 +73,6 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="applicant"/>
 	<xs:simpleType name="EmptyBooleanType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="true"/>
