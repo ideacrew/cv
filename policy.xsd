@@ -136,7 +136,7 @@
 		<xs:sequence>
 			<xs:element name="type" type="EnrollmentNameType"/>
 			<xs:element name="market"/>
-			<xs:element ref="policy"/>
+			<xs:element ref="policy" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PolicyEventType">
