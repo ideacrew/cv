@@ -171,11 +171,6 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="tax_household" type="TaxHouseholdLinkType">
-		<xs:annotation>
-			<xs:documentation>An instance of an Application Group that is subdivided based on tax filing relationships</xs:documentation>
-		</xs:annotation>
-	</xs:element>
 	<xs:element name="tax_household_members">
 		<xs:annotation>
 			<xs:documentation>Set of Applicants who belong to a single tax household</xs:documentation>
@@ -187,6 +182,13 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="tax_household_size" type="TaxHouseholdSizeType"/>
+	<xs:element name="tax_households">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="tax_household" type="TaxHouseholdLinkType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="uqhp_enrollments">
 		<xs:annotation>
 			<xs:documentation>Unassisted Qualified Health Plan enrollments</xs:documentation>
@@ -605,18 +607,6 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="HbxEnrollmentExemptionType">
-		<xs:sequence>
-			<xs:element name="type" type="EnrollmentExemptionNameType"/>
-			<xs:element name="certificate_number" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>HBX-assigned exemption certificate number</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="start_date" type="SimpleDateType"/>
-			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="FinancialReportType">
 		<xs:sequence>
 			<xs:element name="tax_filing_status" type="TaxFilerNameType"/>
@@ -647,6 +637,20 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HbxEnrollmentExemptionType">
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierSimpleType"/>
+			<xs:element name="type" type="EnrollmentExemptionNameType"/>
+			<xs:element name="certificate_number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>HBX-assigned exemption certificate number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="start_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -689,7 +693,8 @@
 	</xs:complexType>
 	<xs:complexType name="IaEnrollmentType">
 		<xs:sequence>
-			<xs:element name="policy" type="PolicyLinkType"/>
+			<xs:element name="policy_id" type="IdentifierSimpleType"/>
+			<xs:element name="eligibility_determination_id" type="IdentifierSimpleType"/>
 			<xs:element name="applied_aptc" type="CurrencyType"/>
 			<xs:element name="elected_aptc" type="CurrencyType" minOccurs="0"/>
 			<xs:element name="allocated_aptc" type="CurrencyType" minOccurs="0"/>
@@ -1053,10 +1058,17 @@
 	<xs:complexType name="IrsGroupType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierSimpleType"/>
-			<xs:element name="tax_households">
+			<xs:element name="tax_households_ids">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element ref="tax_household" maxOccurs="unbounded"/>
+						<xs:element name="tax_household_id" type="IdentifierSimpleType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="hbx_enrollment_ids">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="hbx_enrollment_id" type="IdentifierSimpleType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -1218,7 +1230,7 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="TaxHouseholdType">
+	<xs:complexType name="TaxHouseholdBaseType" abstract="true">
 		<xs:annotation>
 			<xs:documentation>Applicant sub-grouping for purpose of financial_report eligibility determination and enrollment</xs:documentation>
 		</xs:annotation>
@@ -1226,40 +1238,24 @@
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
 			<xs:element ref="tax_household_members"/>
-			<xs:element ref="tax_household_size"/>
-			<xs:element name="total_incomes_by_year" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Sum of all qualified household income sources, including incomes of person who pays taxes, spouse and dependents, less qualified deductions, by calendar year</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="total_income_by_year" type="CurrencyAmountPerAnnumType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="is_active" type="xs:boolean">
+			<xs:element ref="tax_household_size" minOccurs="0"/>
+			<xs:element name="total_incomes_by_year" type="TotalIncomesByYearType" minOccurs="0"/>
+			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This tax household is operative on the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdLinkType">
 		<xs:complexContent>
-			<xs:restriction base="TaxHouseholdType">
+			<xs:restriction base="TaxHouseholdBaseType">
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType"/>
 					<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
 					<xs:element ref="tax_household_members"/>
-					<xs:element ref="tax_household_size"/>
-					<xs:element name="is_active" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>This tax household is operative on the HBX</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -1276,6 +1272,37 @@
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TaxHouseholdType">
+		<xs:annotation>
+			<xs:documentation>Applicant sub-grouping for purpose of financial_report eligibility determination and enrollment</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="TaxHouseholdBaseType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
+					<xs:element ref="tax_household_members"/>
+					<xs:element ref="tax_household_size" minOccurs="0"/>
+					<xs:element name="total_incomes_by_year" type="TotalIncomesByYearType" minOccurs="0"/>
+					<xs:element name="is_active" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>This tax household is operative on the HBX</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="comments" minOccurs="0"/>
+					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TotalIncomesByYearType">
+		<xs:annotation>
+			<xs:documentation>Sum of all qualified household income sources, including incomes of person who pays taxes, spouse and dependents, less qualified deductions, by calendar year</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="total_income_by_year" type="CurrencyAmountPerAnnumType" maxOccurs="unbounded"/>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EligibilityDeterminationApplicantType">
 		<xs:complexContent>
@@ -1313,13 +1340,13 @@
 			<xs:documentation>An Individual's HBX activity associated with SHOP employers</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="policy" type="IdentifierSimpleType"/>
 			<xs:element name="employer" type="EmployerLinkType"/>
 			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="employer_contribution_amount" type="CurrencyType"/>
-			<xs:element name="policy" type="PolicyLinkType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="StreamlinedMedicaidEnrollmentType">
@@ -1329,7 +1356,8 @@
 	</xs:complexType>
 	<xs:complexType name="UQhpEnrollmentType">
 		<xs:sequence>
-			<xs:element name="policy" type="PolicyLinkType"/>
+			<xs:element name="policy" type="IdentifierSimpleType"/>
+			<xs:element name="eligibility_determination_id" type="IdentifierSimpleType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="AlternateBenefitNameType">
