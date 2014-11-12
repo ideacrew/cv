@@ -2,16 +2,12 @@
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
-	<xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
-	<xs:element name="applicants">
-		<xs:annotation>
-			<xs:documentation>Individual(s) who comprise an Application Group</xs:documentation>
-		</xs:annotation>
+	<xs:element name="affected_members">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="applicant" type="ApplicantType" maxOccurs="unbounded"/>
+				<xs:element name="affected_member" type="ApplicantLinkType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -22,6 +18,16 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="applicant_link" type="ApplicantLinkType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="applicants">
+		<xs:annotation>
+			<xs:documentation>Individual(s) who comprise an Application Group</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="applicant" type="ApplicantType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -45,13 +51,6 @@
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for an application group</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-	<xs:element name="affected_members">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="affected_member" type="ApplicantLinkType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
 	</xs:element>
 	<xs:element name="eligibility_determinations">
 		<xs:complexType>
@@ -77,7 +76,11 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="hbx_enrollment" type="HbxEnrollmentType"/>
+	<xs:element name="enrollment_group_uri" type="IdentifierSimpleType" substitutionGroup="resource_instance_uri">
+		<xs:annotation>
+			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="financial_reports">
 		<xs:annotation>
 			<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
@@ -88,13 +91,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="hcr_chip_enrollments">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="hcr_chip_enrollment" type="HcrChipEnrollmentType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+	<xs:element name="hbx_enrollment" type="HbxEnrollmentType"/>
 	<xs:element name="hbx_enrollments">
 		<xs:annotation>
 			<xs:documentation>Exchange-sponsored services used by this household</xs:documentation>
@@ -102,6 +99,13 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="hbx_enrollment" type="HbxEnrollmentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hcr_chip_enrollments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="hcr_chip_enrollment" type="HcrChipEnrollmentType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -118,6 +122,8 @@
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="individual_event" type="IndividualEventType"/>
+	<xs:element name="individual_response" type="IndividualResponseType"/>
+	<xs:element name="individual_request" type="IndividualRequestType"/>
 	<xs:element name="individual_update" type="IndividualUpdateType"/>
 	<xs:element name="individual_uri" type="IdentifierSimpleType" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
@@ -643,7 +649,7 @@
 	<xs:complexType name="HbxEnrollmentExemptionType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierSimpleType"/>
-			<xs:element name="type" type="EnrollmentExemptionNameType"/>
+			<xs:element name="type" type="HbxEnrollmentExemptionNameType"/>
 			<xs:element name="certificate_number" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>HBX-assigned exemption certificate number</xs:documentation>
@@ -1436,7 +1442,10 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#retirement"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="EnrollmentExemptionNameType">
+	<xs:simpleType name="HbxEnrollmentExemptionNameType">
+		<xs:annotation>
+			<xs:documentation>Kinds of qualified exemptions</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#hardship"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_exemption#health_care_ministry_member"/>

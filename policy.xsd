@@ -65,17 +65,6 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="EnrolleeType">
-		<xs:annotation>
-			<xs:documentation>An individual enrolled under a policy</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="member" type="EnrolleeMemberType"/>
-			<xs:element name="is_subscriber" type="xs:boolean"/>
-			<xs:element name="benefit_status" type="BenefitStatusNameType" minOccurs="0"/>
-			<xs:element name="benefit" type="EnrolleeBenefitType"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="EnrolleeMemberType">
 		<xs:complexContent>
 			<xs:restriction base="IndividualType">
@@ -124,14 +113,17 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:simpleType name="EnrollmentNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#initial_enrollment"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#special_enrollment"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#renewal"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#maintenance"/>
-		</xs:restriction>
-	</xs:simpleType>
+	<xs:complexType name="EnrolleeType">
+		<xs:annotation>
+			<xs:documentation>An individual enrolled under a policy</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="member" type="EnrolleeMemberType"/>
+			<xs:element name="is_subscriber" type="xs:boolean"/>
+			<xs:element name="benefit_status" type="BenefitStatusNameType" minOccurs="0"/>
+			<xs:element name="benefit" type="EnrolleeBenefitType"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="EnrollmentType">
 		<xs:sequence>
 			<xs:element name="type" type="EnrollmentNameType"/>
@@ -209,36 +201,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="PolicyEventNameType">
-		<xs:annotation>
-			<xs:documentation>Enumerated list of notification messages published for Policy resource</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:policies#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:policies#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:policies#deleted"/>
-			<xs:enumeration value="urn:openhbx:events:v1:policies#effectuated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:policies#canceled"/>
-			<xs:enumeration value="urn:openhbx:events:v1:policies#terminated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:policies#state_changed"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="PolicyRequestNameType">
-		<xs:annotation>
-			<xs:documentation>Request methods suported by Policy resource</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:requests:v1:policies"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#by_id"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#create"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#update"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#delete"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#effectuate"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#cancel"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#terminate"/>
-			<xs:enumeration value="urn:openhbx:requests:v1:policies#change_state"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="PolicyRequestType">
 		<xs:annotation>
 			<xs:documentation>Service call to Policy resource</xs:documentation>
@@ -450,6 +412,25 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="BenefitStatusNameType">
+		<xs:annotation>
+			<xs:documentation>Mode or status of activity for an enrollment</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#active"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#cobra"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#surviving_insured"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#tefra"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnrollmentNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#initial_enrollment"/>
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#special_enrollment"/>
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#renewal"/>
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#maintenance"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="EnrollmentStatusNameType">
 		<xs:annotation>
 			<xs:documentation>Enumerated list of process states for a policy</xs:documentation>
@@ -462,15 +443,34 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment_status#maintenance_submitted"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="BenefitStatusNameType">
+	<xs:simpleType name="PolicyEventNameType">
 		<xs:annotation>
-			<xs:documentation>Mode or status of activity for an enrollment</xs:documentation>
+			<xs:documentation>Enumerated list of notification messages published for Policy resource</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#active"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#cobra"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#surviving_insured"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#tefra"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#effectuated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#canceled"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#terminated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:policies#state_changed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PolicyRequestNameType">
+		<xs:annotation>
+			<xs:documentation>Request methods suported by Policy resource</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:requests:v1:policies"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#by_id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#create"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#update"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#delete"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#effectuate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#cancel"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#terminate"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:policies#change_state"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
