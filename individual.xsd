@@ -23,7 +23,7 @@
 	</xs:element>
 	<xs:element name="applicants">
 		<xs:annotation>
-			<xs:documentation>Individual(s) who comprise an Application Group</xs:documentation>
+			<xs:documentation>Individual who comprise an Application Group</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -76,18 +76,28 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="employer_links">
+		<xs:annotation>
+			<xs:documentation>Set of employer references</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="employer_link" type="EmployerLinkType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="enrollment_group_uri" type="IdentifierSimpleType" substitutionGroup="resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="financial_reports">
+	<xs:element name="financial_statements">
 		<xs:annotation>
-			<xs:documentation>Set of individuals who comprise this Application Group</xs:documentation>
+			<xs:documentation>Financial information used to determine insurance assistance eligibility</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="financial_report" type="FinancialReportType" maxOccurs="unbounded"/>
+				<xs:element name="financial_statement" type="FinancialStatementType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -549,10 +559,10 @@
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="employer" type="EmployerLinkType" minOccurs="0"/>
+					<xs:element ref="employer_links" minOccurs="0"/>
 					<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
-					<xs:element ref="financial_reports" minOccurs="0">
+					<xs:element ref="financial_statements" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 						</xs:annotation>
@@ -613,7 +623,7 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="FinancialReportType">
+	<xs:complexType name="FinancialStatementType">
 		<xs:sequence>
 			<xs:element name="tax_filing_status" type="TaxFilerNameType"/>
 			<xs:element name="is_tax_filing_together" type="xs:boolean"/>
@@ -1039,7 +1049,7 @@
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="employer" type="EmployerLinkType" minOccurs="0"/>
+			<xs:element ref="employer_links" minOccurs="0"/>
 			<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
@@ -1047,7 +1057,7 @@
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 			<xs:element ref="responsible_parties" minOccurs="0"/>
-			<xs:element ref="financial_reports" minOccurs="0">
+			<xs:element ref="financial_statements" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 				</xs:annotation>
@@ -1075,6 +1085,13 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="hbx_enrollment_id" type="IdentifierSimpleType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="hbx_enrollment_exemption_ids">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="hbx_enrollment_exemption_id" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -1238,7 +1255,7 @@
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdBaseType" abstract="true">
 		<xs:annotation>
-			<xs:documentation>Applicant sub-grouping for purpose of financial_report eligibility determination and enrollment</xs:documentation>
+			<xs:documentation>Applicant sub-grouping for purpose of financial_statement eligibility determination and enrollment</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -1281,7 +1298,7 @@
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdType">
 		<xs:annotation>
-			<xs:documentation>Applicant sub-grouping for purpose of financial_report eligibility determination and enrollment</xs:documentation>
+			<xs:documentation>Applicant sub-grouping for purpose of financial_statement eligibility determination and enrollment</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="TaxHouseholdBaseType">
