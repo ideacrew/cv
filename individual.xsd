@@ -1559,6 +1559,11 @@
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:requests:v1:individuals"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:individual#by_id"/>
+			<xs:enumeration value="urn:openhbx:requests:v1:individual#link">
+				<xs:annotation>
+					<xs:documentation>Accepts a set of attributes which are used to identify one, and only one, Individual instance</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:requests:v1:individual#create"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:individual#update"/>
 			<xs:enumeration value="urn:openhbx:requests:v1:individual#delete"/>
