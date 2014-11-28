@@ -82,11 +82,27 @@
 	</xs:simpleType>
 	<xs:complexType name="CuramApplicantType">
 		<xs:sequence>
-			<xs:element name="person_id"/>
-			<xs:element name="hbx_person_id" minOccurs="0"/>
-			<xs:element name="concern_role_id"/>
-			<xs:element name="participant_id"/>
-			<xs:element name="aceds_id" minOccurs="0"/>
+			<xs:element name="identifier_sets">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="identifier_set" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="person_id"/>
+									<xs:element name="hbx_person_id" minOccurs="0"/>
+									<xs:element name="participant_id"/>
+									<xs:element name="concern_role_id">
+										<xs:annotation>
+											<xs:documentation>Concern role IDs may repeat between identifier-sets</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="aceds_id" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="full_name"/>
 			<xs:element name="name_first" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
