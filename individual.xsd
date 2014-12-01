@@ -1363,7 +1363,7 @@
 			<xs:documentation>An Individual's HBX activity associated with SHOP employers</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="policy" type="IdentifierSimpleType"/>
+			<xs:element name="policy_id" type="IdentifierSimpleType"/>
 			<xs:element name="employer" type="EmployerLinkType"/>
 			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
@@ -1379,7 +1379,7 @@
 	</xs:complexType>
 	<xs:complexType name="UQhpEnrollmentType">
 		<xs:sequence>
-			<xs:element name="policy" type="IdentifierSimpleType"/>
+			<xs:element name="policy_id" type="IdentifierSimpleType"/>
 			<xs:element name="eligibility_determination_id" type="IdentifierSimpleType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
