@@ -128,7 +128,6 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="is_dental_only" type="xs:boolean"/>
-			<xs:element ref="rates"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PolicyLinkType">
