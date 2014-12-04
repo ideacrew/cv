@@ -76,13 +76,13 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="employer_links">
+	<xs:element name="employee_applicants">
 		<xs:annotation>
 			<xs:documentation>Set of employer references</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="employer_link" type="EmployerLinkType" maxOccurs="unbounded"/>
+				<xs:element name="employee_applicant" type="EmployeeApplicantType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -90,6 +90,16 @@
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
+	</xs:element>
+	<xs:element name="hbx_enrollment_exemptions">
+		<xs:annotation>
+			<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="hbx_enrollment_exemption" type="HbxEnrollmentExemptionType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
 	</xs:element>
 	<xs:element name="financial_statements">
 		<xs:annotation>
@@ -120,6 +130,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="ia_enrollments">
+		<xs:annotation>
+			<xs:documentation>Insurance Assisted Qualified Health Plan enrollments</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="ia_enrollment" type="IaEnrollmentType" maxOccurs="unbounded"/>
@@ -193,7 +206,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="tax_household_member" type="ApplicantLinkType" maxOccurs="unbounded"/>
+				<xs:element name="tax_household_member" type="TaxHouseholdMemberType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -201,7 +214,7 @@
 	<xs:element name="tax_households">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="tax_household" type="TaxHouseholdLinkType" maxOccurs="unbounded"/>
+				<xs:element name="tax_household" type="TaxHouseholdType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -236,29 +249,14 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
+			<xs:element name="renewal_consent_applicant_id" type="IdentifierSimpleType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Applicant who approved automatic renewal/eligibilty check</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element ref="irs_groups" minOccurs="0"/>
-			<xs:element name="tax_households" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Tax household breakout for this application group based on applied ACA and HBX rules</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="tax_household" type="TaxHouseholdType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element ref="eligibility_determinations" minOccurs="0"/>
+			<xs:element ref="tax_households" minOccurs="0"/>
 			<xs:element ref="hbx_enrollments" minOccurs="0"/>
-			<xs:element name="hbx_enrollment_exemptions" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="hbx_enrollment_exemption" type="HbxEnrollmentExemptionType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="qualifying_life_events" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
@@ -268,11 +266,6 @@
 						<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
-			</xs:element>
-			<xs:element name="renewal_consent_applicant_id" type="IdentifierSimpleType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Applicant who approved automatic renewal/eligibilty check</xs:documentation>
-				</xs:annotation>
 			</xs:element>
 			<xs:element name="renewal_consent_through_year" minOccurs="0">
 				<xs:annotation>
@@ -554,14 +547,20 @@
 					<xs:element ref="person_relationships"/>
 					<xs:element name="person_demographics" type="PersonDemographicsType"/>
 					<xs:element name="is_primary_applicant" type="xs:boolean"/>
+					<xs:element name="is_consent_applicant" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element ref="employer_links" minOccurs="0"/>
-					<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
+					<xs:element ref="employee_applicants" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Employer sponsored coverages</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
+					<xs:element name="broker_id" type="IdentifierSimpleType" minOccurs="0"/>
+					<xs:element ref="hbx_enrollment_exemptions" minOccurs="0"/>
 					<xs:element ref="financial_statements" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
@@ -586,13 +585,6 @@
 					<xs:documentation>Eligibility system workflow status</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="applicants">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="applicant" type="EligibilityDeterminationApplicantType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="maximum_aptc" type="CurrencyType">
 				<xs:annotation>
 					<xs:documentation>Premium tax credit assistance eligibility.  Available to household with income between 100% and 400% of the Federal Poverty Level (FPL)</xs:documentation>
@@ -604,7 +596,7 @@
 			</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="benchmark_plan" type="PlanLinkType" minOccurs="0">
+			<xs:element name="benchmark_plan_id" type="IdentifierSimpleType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Silver plan used to calculate assistance values</xs:documentation>
 				</xs:annotation>
@@ -621,6 +613,18 @@
 	<xs:complexType name="EmergencyMedicaidEnrollmentType">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployeeApplicantType">
+		<xs:annotation>
+			<xs:documentation>An Individual who is or has enrolled under employer sponsored coverage</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="employer_id" type="IdentifierSimpleType"/>
+			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
+			<xs:element name="eligibility_date" type="xs:date" minOccurs="0"/>
+			<xs:element name="start_date" type="xs:date"/>
+			<xs:element name="end_date" type="xs:date" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="FinancialStatementType">
@@ -708,6 +712,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IaEnrollmentType">
+		<xs:annotation>
+			<xs:documentation>Insurance Assisted Qualified Health Plan enrollments</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="policy_id" type="IdentifierSimpleType"/>
 			<xs:element name="eligibility_determination_id" type="IdentifierSimpleType"/>
@@ -1044,19 +1051,22 @@
 			<xs:element ref="person_relationships" minOccurs="0"/>
 			<xs:element name="person_demographics" type="PersonDemographicsType" minOccurs="0"/>
 			<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="is_consent_applicant" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="is_subscriber" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="employer_links" minOccurs="0"/>
-			<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
+			<xs:element ref="employee_applicants" minOccurs="0"/>
 			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
+			<xs:element name="broker_id" type="IdentifierSimpleType" minOccurs="0"/>
 			<xs:element ref="responsible_parties" minOccurs="0"/>
+			<xs:element ref="hbx_enrollment_exemptions" minOccurs="0"/>
 			<xs:element ref="financial_statements" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
@@ -1088,13 +1098,8 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="hbx_enrollment_exemption_ids">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="hbx_enrollment_exemption_id" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="effective_start_date" type="SimpleDateType"/>
+			<xs:element name="effective_end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element ref="comments"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
@@ -1263,6 +1268,7 @@
 			<xs:element ref="tax_household_members"/>
 			<xs:element ref="tax_household_size" minOccurs="0"/>
 			<xs:element name="total_incomes_by_year" type="TotalIncomesByYearType" minOccurs="0"/>
+			<xs:element ref="eligibility_determinations" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This tax household is operative on the HBX</xs:documentation>
@@ -1272,26 +1278,21 @@
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="TaxHouseholdLinkType">
-		<xs:complexContent>
-			<xs:restriction base="TaxHouseholdBaseType">
-				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
-					<xs:element name="primary_applicant_id" type="IdentifierSimpleType"/>
-					<xs:element ref="tax_household_members"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
 	<xs:complexType name="TaxHouseholdMemberType">
 		<xs:complexContent>
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="person" type="PersonLinkType"/>
+					<xs:element name="is_subscriber" type="xs:boolean"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
+					<xs:element ref="financial_statements">
+						<xs:annotation>
+							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -1308,6 +1309,7 @@
 					<xs:element ref="tax_household_members"/>
 					<xs:element ref="tax_household_size" minOccurs="0"/>
 					<xs:element name="total_incomes_by_year" type="TotalIncomesByYearType" minOccurs="0"/>
+					<xs:element ref="eligibility_determinations" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>This tax household is operative on the HBX</xs:documentation>
@@ -1367,7 +1369,8 @@
 			<xs:element name="employer" type="EmployerLinkType"/>
 			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 			<xs:element name="eligibility_start_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element name="eligibility_end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="start_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="employment_termination_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="employer_contribution_amount" type="CurrencyType"/>
 		</xs:sequence>
@@ -1378,6 +1381,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="UQhpEnrollmentType">
+		<xs:annotation>
+			<xs:documentation>Unassisted Qualified Health Plan enrollment type</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="policy_id" type="IdentifierSimpleType"/>
 			<xs:element name="eligibility_determination_id" type="IdentifierSimpleType" minOccurs="0"/>
