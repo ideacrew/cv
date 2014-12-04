@@ -1058,9 +1058,7 @@
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-      <xs:element name="employer" type="EmployerLinkType" minOccurs="0"/>
 			<xs:element ref="employee_applicants" minOccurs="0"/>
-			<xs:element name="is_head_of_household" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
