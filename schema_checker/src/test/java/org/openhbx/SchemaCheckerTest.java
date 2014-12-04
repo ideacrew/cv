@@ -62,11 +62,11 @@ public class SchemaCheckerTest {
   public void CheckPremiumStatementTest() throws Exception {
     checkSchema("premium_statement.xsd");
   }
-*/  
   @Test
   public void CheckProcessTest() throws Exception {
     checkSchema("process.xsd");
   }
+*/
   
   private void checkSchema(String schemaName) throws Exception {
     SchemaChecker sc = new SchemaChecker();

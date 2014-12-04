@@ -5,6 +5,7 @@
 	<xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="employer.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
+  <xs:include schemaLocation="individual.xsd"/>
 	<xs:element name="allocated_aptc_amount" type="CurrencyType"/>
 	<xs:element name="applied_aptc_amount" type="CurrencyType"/>
 	<xs:element name="policy" type="PolicyType"/>
@@ -49,7 +50,7 @@
 					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 					<xs:element ref="responsible_parties" minOccurs="0"/>
-					<xs:element ref="financial_reports" minOccurs="0">
+					<xs:element ref="financial_statements" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 						</xs:annotation>
@@ -97,7 +98,7 @@
 					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 					<xs:element ref="responsible_parties" minOccurs="0"/>
-					<xs:element ref="financial_reports" minOccurs="0">
+					<xs:element ref="financial_statements" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 						</xs:annotation>
