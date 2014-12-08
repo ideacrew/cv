@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:element name="aceds_id" type="xs:string"/>
+	<xs:element name="concern_role_id" type="xs:string"/>
+	<xs:element name="curam_applicant" type="CuramApplicantType"/>
+	<xs:element name="curam_applicants">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="curam_applicant" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hbx_person_id" type="xs:anyURI"/>
 	<xs:element name="integrated_cases">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
@@ -32,9 +43,10 @@
 																<xs:element name="pdc_applicant" maxOccurs="unbounded">
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element name="person_id"/>
-																			<xs:element name="hbx_person_id" minOccurs="0"/>
-																			<xs:element name="participant_id"/>
+																			<xs:element ref="person_id" minOccurs="0"/>
+																			<xs:element ref="hbx_person_id" minOccurs="0"/>
+																			<xs:element ref="participant_id" minOccurs="0"/>
+																			<xs:element ref="concern_role_id" minOccurs="0"/>
 																			<xs:element name="applicant_name"/>
 																			<xs:element name="consent_applicant"/>
 																			<xs:element name="is_enrolled_for_es_coverage"/>
@@ -73,13 +85,8 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:simpleType name="EmptyBooleanType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="true"/>
-			<xs:enumeration value="false"/>
-			<xs:enumeration value=""/>
-		</xs:restriction>
-	</xs:simpleType>
+	<xs:element name="participant_id" type="xs:string"/>
+	<xs:element name="person_id" type="xs:string"/>
 	<xs:complexType name="CuramApplicantType">
 		<xs:sequence>
 			<xs:element name="identifier_sets">
@@ -88,17 +95,17 @@
 						<xs:element name="identifier_set" maxOccurs="unbounded">
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="person_id"/>
-									<xs:element name="participant_id"/>
-									<xs:element name="hbx_person_id" minOccurs="0"/>
-									<xs:element name="aceds_id" minOccurs="0"/>
+									<xs:element ref="person_id"/>
+									<xs:element ref="participant_id" minOccurs="0"/>
+									<xs:element ref="hbx_person_id" minOccurs="0"/>
+									<xs:element ref="aceds_id" minOccurs="0"/>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="concern_role_id"/>
+			<xs:element ref="concern_role_id"/>
 			<xs:element name="full_name"/>
 			<xs:element name="name_first" type="xs:string" minOccurs="0"/>
 			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
@@ -212,14 +219,13 @@
 	<xs:complexType name="CuramIntegratedCaseType">
 		<xs:sequence/>
 	</xs:complexType>
-	<xs:element name="curam_applicant" type="CuramApplicantType"/>
-	<xs:element name="curam_applicants">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="curam_applicant" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+	<xs:simpleType name="EmptyBooleanType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value=""/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:group name="ResourceTimestampGroup">
 		<xs:sequence>
 			<xs:element name="created_at" type="xs:dateTime"/>
