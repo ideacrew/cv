@@ -118,6 +118,9 @@
 			<xs:element name="aptc_amount" minOccurs="0"/>
 			<xs:element name="csr" minOccurs="0"/>
 			<xs:element name="is_resident" type="EmptyBooleanType" minOccurs="0"/>
+			<xs:element name="is_pregnancy" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="pregnancy_end_date" type="xs:date" minOccurs="0"/>
+			<xs:element name="enrolled_on_medicaid_during_pregnancy" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_applicant" type="xs:boolean"/>
 			<xs:element name="citizen_status"/>
 			<xs:element name="tax_filing_status"/>
