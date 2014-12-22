@@ -389,7 +389,7 @@
 								</xs:complexType>
 							</xs:element>
 						</xs:choice>
-						<xs:element name="premium_amount_total"/>
+						<xs:element name="premium_total_amount"/>
 						<xs:element name="total_responsible_amount" type="CurrencyType"/>
 					</xs:sequence>
 				</xs:complexType>
