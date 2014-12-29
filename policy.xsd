@@ -123,6 +123,7 @@
 			<xs:element name="benefit" type="EnrolleeBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="enrollment" type="EnrollmentType"/>
 	<xs:complexType name="EnrollmentType">
 		<xs:sequence>
 			<xs:element name="type" type="EnrollmentNameType"/>
