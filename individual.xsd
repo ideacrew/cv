@@ -278,7 +278,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="submitted_date" type="SimpleDateType"/>
+			<xs:element name="submitted_at" type="xs:dateTime"/>
 			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Indicates this Application Group is operative on the HBX</xs:documentation>
@@ -1275,6 +1275,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
+			<xs:element name="submitted_at" type="xs:dateTime"/>
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -1316,6 +1317,7 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element ref="comments" minOccurs="0"/>
+					<xs:element name="submitted_at" type="xs:dateTime"/>
 					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
