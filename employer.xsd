@@ -39,6 +39,8 @@
 			<xs:restriction base="EmployerCensusFamilyMemberType">
 				<xs:sequence>
 					<xs:element name="name" type="PersonNameType"/>
+					<xs:element name="email" type="EmailType" minOccurs="0"/>
+					<xs:element name="address" type="AddressType"/>
 					<xs:element name="relationship" type="EmployerCensusFamilyRelationshipNameType"/>
 					<xs:element name="gender" type="GenderNameType"/>
 					<xs:element name="dob" type="SimpleDateType"/>
@@ -58,6 +60,8 @@
 			<xs:restriction base="EmployerCensusFamilyMemberType">
 				<xs:sequence>
 					<xs:element name="name" type="PersonNameType"/>
+					<xs:element name="email" type="EmailType" minOccurs="0"/>
+					<xs:element name="address" type="AddressType"/>
 					<xs:element name="relationship" type="EmployerCensusFamilyRelationshipNameType"/>
 					<xs:element name="gender" type="GenderNameType"/>
 					<xs:element name="dob" type="SimpleDateType"/>
@@ -69,6 +73,8 @@
 	<xs:complexType name="EmployerCensusFamilyMemberType" abstract="true">
 		<xs:sequence>
 			<xs:element name="name" type="PersonNameType"/>
+			<xs:element name="email" type="EmailType" minOccurs="0"/>
+			<xs:element name="address" type="AddressType"/>
 			<xs:element name="relationship" type="EmployerCensusFamilyRelationshipNameType"/>
 			<xs:element name="gender" type="GenderNameType"/>
 			<xs:element name="dob" type="SimpleDateType">
