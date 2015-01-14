@@ -2,11 +2,25 @@
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
-  <xs:include schemaLocation="plan.xsd"/>
+	<xs:include schemaLocation="plan.xsd"/>
 	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
 		</xs:annotation>
+	</xs:element>
+	<xs:element name="employer_census_families">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="employer_census_family_dependents">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="employer_census_family_member" type="EmployerCensusFamilyDependentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
 	</xs:element>
 	<xs:element name="employer_event" type="EmployerEventType">
 		<xs:annotation>
@@ -20,6 +34,75 @@
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:complexType name="EmployerCensusFamilyEmployeeType">
+		<xs:complexContent>
+			<xs:restriction base="EmployerCensusFamilyMemberType">
+				<xs:sequence>
+					<xs:element name="name" type="PersonNameType"/>
+					<xs:element name="relationship" type="EmployerCensusFamilyRelationshipNameType"/>
+					<xs:element name="gender" type="GenderNameType"/>
+					<xs:element name="dob" type="SimpleDateType"/>
+					<xs:element name="ssn">
+						<xs:annotation>
+							<xs:documentation>Social Security Number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="date_of_hire" type="SimpleDateType"/>
+					<xs:element name="date_of_termination" type="SimpleDateType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EmployerCensusFamilyDependentType">
+		<xs:complexContent>
+			<xs:restriction base="EmployerCensusFamilyMemberType">
+				<xs:sequence>
+					<xs:element name="name" type="PersonNameType"/>
+					<xs:element name="relationship" type="EmployerCensusFamilyRelationshipNameType"/>
+					<xs:element name="gender" type="GenderNameType"/>
+					<xs:element name="dob" type="SimpleDateType"/>
+					<xs:element name="ssn" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EmployerCensusFamilyMemberType" abstract="true">
+		<xs:sequence>
+			<xs:element name="name" type="PersonNameType"/>
+			<xs:element name="relationship" type="EmployerCensusFamilyRelationshipNameType"/>
+			<xs:element name="gender" type="GenderNameType"/>
+			<xs:element name="dob" type="SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>Date of Birth</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ssn" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Social Security Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date_of_hire" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="date_of_termination" type="SimpleDateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployerCensusFamilyType">
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierSimpleType"/>
+			<xs:element name="employee" type="EmployerCensusFamilyMemberType"/>
+			<xs:element name="dependents" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dependent" type="EmployerCensusFamilyDependentType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmployerCensusType">
+		<xs:sequence>
+			<xs:element ref="employer_census_families" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>Message structure for SHOP employer event</xs:documentation>
@@ -285,6 +368,7 @@
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
 			<xs:element name="plan_years" type="PlanYearType"/>
 			<xs:element ref="contacts"/>
+			<xs:element ref="employer_census_families" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicates this Employer is operative on the HBX</xs:documentation>
@@ -292,6 +376,7 @@
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PlanYearType">
@@ -358,16 +443,24 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="employee_roster" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="employee" type="IdentifierSimpleType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="BusinessEntityKindType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:employers#c_corporation   "/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#s_corporation"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#partnership"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#tax_exempt_organization"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmployerCensusFamilyRelationshipNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#self"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#dependent"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="EmployerEventNameType">
 		<xs:annotation>
 			<xs:documentation>Event notification types for SHOP employer</xs:documentation>
