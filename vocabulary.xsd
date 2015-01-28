@@ -5,4 +5,5 @@
 	    elementFormDefault="qualified">
   <xsd:include schemaLocation="common.xsd"/>
   <xsd:include schemaLocation="employer.xsd"/>
+  <xsd:include schemaLocation="document_storage.xsd"/>
 </xsd:schema>
