@@ -52,7 +52,7 @@ public class SchemaCheckerTest {
   public void CheckPolicyTest() throws Exception {
     checkSchema("policy.xsd");
   }
-  
+/*  
   @Test
   public void CheckPremiumPaymentTest() throws Exception {
     checkSchema("premium_payment.xsd");
@@ -62,11 +62,11 @@ public class SchemaCheckerTest {
   public void CheckPremiumStatementTest() throws Exception {
     checkSchema("premium_statement.xsd");
   }
-  
   @Test
   public void CheckProcessTest() throws Exception {
     checkSchema("process.xsd");
   }
+*/
   
   private void checkSchema(String schemaName) throws Exception {
     SchemaChecker sc = new SchemaChecker();
