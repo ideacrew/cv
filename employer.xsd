@@ -464,7 +464,10 @@
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#self"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#spouse"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:employers#dependent"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#domestic_partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#child_under_26"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#child_26and over"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#disabled_child_26and over"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EmployerEventNameType">
@@ -478,11 +481,12 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employers#terminated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#reinstated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_added"/>
-			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_changed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#broker_removed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_opened"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#enrollment_closed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#carrier_acknowledged_group"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#employee_hired"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employers#employee_terminated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employers#payment_initiated">
 				<xs:annotation>
 					<xs:documentation>Employer successfully completed online payment transaction</xs:documentation>
