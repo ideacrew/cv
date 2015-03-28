@@ -1284,7 +1284,7 @@
 					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
-					<xs:element ref="financial_statements">
+					<xs:element ref="financial_statements" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 						</xs:annotation>
@@ -1399,6 +1399,9 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#state_supplementary_payment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#tricare"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#veterans_benefits"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#health_care_for_peace_corp_volunteers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#naf_health_benefit_program"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:alternate_benefit#dod_non-appropriated_health_benefits"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ApplicationGroupEventNameType">
@@ -1476,8 +1479,22 @@
 	</xs:simpleType>
 	<xs:simpleType name="HouseholdStatusNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:household_state#approved"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:household_state#active"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#suspended"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#closed"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#open"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#submitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#approved"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#pending_closure"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#planned"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#canceled_planned"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#delayed_processing_pending"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#canceled"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#appeal_submitted"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#rejected"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#in_progress"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#completed"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:household_state#plan_submitted"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="IncomeFrequencyNameType">
@@ -1553,6 +1570,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:income#tax_exempt_interest"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income#unemployment_insurance"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:income#wages_and_salaries"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:income#income_from_irs"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="IndividualRequestNameType">
@@ -1626,6 +1644,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#child"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#father_or_mother"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#grandfather_or_grandmother"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#great_grandfather_or_great_grandmother"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#grandson_or_granddaughter"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#uncle_or_aunt"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#nephew_or_niece"/>
