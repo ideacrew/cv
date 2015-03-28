@@ -466,8 +466,8 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#spouse"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#domestic_partner"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#child_under_26"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:employers#child_26and over"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:employers#disabled_child_26and over"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#child_26_and_over"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#disabled_child_26_and_over"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EmployerEventNameType">
