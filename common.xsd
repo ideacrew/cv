@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
-	<xs:element name="addresses">
+	<xs:complexType name="AddressListType">
+		<xs:sequence>
+			<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="addresses" type="AddressListType">
 		<xs:annotation>
 			<xs:documentation>Collection of places where an individual or organization is situated</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
 	</xs:element>
 	<xs:element name="alias_ids">
 		<xs:annotation>
@@ -133,32 +134,32 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
+
+	<xs:simpleType name="AddressKindType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:address_type#home"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:address_type#mailing"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:address_type#work"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LocationStateCodeType">
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="AddressType">
 		<xs:annotation>
 			<xs:documentation>Physical street or mailing address</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="type">
-				<xs:simpleType>
-					<xs:restriction base="xs:anyURI">
-						<xs:enumeration value="urn:openhbx:terms:v1:address_type#home"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:address_type#mailing"/>
-						<xs:enumeration value="urn:openhbx:terms:v1:address_type#work"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="type" type="AddressKindType"/>
 			<xs:element name="address_line_1" type="xs:string"/>
 			<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
 			<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
 			<xs:element name="location_city_name" type="xs:string"/>
 			<xs:element name="location_state" type="UsStateNameType" minOccurs="0"/>
-			<xs:element name="location_state_code" minOccurs="1">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:length value="2"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="location_state_code" minOccurs="1" type="LocationStateCodeType"/>
 			<xs:element name="postal_code" type="xs:integer"/>
 			<xs:element name="location_postal_extension_code" type="xs:integer" minOccurs="0"/>
 			<xs:element name="location_country_name" type="xs:string" minOccurs="0"/>
@@ -623,6 +624,16 @@
 								<xs:documentation>Not found</xs:documentation>
 							</xs:annotation>
 						</xs:enumeration>
+						<xs:enumeration value="409">
+							<xs:annotation>
+								<xs:documentation>Conflict with existing resource</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="422">
+							<xs:annotation>
+								<xs:documentation>Invalid entity.  The request is structured correctly, but the content violates data constraints or workflow rules.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
 						<xs:enumeration value="500">
 							<xs:annotation>
 								<xs:documentation>Internal server error</xs:documentation>
@@ -674,7 +685,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="header" type="ServiceHeaderType"/>
-			<xs:element name="metadata" type="ServiceMetadataType"/>
+			<xs:element name="metadata" type="ServiceMetadataType" minOccurs="0"/>
 			<xs:element name="body" type="xs:anyType"/>
 		</xs:sequence>
 	</xs:complexType>

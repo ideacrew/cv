@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:include schemaLocation="links.xsd"/>
+	<xs:include schemaLocation="plan.xsd"/>
+	<xs:include schemaLocation="individual.xsd"/>
+
+	<xs:simpleType name="residencyVerificationResultCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#INVALID_ADDRESS"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#ADDRESS_NOT_IN_AREA"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#ADDRESS_IN_AREA"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="residency_verification_response" type="residencyVerificationResultCodeType"/>
+
+	<xs:complexType name="residencyVerificationResidenceAddressType">
+		<xs:complexContent>
+			<xs:restriction base="AddressType">
+				<xs:sequence>
+					<xs:element name="type">
+						<xs:simpleType>
+							<xs:restriction base="AddressKindType">
+								<xs:enumeration value="urn:openhbx:terms:v1:address_type#home"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="address_line_1" type="xs:string"/>
+					<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
+					<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
+					<xs:element name="location_city_name" type="xs:string"/>
+					<xs:element name="location_state" type="UsStateNameType" minOccurs="0"/>
+					<xs:element name="location_state_code" minOccurs="1" type="LocationStateCodeType"/>
+					<xs:element name="postal_code" type="xs:integer"/>
+					<xs:element name="location_postal_extension_code" type="xs:integer" minOccurs="0"/>
+					<xs:element name="location_country_name" type="xs:string" minOccurs="0"/>
+					<xs:element name="location_country_code" type="xs:anyURI" minOccurs="0"/>
+					<xs:element name="address_full_text" type="xs:string" minOccurs="0"/>
+					<xs:element name="location" type="LocationNameType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="residenceAddressListType">
+		<xs:complexContent>
+			<xs:restriction base="AddressListType">
+				<xs:sequence>
+					<xs:element name="address" type="residencyVerificationResidenceAddressType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="residencyVerificationRequestBodyType">
+		<xs:sequence>
+			<xs:element name="person">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="PersonType">
+							<xs:sequence>
+								<xs:element name="id" type="IdentifierType"/>
+								<xs:element name="person_name" type="PersonNameType"/>
+								<xs:element name="addresses" type="residenceAddressListType"/>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="residency_verification_request" type="residencyVerificationRequestBodyType"/>
+
+	<xs:complexType name="residencyVerificationRequestType">
+		<xs:complexContent>
+			<xs:restriction base="ServiceRequestType">
+				<xs:sequence>
+					<xs:element name="request_name">
+						<xs:simpleType>
+							<xs:restriction base="xs:anyURI">
+								<xs:enumeration value="urn:openhbx:requests:v1:individual#verify_residency"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="body">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="residency_verification_request"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="residencyVerificationResponseType">
+		<xs:complexContent>
+			<xs:restriction base="ServiceResponseType">
+				<xs:sequence>
+					<xs:element name="header">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:restriction base="ServiceHeaderType">
+									<xs:sequence>
+										<xs:element name="hbx_id" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>CMS-assigned Health Benefit Exchange identifier, e.g. DC0</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="submitted_timestamp" type="xs:dateTime">
+											<xs:annotation>
+												<xs:documentation>UTC date and time when event occured</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="status" type="ServiceStatusType">
+											<xs:annotation>
+												<xs:documentation>Indicate success or failure of a request to a service</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:restriction>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="metadata" type="ServiceMetadataType"/>
+					<xs:element name="body">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="residency_verification_response"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
