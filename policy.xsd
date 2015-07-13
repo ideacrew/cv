@@ -473,7 +473,7 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:policies#change_state"/>
 		</xs:restriction>
 	</xs:simpleType>
-		<xs:simpleType name="IssuerNameType">
+	<xs:simpleType name="IssuerNameType">
 		<xs:annotation>
 			<xs:documentation>Active and former carriers on the Health Benefit Exchange</xs:documentation>
 		</xs:annotation>
@@ -490,5 +490,49 @@
 			<xs:enumeration value="urn:dc0:terms:v1:issuer_names#met_life"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:element name="coverage_quote_request" type="coverageQuoteRequestType"/>
+
+	<xs:element name="coverage_quote" type="coverageQuoteResponseType"/>
+
+	<xs:complexType name="coverageQuoteRequestType">
+		<xs:sequence>
+			<xs:element name="enrollees">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="enrollee" type="EnrolleeType" maxOccurs="unbounded" minOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="enrollment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="plan" type="PlanLinkType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="coverageQuoteResponseType">
+		<xs:sequence>
+			<xs:element name="enrollees">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="enrollee" type="EnrolleeType" maxOccurs="unbounded" minOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="enrollment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="plan" type="PlanLinkType"/>
+						<xs:element name="premium_total_amount" type="CurrencyType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
 
 </xs:schema>
