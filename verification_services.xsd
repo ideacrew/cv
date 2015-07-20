@@ -7,7 +7,6 @@
 
 	<xs:simpleType name="residencyVerificationResultCodeType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#INVALID_ADDRESS"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#ADDRESS_NOT_IN_AREA"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#ADDRESS_IN_AREA"/>
 		</xs:restriction>
@@ -15,54 +14,16 @@
 
 	<xs:element name="residency_verification_response" type="residencyVerificationResultCodeType"/>
 
-	<xs:complexType name="residencyVerificationResidenceAddressType">
-		<xs:complexContent>
-			<xs:restriction base="AddressType">
-				<xs:sequence>
-					<xs:element name="type">
-						<xs:simpleType>
-							<xs:restriction base="AddressKindType">
-								<xs:enumeration value="urn:openhbx:terms:v1:address_type#home"/>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-					<xs:element name="address_line_1" type="xs:string"/>
-					<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
-					<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
-					<xs:element name="location_city_name" type="xs:string"/>
-					<xs:element name="location_state" type="UsStateNameType" minOccurs="0"/>
-					<xs:element name="location_state_code" minOccurs="1" type="LocationStateCodeType"/>
-					<xs:element name="postal_code" type="xs:integer"/>
-					<xs:element name="location_postal_extension_code" type="xs:integer" minOccurs="0"/>
-					<xs:element name="location_country_name" type="xs:string" minOccurs="0"/>
-					<xs:element name="location_country_code" type="xs:anyURI" minOccurs="0"/>
-					<xs:element name="address_full_text" type="xs:string" minOccurs="0"/>
-					<xs:element name="location" type="LocationNameType" minOccurs="0"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-
-	<xs:complexType name="residenceAddressListType">
-		<xs:complexContent>
-			<xs:restriction base="AddressListType">
-				<xs:sequence>
-					<xs:element name="address" type="residencyVerificationResidenceAddressType"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-
 	<xs:complexType name="residencyVerificationRequestBodyType">
 		<xs:sequence>
-			<xs:element name="person">
+			<xs:element name="individual">
 				<xs:complexType>
 					<xs:complexContent>
-						<xs:restriction base="PersonType">
+						<xs:restriction base="IndividualType">
 							<xs:sequence>
 								<xs:element name="id" type="IdentifierType"/>
-								<xs:element name="person_name" type="PersonNameType"/>
-								<xs:element name="addresses" type="residenceAddressListType"/>
+								<xs:element name="person" type="PersonType"/>
+								<xs:element name="person_demographics" type="PersonDemographicsType"/>
 							</xs:sequence>
 						</xs:restriction>
 					</xs:complexContent>
