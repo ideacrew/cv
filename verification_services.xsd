@@ -6,29 +6,135 @@
 	<xs:include schemaLocation="individual.xsd"/>
 
 	<xs:simpleType name="residencyVerificationResultCodeType">
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#ADDRESS_NOT_IN_AREA"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:address_verification#ADDRESS_IN_AREA"/>
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:complexType name="verificationQuestionResponseOptionType">
+		<xs:sequence>
+		   <xs:element name="response_id" type="xs:string" minOccurs="0"/>
+                   <xs:element name="response_text" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="verificationQuestionResponseOptionListType">
+		<xs:sequence>
+	          <xs:element name="response_option" type="verificationQuestionResponseOptionType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="verificationQuestionPromptType">
+		<xs:sequence>
+			<xs:element name="question_id" type="xs:string"/>
+			<xs:element name="question_text" type="xs:string"/>
+			<xs:element name="response_options" type="verificationQuestionResponseOptionListType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="verificationQuestionResponseType">
+		<xs:sequence>
+			<xs:element name="question_id" type="xs:string"/>
+	                <xs:element name="answer" type="verificationQuestionResponseOptionType" minOccurs="1" maxOccurs="unbounded"/>
+         	</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="verificationQuestionResponseSubmissionType">
+		<xs:sequence>
+			<xs:element name="session_id" type="xs:string"/>
+			<xs:element name="question_response" type="verificationQuestionResponseType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="interactiveVerificationResponseCodeType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:interactive_identity_verification#FAILURE"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:interactive_identity_verification#SUCCESS"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:interactive_identity_verification#MORE_INFORMATION_REQUIRED"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="interactiveVerificationCompleteResponseCodeType">
+		<xs:restriction base="interactiveVerificationResponseCodeType">
+			<xs:enumeration value="urn:openhbx:terms:v1:interactive_identity_verification#FAILURE"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:interactive_identity_verification#SUCCESS"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="interactiveVerificationSessionResponseCodeType">
+		<xs:restriction base="interactiveVerificationResponseCodeType">
+			<xs:enumeration value="urn:openhbx:terms:v1:interactive_identity_verification#MORE_INFORMATION_REQUIRED"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="interactiveVerificationResponseType">
+		<xs:sequence>
+			<xs:element name="response_code" type="interactiveVerificationResponseCodeType"/>
+			<xs:element name="response_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="session_id" type="xs:string" minOccurs="0"/>
+		        <xs:element name="question" type="verificationQuestionPromptType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="interactiveVerificationCompletedResponseType">
+		<xs:complexContent>
+			<xs:restriction base="interactiveVerificationResponseType">
+				<xs:sequence>
+					<xs:element name="response_code" type="interactiveVerificationCompleteResponseCodeType"/>
+					<xs:element name="response_text" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="verificationSessionResponseRequiredResponseType">
+		<xs:complexContent>
+			<xs:restriction base="interactiveVerificationResponseType">
+				<xs:sequence>
+					<xs:element name="response_code" type="interactiveVerificationSessionResponseCodeType"/>
+			                <xs:element name="session_id" type="xs:string"/>
+		                        <xs:element name="question" type="verificationQuestionPromptType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="verificationIndividualType">
+		<xs:complexContent>
+			<xs:restriction base="IndividualType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="person" type="PersonType"/>
+					<xs:element name="person_demographics" type="PersonDemographicsType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+        <xs:complexType name="interactiveVerificationSessionStartRequestBodyType">
+		<xs:sequence>
+			<xs:element name="individual" type="verificationIndividualType"/>
+		</xs:sequence>
+        </xs:complexType>
+
+	<xs:complexType name="interactiveVerificationResultBodyType">
+		<xs:choice>
+			<xs:element name="verification_result" type="interactiveVerificationCompletedResponseType"/>
+			<xs:element name="session" type="verificationSessionResponseRequiredResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:element name="interactive_verification_start" type="interactiveVerificationSessionStartRequestBodyType"/>
+
+	<xs:element name="interactive_verification_question_response" type="verificationQuestionResponseSubmissionType"/>
+	<xs:element name="interactive_verification_result" type="interactiveVerificationResultBodyType"/>
+
 	<xs:element name="residency_verification_response" type="residencyVerificationResultCodeType"/>
 
 	<xs:complexType name="residencyVerificationRequestBodyType">
 		<xs:sequence>
-			<xs:element name="individual">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:restriction base="IndividualType">
-							<xs:sequence>
-								<xs:element name="id" type="IdentifierType"/>
-								<xs:element name="person" type="PersonType"/>
-								<xs:element name="person_demographics" type="PersonDemographicsType"/>
-							</xs:sequence>
-						</xs:restriction>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="individual" type="verificationIndividualType"/>
 		</xs:sequence>
 	</xs:complexType>
 
