@@ -372,7 +372,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
-			<xs:element name="plan_years" type="PlanYearType"/>
+			<xs:element name="plan_years" type="PlanYearListType"/>
 			<xs:element ref="contacts"/>
 			<xs:element ref="employer_census_families" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
@@ -383,6 +383,11 @@
 			<xs:element ref="comments" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PlanYearListType">
+		<xs:sequence>
+			<xs:element name="plan_year" type="PlanYearType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PlanYearType">
