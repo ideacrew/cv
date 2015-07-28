@@ -3,6 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
+	<xs:include schemaLocation="organization.xsd"/>
 	<xs:element name="employer" type="EmployerType">
 		<xs:annotation>
 			<xs:documentation>SHOP employer instance</xs:documentation>
@@ -372,6 +373,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
+			<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 			<xs:element name="plan_years" type="PlanYearListType"/>
 			<xs:element ref="contacts"/>
 			<xs:element ref="employer_census_families" minOccurs="0"/>
@@ -402,7 +404,6 @@
 					<xs:documentation>Date employer plan eligibility ends</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="broker" type="IdentifierSimpleType" minOccurs="0"/>
 			<xs:element name="fte_count" type="xs:integer">
 				<xs:annotation>
 					<xs:documentation>Number of full-time-employees</xs:documentation>

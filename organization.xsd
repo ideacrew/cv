@@ -84,7 +84,7 @@
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
 						<xs:annotation>
-							<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
+							<xs:documentation>Indicator that organization is operative on the HBX</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
@@ -92,9 +92,25 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="BrokerType">
+
+	<xs:complexType name="BrokerAgencyAttributesType">
+		<xs:sequence>
+		  <xs:element name="npn" type="NpnIdType"/>
+		  <xs:element name="primary_broker" type="BrokerType"/>
+		  <xs:element name="brokers" type="BrokerAgencyBrokersListType" />
+		  <xs:element name="tpa" type="TpaType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BrokerAgencyBrokersListType">
+          <xs:sequence>
+             <xs:element name="broker" minOccurs="0" maxOccurs="unbounded" type="BrokerType"/>
+	  </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BrokerAgencyType">
 		<xs:annotation>
-			<xs:documentation>An insurance specialist who provides advice and sells insurance to businesses and consumers</xs:documentation>
+			<xs:documentation>An organization specializing in advice about and sale of insurance products to businesses and consumers</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="OrganizationType">
@@ -120,6 +136,7 @@
 							<xs:documentation>Organization name in shortened, free-form text</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 					<xs:element ref="phones" minOccurs="0"/>
 					<xs:element ref="emails" minOccurs="0"/>
@@ -129,11 +146,22 @@
 							<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="extended_attributes" type="TpaType" minOccurs="0"/>
+					<xs:element name="extended_attributes" type="BrokerAgencyAttributesType"/>
 					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BrokerType">
+		<xs:annotation>
+			<xs:documentation>An insurance specialist who provides advice and sells insurance to businesses and consumers</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="person" type="PersonType"/>
+			<xs:element name="npn" type="NpnIdType"/>
+			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="HbxType">
 		<xs:annotation>
@@ -180,7 +208,7 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-		<xs:complexType name="ResponsibleEntityType">
+	<xs:complexType name="ResponsibleEntityType">
 		<xs:annotation>
 			<xs:documentation>An Entitity's HBX activity associated with sponsoring insurance coverage for others</xs:documentation>
 		</xs:annotation>
@@ -210,4 +238,19 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:complexType name="BrokerAccountType">
+		<xs:sequence>
+			<xs:element name="broker_agency" type="BrokerAgencyType"/>
+			<xs:element name="writing_agent" type="BrokerType"/>
+			<xs:element name="start_on" type="SimpleDateType"/>
+			<xs:element name="end_on" type="SimpleDateType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BrokerAccountListType">
+		<xs:sequence>
+			<xs:element name="broker_account" type="BrokerAccountType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
