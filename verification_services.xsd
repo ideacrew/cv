@@ -72,6 +72,7 @@
 		<xs:sequence>
 			<xs:element name="response_code" type="interactiveVerificationResponseCodeType"/>
 			<xs:element name="response_text" type="xs:string" minOccurs="0"/>
+			<xs:element name="transaction_id" type="xs:string"/>
 			<xs:element name="session_id" type="xs:string" minOccurs="0"/>
 		        <xs:element name="question" type="verificationQuestionPromptType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -83,6 +84,7 @@
 				<xs:sequence>
 					<xs:element name="response_code" type="interactiveVerificationCompleteResponseCodeType"/>
 					<xs:element name="response_text" type="xs:string" minOccurs="0"/>
+					<xs:element name="transaction_id" type="xs:string"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -93,6 +95,7 @@
 			<xs:restriction base="interactiveVerificationResponseType">
 				<xs:sequence>
 					<xs:element name="response_code" type="interactiveVerificationSessionResponseCodeType"/>
+					<xs:element name="transaction_id" type="xs:string"/>
 					<xs:element name="session_id" type="xs:string"/>
 					<xs:element name="question" type="verificationQuestionPromptType" minOccurs="1" maxOccurs="unbounded"/>
 				</xs:sequence>
