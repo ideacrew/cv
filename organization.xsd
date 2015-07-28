@@ -233,10 +233,10 @@
 
 	<xs:complexType name="BrokerAccountType">
 		<xs:sequence>
-			<xs:element name="broker_agency" type="BrokerAgencyType"/>
+			<xs:element name="broker_agency" type="BrokerAgencyLinkType"/>
 			<xs:element name="writing_agent" type="BrokerType"/>
 			<xs:element name="start_on" type="SimpleDateType"/>
-			<xs:element name="end_on" type="SimpleDateType"/>
+			<xs:element name="end_on" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -440,11 +440,11 @@
 
 	<xs:complexType name="EmployerProfileType">
 		<xs:sequence>
+			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
 			<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 			<xs:element name="plan_years" type="PlanYearListType"/>
 			<xs:element ref="employer_census_families" minOccurs="0"/>
-			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -466,7 +466,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="broker_agency_profile" type="BrokerAgencyProfileType" minOccurs="0"/>
-			<xs:element name="employer_profile" type="BrokerAgencyProfileType" minOccurs="0"/>
+			<xs:element name="employer_profile" type="EmployerProfileType" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -490,7 +490,34 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="broker_agency_profile" type="BrokerAgencyProfileType"/>
-					<xs:element name="employer_profile" type="BrokerAgencyProfileType" minOccurs="0"/>
+					<xs:element name="employer_profile" type="EmployerProfileType" minOccurs="0"/>
+					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EmployerOrganizationType">
+		<xs:annotation>
+			<xs:documentation>An organization specializing in advice about and sale of insurance products to businesses and consumers</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="OrganizationWithRolesType">
+				<xs:sequence>
+					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
+					<xs:element name="fein" type="FederalTaxIdType"/>
+					<xs:element ref="addresses" minOccurs="0"/>
+					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
+					<xs:element ref="phones" minOccurs="0"/>
+					<xs:element ref="emails" minOccurs="0"/>
+					<xs:element ref="contacts" minOccurs="0"/>
+					<xs:element name="is_active" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="broker_agency_profile" type="BrokerAgencyProfileType" minOccurs="0"/>
+					<xs:element name="employer_profile" type="EmployerProfileType"/>
 					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
