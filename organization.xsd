@@ -11,7 +11,22 @@
                         <xs:enumeration value="urn:openhbx:events:v1:employers#partnership"/>
                         <xs:enumeration value="urn:openhbx:events:v1:employers#tax_exempt_organization"/>
                 </xs:restriction>
-        </xs:simpleType>
+	</xs:simpleType>
+
+	<xs:complexType name="OfficeLocationType">
+		<xs:sequence>
+			<xs:element name="primary" type="xs:boolean"/>
+			<xs:element name="address" type="AddressType" minOccurs="0"/>
+			<xs:element name="phone" type="PhoneType" minOccurs="0"/>
+			<xs:element name="email" type="EmailType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OfficeLocationListType">
+		<xs:sequence>
+			<xs:element name="office_location" minOccurs="0" maxOccurs="unbounded" type="OfficeLocationType"/>
+		</xs:sequence>
+	</xs:complexType>
 
 	<xs:element name="organization">
 		<xs:annotation>
@@ -49,32 +64,10 @@
 			<xs:documentation>Base class for companies and agencies</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Organization formal name in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="dba" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Doing Business As in free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="display_name" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Organization name as presesnted in UI</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="abbreviation" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Organization name in shortened, free-form text</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+		        <xs:group ref="OrganizationTypeCommonElementsGroup"/>
 			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-			<xs:element ref="addresses" minOccurs="0"/>
+			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-			<xs:element ref="phones" minOccurs="0"/>
-			<xs:element ref="emails" minOccurs="0"/>
 			<xs:element ref="contacts" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
@@ -92,31 +85,10 @@
 		<xs:complexContent>
 			<xs:restriction base="OrganizationType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
-					<xs:element name="name" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>Organization formal name in free-form text</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dba" type="xs:string" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Doing Business As in free-form text</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="display_name" type="xs:string" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Organization name as presesnted in UI</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="abbreviation" type="xs:string" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Organization name in shortened, free-form text</xs:documentation>
-						</xs:annotation>
-					</xs:element>
+					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
+			                <xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-					<xs:element ref="phones" minOccurs="0"/>
-					<xs:element ref="emails" minOccurs="0"/>
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
 						<xs:annotation>
@@ -162,32 +134,10 @@
 		<xs:complexContent>
 			<xs:restriction base="OrganizationType">
 				<xs:sequence>
-					<xs:element name="id" type="IdentifierType"/>
-					<xs:element name="name" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>Organization formal name in free-form text</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dba" type="xs:string" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Doing Business As in free-form text</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="display_name" type="xs:string" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Organization name as presesnted in UI</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="abbreviation" type="xs:string" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Organization name in shortened, free-form text</xs:documentation>
-						</xs:annotation>
-					</xs:element>
+					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-					<xs:element ref="addresses" minOccurs="0"/>
+			                <xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-					<xs:element ref="phones" minOccurs="0"/>
-					<xs:element ref="emails" minOccurs="0"/>
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
 						<xs:annotation>
@@ -455,10 +405,8 @@
 		<xs:sequence>
 			<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-			<xs:element ref="addresses" minOccurs="0"/>
+			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-			<xs:element ref="phones" minOccurs="0"/>
-			<xs:element ref="emails" minOccurs="0"/>
 			<xs:element ref="contacts" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
@@ -479,10 +427,8 @@
 				<xs:sequence>
 					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-					<xs:element ref="addresses" minOccurs="0"/>
+					<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-					<xs:element ref="phones" minOccurs="0"/>
-					<xs:element ref="emails" minOccurs="0"/>
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
 						<xs:annotation>
@@ -506,10 +452,8 @@
 				<xs:sequence>
 					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 					<xs:element name="fein" type="FederalTaxIdType"/>
-					<xs:element ref="addresses" minOccurs="0"/>
+					<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
-					<xs:element ref="phones" minOccurs="0"/>
-					<xs:element ref="emails" minOccurs="0"/>
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
 						<xs:annotation>
