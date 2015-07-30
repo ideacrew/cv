@@ -43,6 +43,7 @@
 	<xs:complexType name="verificationQuestionResponseSubmissionType">
 		<xs:sequence>
 			<xs:element name="session_id" type="xs:string"/>
+			<xs:element name="transaction_id" type="xs:string"/>
 			<xs:element name="question_response" type="verificationQuestionResponseType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
