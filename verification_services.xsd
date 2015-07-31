@@ -208,4 +208,71 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+
+	<xs:simpleType name="LawfulPresencePresenceCodeType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#lawful_permanent_resident"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#application_pending"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#non_immigrant"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#refugee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#asylee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#temporary_resident"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#citizen"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#student"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#asylum_application_pending"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#daca"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#temporary_protected_status"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#other"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LawfulPresenceEmploymentAuthorizedCodeType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:employment_authorization#authorized"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:employment_authorization#denied"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:employment_authorization#temporary_authorization"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:employment_authorization#cnmi_authorized_only"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LawfulPresenceResponseDeterminedCodeType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:determination#lawfully_present"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:determination#not_lawfully_present"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LawfulPresenceResponseIndeterminateCodeType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:determination#invalid_information"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:determination#additional_verification_required"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="LawfulPresenceResponseType">
+		<xs:choice>
+			<xs:element name="lawful_presence_indeterminate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="response_code" type="LawfulPresenceResponseIndeterminateCodeType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="lawful_presence_determination">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="response_code" type="LawfulPresenceResponseDeterminedCodeType"/>
+						<xs:element name="legal_status" type="LawfulPresencePresenceCodeType"/>
+						<xs:element name="employment_authorized" type="LawfulPresenceEmploymentAuthorizedCodeType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:element name="lawful_presence" type="LawfulPresenceResponseType">
+		<xs:annotation>
+			<xs:documentation>This element is the response body provided to a request for lawful presence information.</xs:documentation>
+	   </xs:annotation>
+	</xs:element>
 </xs:schema>
