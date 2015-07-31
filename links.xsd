@@ -63,7 +63,7 @@
 					<xs:documentation>Organization name as presesnted in UI</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="is_active" type="xs:boolean">
+			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
 				</xs:annotation>
@@ -127,6 +127,7 @@
 					<xs:documentation>Display name for plan in free form text</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
 			<xs:element name="is_dental_only" type="xs:boolean"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -188,4 +189,26 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:policy_state#hbx_terminated"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+<xs:complexType name="BrokerAgencyLinkType">
+                <xs:annotation>
+                        <xs:documentation>An organization specializing in advice about and sale of insurance products to businesses and consumers</xs:documentation>
+                </xs:annotation>
+                                <xs:sequence>
+                                        <xs:element name="id" type="IdentifierType"/>
+                                        <xs:element name="name" type="xs:string">
+                                                <xs:annotation>
+                                                        <xs:documentation>Organization formal name in free-form text</xs:documentation>
+                                                </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="display_name" type="xs:string" minOccurs="0">
+                                                <xs:annotation>
+                                                        <xs:documentation>Organization name as presesnted in UI</xs:documentation>
+                                                </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
+                                        <xs:element name="npn" type="NpnIdType"/>
+                                        <xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+                                </xs:sequence>
+        </xs:complexType>
 </xs:schema>

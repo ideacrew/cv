@@ -61,7 +61,7 @@
 			<xs:element ref="maximums" minOccurs="0"/>
 			<xs:element ref="deductables" minOccurs="0"/>
 			<xs:element name="metadata" type="xs:string" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PlanType">
@@ -90,11 +90,7 @@
 					<xs:element ref="maximums" minOccurs="0"/>
 					<xs:element ref="deductables" minOccurs="0"/>
 					<xs:element name="metadata" type="xs:string" minOccurs="0"/>
-					<xs:sequence>
-						<xs:element name="created_at" type="xs:dateTime"/>
-						<xs:element name="modified_at" type="xs:dateTime"/>
-						<xs:element name="version" type="xs:integer" minOccurs="0"/>
-					</xs:sequence>
+			                <xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
