@@ -270,6 +270,40 @@
 		</xs:choice>
 	</xs:complexType>
 
+	<xs:simpleType name="DeathConfirmationCodeType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:death_confirmation#confirmed"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:death_confirmation#confirmed"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:death_confirmation#confirmed"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="SSAVerificationResultType">
+		<xs:sequence>
+			<xs:element name="individual" type="verificationIndividualType"/>
+			<xs:element name="ssn_verified" type="xs:boolean"/>
+			<xs:element name="death_confirmation" type="DeathConfirmationCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Death confirmation code.  Do not include this element if applicant is alive.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citizenship_verified" type="xs:boolean"/>
+			<xs:element name="incarcerated" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="ssa_verification_request" type="verificationIndividualType">
+		<xs:annotation>
+			<xs:documentation>Root element for validation requests to the SSA service.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="ssa_verification_result" type="xs:anyType">
+		<xs:annotation>
+			<xs:documentation>Root element for response from SSA service.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
 	<xs:element name="lawful_presence" type="LawfulPresenceResponseType">
 		<xs:annotation>
 			<xs:documentation>This element is the response body provided to a request for lawful presence information.</xs:documentation>
