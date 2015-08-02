@@ -209,6 +209,35 @@
 		</xs:complexContent>
 	</xs:complexType>
 
+	<xs:complexType name="PassportInformationType">
+		<xs:sequence>
+			<xs:element name="issuing_country" type="xs:string"/>
+			<xs:element name="passport_number" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ImmigrationInformationType">
+		<xs:sequence>
+			<xs:element name="also_known_as" type="xs:string" minOccurs="0"/>
+			<xs:element name="alien_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="citizenship_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="i94_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="naturalization_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="reciept_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="sevis_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="passport_information" type="PassportInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LawfulPresenceRequestType">
+		<xs:sequence>
+			<xs:element name="individual" type="verificationIndividualType"/>
+			<xs:element name="immigration_information" type="ImmigrationInformationType"/>
+			<xs:element name="check_five_year_bar" type="xs:boolean"/>
+			<xs:element name="requested_coverage_start_date" type="SimpleDateType"/>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:simpleType name="LawfulPresencePresenceCodeType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:lawful_presence:presence_status#lawful_permanent_resident"/>
@@ -298,9 +327,15 @@
 		</xs:annotation>
 	</xs:element>
 
-	<xs:element name="ssa_verification_result" type="xs:anyType">
+	<xs:element name="ssa_verification_result" type="SSAVerificationResultType">
 		<xs:annotation>
 			<xs:documentation>Root element for response from SSA service.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="lawful_presence_request" type="LawfulPresenceRequestType">
+		<xs:annotation>
+			<xs:documentation>Root element for lawful presence request.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 
