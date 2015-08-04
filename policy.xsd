@@ -43,6 +43,8 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element ref="employee_applicants" minOccurs="0"/>
+					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
@@ -70,11 +72,11 @@
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType" minOccurs="0"/>
-                                        <xs:element name="primary_family_id" type="IdentifierType" minOccurs="0">
-                                                <xs:annotation>
-                                                        <xs:documentation>Primary family of this person.</xs:documentation>
-                                                </xs:annotation>
-                                        </xs:element>
+					<xs:element name="primary_family_id" type="IdentifierType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Primary family of this person.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Tax household  to which this person belongs</xs:documentation>
@@ -90,6 +92,8 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element ref="employee_applicants" minOccurs="0"/>
+					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>

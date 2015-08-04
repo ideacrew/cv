@@ -553,6 +553,8 @@
 							<xs:documentation>Employer sponsored coverages</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+			<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+			<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 					<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 					<xs:element ref="hbx_enrollment_exemptions" minOccurs="0"/>
@@ -610,16 +612,19 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="EmployeeRoleType">
 		<xs:annotation>
 			<xs:appinfo>INCOMPLETE.  Needs benefit group and other information.</xs:appinfo>
 			<xs:documentation>An Individual is or was employed by a specific employer.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="employer_id" type="IdentifierSimpleType"/>
 			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
 			<xs:element name="start_date" type="SimpleDateType"/>
 			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -629,6 +634,15 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="employee_role" type="EmployeeRoleType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BrokerRolesListType">
+		<xs:annotation>
+			<xs:documentation>A list of employee roles for an individual.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="broker_role" type="BrokerRoleType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -1076,6 +1090,7 @@
 			</xs:element>
 			<xs:element ref="employee_applicants" minOccurs="0"/>
 			<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+			<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
