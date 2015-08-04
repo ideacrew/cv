@@ -29,11 +29,6 @@ public class SchemaCheckerTest {
   }
   
   @Test
-  public void CheckEmployerTest() throws Exception {
-    checkSchema("employer.xsd");
-  }
-  
-  @Test
   public void CheckIndividualTest() throws Exception {
     checkSchema("individual.xsd");
   }
