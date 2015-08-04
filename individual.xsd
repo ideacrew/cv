@@ -76,16 +76,6 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="employee_applicants">
-		<xs:annotation>
-			<xs:documentation>Set of employer references</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="employee_applicant" type="EmployeeApplicantType" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	<xs:element name="hbx_enrollment_exemptions">
 		<xs:annotation>
 			<xs:documentation>Eligible for exemption from health coverage</xs:documentation>
@@ -548,13 +538,8 @@
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element ref="employee_applicants" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Employer sponsored coverages</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-			<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
-			<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
+					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
 					<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 					<xs:element ref="hbx_enrollment_exemptions" minOccurs="0"/>
@@ -590,7 +575,7 @@
 			<xs:element name="csr_percent" type="xs:float">
 				<xs:annotation>
 					<xs:documentation>Cost-sharing reduction assistance eligibility for co-pays, etc.  Available to households with income between 100-250% of FPL and enrolled in Silver plan.
-			</xs:documentation>
+					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="benchmark_plan_id" type="IdentifierSimpleType" minOccurs="0">
@@ -646,18 +631,6 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="EmployeeApplicantType">
-		<xs:annotation>
-			<xs:documentation>An Individual who is or has enrolled under employer sponsored coverage</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="employer_id" type="IdentifierSimpleType"/>
-			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
-			<xs:element name="eligibility_date" type="xs:date" minOccurs="0"/>
-			<xs:element name="start_date" type="xs:date"/>
-			<xs:element name="end_date" type="xs:date" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="FinancialStatementType">
 		<xs:sequence>
 			<xs:element name="tax_filing_status" type="TaxFilerNameType"/>
@@ -1088,7 +1061,6 @@
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="employee_applicants" minOccurs="0"/>
 			<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
 			<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>

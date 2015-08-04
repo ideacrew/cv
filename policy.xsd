@@ -42,7 +42,6 @@
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element ref="employee_applicants" minOccurs="0"/>
 					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
 					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
@@ -91,7 +90,6 @@
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element ref="employee_applicants" minOccurs="0"/>
 					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
 					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
