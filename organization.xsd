@@ -446,7 +446,7 @@
 	<xs:element name="employer_census_families">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded"/>
+				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
