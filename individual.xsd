@@ -528,11 +528,11 @@
 							<xs:documentation>Include URIs for system components when known, e.g. person_id, concern_role_id, aceds_id, gdb_id</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Application group to which this person belongs</xs:documentation>
-						</xs:annotation>
-					</xs:element>
+  			<xs:element name="primary_family_id" type="IdentifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Primary family of this person.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Tax household  to which this person belongs</xs:documentation>
@@ -553,8 +553,10 @@
 							<xs:documentation>Employer sponsored coverages</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+			<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+			<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
-					<xs:element name="broker_id" type="IdentifierSimpleType" minOccurs="0"/>
+					<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 					<xs:element ref="hbx_enrollment_exemptions" minOccurs="0"/>
 					<xs:element ref="financial_statements" minOccurs="0">
 						<xs:annotation>
@@ -610,6 +612,40 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="EmployeeRoleType">
+		<xs:annotation>
+			<xs:appinfo>INCOMPLETE.  Needs benefit group and other information.</xs:appinfo>
+			<xs:documentation>An Individual is or was employed by a specific employer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="employer_id" type="IdentifierSimpleType"/>
+			<xs:element name="employment_status" type="EmploymentStatusNameType"/>
+			<xs:element name="start_date" type="SimpleDateType"/>
+			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EmployeeRolesListType">
+		<xs:annotation>
+			<xs:documentation>A list of employee roles for an individual.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="employee_role" type="EmployeeRoleType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BrokerRolesListType">
+		<xs:annotation>
+			<xs:documentation>A list of employee roles for an individual.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="broker_role" type="BrokerRoleType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="EmployeeApplicantType">
 		<xs:annotation>
 			<xs:documentation>An Individual who is or has enrolled under employer sponsored coverage</xs:documentation>
@@ -1032,14 +1068,14 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
-			<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
+			<xs:element name="primary_family_id" type="IdentifierType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Application group to which this person belongs</xs:documentation>
+					<xs:documentation>Primary family of this person.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Tax household  to which this person belongs</xs:documentation>
+					<xs:documentation>Tax household to which this person belongs</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="person" type="PersonType"/>
@@ -1047,19 +1083,20 @@
 			<xs:element name="person_demographics" type="PersonDemographicsType" minOccurs="0"/>
 			<xs:element name="is_primary_applicant" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_consent_applicant" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="is_subscriber" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_coverage_applicant" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Individual is applying for health coverage</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="employee_applicants" minOccurs="0"/>
+			<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
+			<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 			<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="is_medicaid_chip_eligible" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="person_health" type="IndividualHealthType" minOccurs="0"/>
-			<xs:element name="broker_id" type="IdentifierSimpleType" minOccurs="0"/>
+			<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 			<xs:element ref="responsible_parties" minOccurs="0"/>
 			<xs:element ref="hbx_enrollment_exemptions" minOccurs="0"/>
 			<xs:element ref="financial_statements" minOccurs="0">
@@ -1279,7 +1316,6 @@
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="person" type="PersonLinkType"/>
-					<xs:element name="is_subscriber" type="xs:boolean"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_enrolled_in_employer_sponsored_coverage" type="xs:boolean" minOccurs="0"/>
 					<xs:element name="is_insurance_assistance_eligible" type="xs:boolean" minOccurs="0"/>

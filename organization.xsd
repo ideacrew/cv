@@ -129,6 +129,19 @@
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="BrokerRoleType">
+		<xs:annotation>
+			<xs:documentation>An individual playing the role of a broker.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="npn" type="NpnIdType"/>
+			<xs:element name="broker_agency" type="BrokerAgencyLinkType"/>
+			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="HbxType">
 		<xs:annotation>
 			<xs:documentation>Health Benefit Exchange organization</xs:documentation>
