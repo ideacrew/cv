@@ -6,7 +6,7 @@
 	<xs:include schemaLocation="plan.xsd"/>
         <xs:simpleType name="BusinessEntityKindType">
                 <xs:restriction base="xs:anyURI">
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation   "/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#s_corporation"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#partnership"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#tax_exempt_organization"/>
