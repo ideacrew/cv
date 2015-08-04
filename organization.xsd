@@ -349,7 +349,7 @@
 			<xs:element name="elected_plans">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="elected_plan" type="PlanLinkType" minOccurs="1" maxOccurs="unbounded"/>
+						<xs:element name="elected_plan" type="PlanLinkType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
