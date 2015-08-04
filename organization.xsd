@@ -10,6 +10,11 @@
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#s_corporation"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#partnership"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#tax_exempt_organization"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_corportation"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_partnership"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#household_employer"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#governmental_employer"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#foreign_embassy_or_consulate"/>
                 </xs:restriction>
 	</xs:simpleType>
 
