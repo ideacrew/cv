@@ -30,7 +30,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="organization">
+	<xs:element name="organization" type="OrganizationType">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
 		</xs:annotation>
