@@ -3,7 +3,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="links.xsd"/>
-	<xs:include schemaLocation="employer.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
 	<xs:include schemaLocation="individual.xsd"/>
 	<xs:element name="allocated_aptc_amount" type="CurrencyType"/>
@@ -42,7 +41,6 @@
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element ref="employee_applicants" minOccurs="0"/>
 					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
 					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
@@ -91,7 +89,6 @@
 							<xs:documentation>Individual is applying for health coverage</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element ref="employee_applicants" minOccurs="0"/>
 					<xs:element name="employee_roles" type="EmployeeRolesListType" minOccurs="0"/>
 					<xs:element name="broker_roles" type="BrokerRolesListType" minOccurs="0"/>
 					<xs:element name="is_without_assistance" type="xs:boolean" minOccurs="0"/>
