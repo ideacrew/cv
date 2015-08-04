@@ -280,7 +280,7 @@
 
 	<xs:complexType name="RelationshipBenefitsListType">
 		<xs:sequence>
-			<xs:element name="relationship_benefit" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="relationship_benefit" minOccurs="0" maxOccurs="unbounded" type="RelationshipBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
 
