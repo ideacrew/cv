@@ -269,17 +269,4 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="PlanMetalLevelNameType">
-		<xs:annotation>
-			<xs:documentation>ACA plan category designation</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#bronze"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#silver"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#gold"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#platinum"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#catastrophic"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
-		</xs:restriction>
-	</xs:simpleType>
 </xs:schema>
