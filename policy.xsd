@@ -23,9 +23,9 @@
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType" minOccurs="0"/>
-					<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
+					<xs:element name="primary_family_id" type="IdentifierType" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>Application group to which this person belongs</xs:documentation>
+							<xs:documentation>Primary family of this person.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
@@ -70,11 +70,11 @@
 			<xs:restriction base="IndividualType">
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType" minOccurs="0"/>
-					<xs:element name="application_group_id" type="IdentifierType" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Application group to which this person belongs</xs:documentation>
-						</xs:annotation>
-					</xs:element>
+                                        <xs:element name="primary_family_id" type="IdentifierType" minOccurs="0">
+                                                <xs:annotation>
+                                                        <xs:documentation>Primary family of this person.</xs:documentation>
+                                                </xs:annotation>
+                                        </xs:element>
 					<xs:element name="tax_household_id" type="IdentifierType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Tax household  to which this person belongs</xs:documentation>
@@ -473,7 +473,7 @@
 			<xs:enumeration value="urn:openhbx:requests:v1:policies#change_state"/>
 		</xs:restriction>
 	</xs:simpleType>
-		<xs:simpleType name="IssuerNameType">
+	<xs:simpleType name="IssuerNameType">
 		<xs:annotation>
 			<xs:documentation>Active and former carriers on the Health Benefit Exchange</xs:documentation>
 		</xs:annotation>
