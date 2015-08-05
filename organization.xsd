@@ -25,7 +25,6 @@
 			<xs:element name="primary" type="xs:boolean"/>
 			<xs:element name="address" type="AddressType" minOccurs="0"/>
 			<xs:element name="phone" type="PhoneType" minOccurs="0"/>
-			<xs:element name="email" type="EmailType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
