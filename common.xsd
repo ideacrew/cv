@@ -207,9 +207,9 @@
 					<xs:element name="person_name" type="PersonNameType"/>
 					<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 					<xs:element name="department" type="xs:string" minOccurs="0"/>
-					<xs:element ref="addresses"/>
+					<xs:element ref="addresses" minOccurs="0"/>
 					<xs:element ref="emails" minOccurs="0"/>
-					<xs:element ref="phones"/>
+					<xs:element ref="phones" minOccurs="0"/>
 					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
