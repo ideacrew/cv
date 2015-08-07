@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
-	<xs:include schemaLocation="common.xsd"/>
-	<xs:include schemaLocation="links.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
         <xs:simpleType name="BusinessEntityKindType">
                 <xs:restriction base="xs:anyURI">
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation   "/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#s_corporation"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#partnership"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:employers#tax_exempt_organization"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_corporation"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_partnership"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#household_employer"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#governmental_employer"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:employers#foreign_embassy_or_consulate"/>
                 </xs:restriction>
 	</xs:simpleType>
 
@@ -20,7 +23,6 @@
 			<xs:element name="primary" type="xs:boolean"/>
 			<xs:element name="address" type="AddressType" minOccurs="0"/>
 			<xs:element name="phone" type="PhoneType" minOccurs="0"/>
-			<xs:element name="email" type="EmailType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -30,7 +32,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="organization">
+	<xs:element name="organization" type="OrganizationWithRolesType">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
 		</xs:annotation>
@@ -275,7 +277,7 @@
 
 	<xs:complexType name="RelationshipBenefitsListType">
 		<xs:sequence>
-			<xs:element name="relationship_benefit" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="relationship_benefit" minOccurs="0" maxOccurs="unbounded" type="RelationshipBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -344,7 +346,7 @@
 			<xs:element name="elected_plans">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="elected_plan" type="PlanLinkType" minOccurs="1" maxOccurs="unbounded"/>
+						<xs:element name="elected_plan" type="PlanLinkType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -446,7 +448,7 @@
 	<xs:element name="employer_census_families">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded"/>
+				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

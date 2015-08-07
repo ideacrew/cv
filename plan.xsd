@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
-	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="links.xsd"/>
 	<xs:element name="coverages">
 		<xs:complexType>
@@ -267,19 +266,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#life_partner"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#female"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="PlanMetalLevelNameType">
-		<xs:annotation>
-			<xs:documentation>ACA plan category designation</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#bronze"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#silver"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#gold"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#platinum"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#catastrophic"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

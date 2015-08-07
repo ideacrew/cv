@@ -208,9 +208,9 @@
 					<xs:element name="person_name" type="PersonNameType"/>
 					<xs:element name="job_title" type="xs:string" minOccurs="0"/>
 					<xs:element name="department" type="xs:string" minOccurs="0"/>
-					<xs:element ref="addresses"/>
+					<xs:element ref="addresses" minOccurs="0"/>
 					<xs:element ref="emails" minOccurs="0"/>
-					<xs:element ref="phones"/>
+					<xs:element ref="phones" minOccurs="0"/>
 					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
@@ -1842,6 +1842,19 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:us_state#west_virginia"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wisconsin"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:us_state#wyoming"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PlanMetalLevelNameType">
+		<xs:annotation>
+			<xs:documentation>ACA plan category designation</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#bronze"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#silver"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#gold"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#platinum"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#catastrophic"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="extended_resource_instance_uri">
