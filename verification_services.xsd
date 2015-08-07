@@ -213,6 +213,14 @@
 		<xs:sequence>
 			<xs:element name="issuing_country" type="xs:string"/>
 			<xs:element name="passport_number" type="xs:string"/>
+			<xs:element name="expiration_date" type="SimpleDateType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="I94DocumentType">
+		<xs:sequence>
+			<xs:element name="i94_number" type="xs:string"/>
+			<xs:element name="expiration_date" type="SimpleDateType"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -221,9 +229,9 @@
 			<xs:element name="also_known_as" type="xs:string" minOccurs="0"/>
 			<xs:element name="alien_number" type="xs:string" minOccurs="0"/>
 			<xs:element name="citizenship_number" type="xs:string" minOccurs="0"/>
-			<xs:element name="i94_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="i94_document" type="I94DocumentType" minOccurs="0"/>
 			<xs:element name="naturalization_number" type="xs:string" minOccurs="0"/>
-			<xs:element name="reciept_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="receipt_number" type="xs:string" minOccurs="0"/>
 			<xs:element name="sevis_id" type="xs:string" minOccurs="0"/>
 			<xs:element name="passport_information" type="PassportInformationType" minOccurs="0"/>
 		</xs:sequence>
