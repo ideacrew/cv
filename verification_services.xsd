@@ -288,24 +288,27 @@
 	</xs:simpleType>
 
 	<xs:complexType name="LawfulPresenceResponseType">
-		<xs:choice>
-			<xs:element name="lawful_presence_indeterminate">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="response_code" type="LawfulPresenceResponseIndeterminateCodeType"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="lawful_presence_determination">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="response_code" type="LawfulPresenceResponseDeterminedCodeType"/>
-						<xs:element name="legal_status" type="LawfulPresencePresenceCodeType"/>
-						<xs:element name="employment_authorized" type="LawfulPresenceEmploymentAuthorizedCodeType"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-		</xs:choice>
+		<xs:sequence>
+			<xs:element name="case_number" type="xs:string"/>
+			<xs:choice>
+				<xs:element name="lawful_presence_indeterminate">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="response_code" type="LawfulPresenceResponseIndeterminateCodeType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="lawful_presence_determination">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="response_code" type="LawfulPresenceResponseDeterminedCodeType"/>
+							<xs:element name="legal_status" type="LawfulPresencePresenceCodeType"/>
+							<xs:element name="employment_authorized" type="LawfulPresenceEmploymentAuthorizedCodeType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
 	</xs:complexType>
 
 	<xs:simpleType name="DeathConfirmationCodeType">
@@ -351,6 +354,6 @@
 	<xs:element name="lawful_presence" type="LawfulPresenceResponseType">
 		<xs:annotation>
 			<xs:documentation>This element is the response body provided to a request for lawful presence information.</xs:documentation>
-	   </xs:annotation>
+		</xs:annotation>
 	</xs:element>
 </xs:schema>
