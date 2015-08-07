@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" xmlns:altova="http://www.altova.com/xml-schema-extensions" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified" version="1.0">
+	<xs:simpleType name="nonEmptyString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:element name="addresses">
 		<xs:annotation>
 			<xs:documentation>Collection of places where an individual or organization is situated</xs:documentation>
@@ -147,7 +153,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="address_line_1" type="xs:string"/>
+			<xs:element name="address_line_1" type="nonEmptyString"/>
 			<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
 			<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
 			<xs:element name="location_city_name" type="xs:string"/>
@@ -355,8 +361,8 @@
 							<xs:complexContent>
 								<xs:restriction base="PersonNameType">
 									<xs:sequence>
-										<xs:element name="person_surname" type="xs:string"/>
-										<xs:element name="person_given_name" type="xs:string"/>
+										<xs:element name="person_surname" type="nonEmptyString"/>
+										<xs:element name="person_given_name" type="nonEmptyString"/>
 									</xs:sequence>
 								</xs:restriction>
 							</xs:complexContent>
@@ -371,8 +377,8 @@
 			<xs:documentation>Base type for components of an individual's name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="person_surname" type="xs:string"/>
-			<xs:element name="person_given_name" type="xs:string"/>
+			<xs:element name="person_surname" type="nonEmptyString"/>
+			<xs:element name="person_given_name" type="nonEmptyString"/>
 			<xs:element name="person_middle_name" type="xs:string" minOccurs="0"/>
 			<xs:element name="person_full_name" type="xs:string" minOccurs="0"/>
 			<xs:element name="person_name_prefix_text" type="xs:string" minOccurs="0"/>
