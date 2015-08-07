@@ -253,7 +253,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="email_address" type="xs:string"/>
+			<xs:element name="email_address" type="nonEmptyString"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IdentifierBaseType" abstract="true">
