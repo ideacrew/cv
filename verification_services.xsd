@@ -234,6 +234,7 @@
 			<xs:element name="receipt_number" type="xs:string" minOccurs="0"/>
 			<xs:element name="sevis_id" type="xs:string" minOccurs="0"/>
 			<xs:element name="passport_information" type="PassportInformationType" minOccurs="0"/>
+			<xs:element name="visa_number" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
