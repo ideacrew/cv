@@ -344,6 +344,7 @@
 			</xs:element>
 			<xs:element name="citizenship_verified" type="xs:boolean"/>
 			<xs:element name="incarcerated" type="xs:boolean"/>
+			<xs:element name="response_text" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
