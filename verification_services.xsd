@@ -217,10 +217,23 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="I94DocumentType">
+	<xs:complexType name="ImmigrationDocumentsType">
 		<xs:sequence>
-			<xs:element name="i94_number" type="xs:string"/>
-			<xs:element name="expiration_date" type="SimpleDateType"/>
+			<xs:element name="has_document_I327" type="xs:boolean"/>
+			<xs:element name="has_document_I571" type="xs:boolean"/>
+			<xs:element name="has_document_cert_of_citizenship" type="xs:boolean"/>
+			<xs:element name="has_document_cert_of_naturalization" type="xs:boolean"/>
+			<xs:element name="has_document_temp_I551" type="xs:boolean"/>
+			<xs:element name="has_document_I94" type="xs:boolean"/>
+			<xs:element name="has_document_I20" type="xs:boolean"/>
+			<xs:element name="has_document_DS2019" type="xs:boolean"/>
+			<xs:element name="document_I551_card_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="document_I766_expiration_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="document_mac_read_I551" type="PassportInformationType" minOccurs="0"/>
+			<xs:element name="document_foreign_passport_I94" type="PassportInformationType" minOccurs="0"/>
+			<xs:element name="document_foreign_passport" type="PassportInformationType" minOccurs="0"/>
+			<xs:element name="other_case_1_document_description" type="xs:string" minOccurs="0"/>
+			<xs:element name="other_case_2_document_description" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -228,13 +241,12 @@
 		<xs:sequence>
 			<xs:element name="also_known_as" type="xs:string" minOccurs="0"/>
 			<xs:element name="alien_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="i94_number" type="xs:string" minOccurs="0"/>
 			<xs:element name="citizenship_number" type="xs:string" minOccurs="0"/>
-			<xs:element name="i94_document" type="I94DocumentType" minOccurs="0"/>
-			<xs:element name="naturalization_number" type="xs:string" minOccurs="0"/>
-			<xs:element name="receipt_number" type="xs:string" minOccurs="0"/>
-			<xs:element name="sevis_id" type="xs:string" minOccurs="0"/>
-			<xs:element name="passport_information" type="PassportInformationType" minOccurs="0"/>
 			<xs:element name="visa_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="sevis_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="naturalization_number" type="xs:string" minOccurs="0"/>
+			<xs:element name="documents" type="ImmigrationDocumentsType"/>
 		</xs:sequence>
 	</xs:complexType>
 
