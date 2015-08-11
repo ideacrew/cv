@@ -6,7 +6,13 @@
 			<xs:element name="address" type="AddressType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
+	
+	<xs:simpleType name="nonEmptyString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:element name="addresses" type="AddressListType">
 		<xs:annotation>
 			<xs:documentation>Collection of places where an individual or organization is situated</xs:documentation>
@@ -134,7 +140,7 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:group>
-
+	
 	<xs:simpleType name="AddressKindType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:address_type#home"/>
@@ -142,7 +148,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:address_type#work"/>
 		</xs:restriction>
 	</xs:simpleType>
-
+	
 	<xs:simpleType name="LocationStateCodeType">
 		<xs:restriction base="xs:string">
 			<xs:length value="2"/>
@@ -154,7 +160,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="type" type="AddressKindType"/>
-			<xs:element name="address_line_1" type="xs:string"/>
+			<xs:element name="address_line_1" type="nonEmptyString"/>
 			<xs:element name="address_line_2" type="xs:string" minOccurs="0"/>
 			<xs:element name="address_line_3" type="xs:string" minOccurs="0"/>
 			<xs:element name="location_city_name" type="xs:string"/>
@@ -248,7 +254,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="email_address" type="xs:string"/>
+			<xs:element name="email_address" type="nonEmptyString"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IdentifierBaseType" abstract="true">
@@ -356,8 +362,8 @@
 							<xs:complexContent>
 								<xs:restriction base="PersonNameType">
 									<xs:sequence>
-										<xs:element name="person_surname" type="xs:string"/>
-										<xs:element name="person_given_name" type="xs:string"/>
+										<xs:element name="person_surname" type="nonEmptyString"/>
+										<xs:element name="person_given_name" type="nonEmptyString"/>
 									</xs:sequence>
 								</xs:restriction>
 							</xs:complexContent>
@@ -372,8 +378,8 @@
 			<xs:documentation>Base type for components of an individual's name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="person_surname" type="xs:string"/>
-			<xs:element name="person_given_name" type="xs:string"/>
+			<xs:element name="person_surname" type="nonEmptyString"/>
+			<xs:element name="person_given_name" type="nonEmptyString"/>
 			<xs:element name="person_middle_name" type="xs:string" minOccurs="0"/>
 			<xs:element name="person_full_name" type="xs:string" minOccurs="0"/>
 			<xs:element name="person_name_prefix_text" type="xs:string" minOccurs="0"/>

@@ -41,7 +41,7 @@
 	<xs:group name="OrganizationTypeCommonElementsGroup">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="name" type="xs:string">
+			<xs:element name="name" type="nonEmptyString">
 				<xs:annotation>
 					<xs:documentation>Organization formal name in free-form text</xs:documentation>
 				</xs:annotation>
