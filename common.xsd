@@ -1852,9 +1852,17 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:plan_metal_level#dental"/>
 		</xs:restriction>
 	</xs:simpleType>
+	
 	<xs:element name="enrollment_group_uri" type="xs:anyURI" substitutionGroup="extended_resource_instance_uri">
 		<xs:annotation>
 			<xs:documentation>Dereferenceable identifier for enrollment group instance, e.g. http://dchealthlink.com/api/services/enrollment_group/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+
+	<xs:simpleType name="PlanActiveYearType">
+           <xs:restriction base="xs:nonNegativeInteger">
+		   <xs:minInclusive value="2012"/>
+	   </xs:restriction>
+	</xs:simpleType>
+
 </xs:schema>

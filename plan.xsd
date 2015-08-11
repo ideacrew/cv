@@ -33,6 +33,7 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
+
 	<xs:complexType name="PlanBaseType">
 		<xs:annotation>
 			<xs:documentation>Individual or group insurance product that provides, or pays the cost of, health care</xs:documentation>
@@ -44,6 +45,7 @@
 					<xs:documentation>Name of plan in free form text</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="active_year" type="PlanActiveYearType"/>
 			<xs:element name="is_dental_only" type="xs:boolean"/>
 			<xs:element name="carrier" type="CarrierLinkType"/>
 			<xs:element name="market" type="AcaMarketPlaceNameType" minOccurs="0"/>
@@ -73,6 +75,7 @@
 							<xs:documentation>Name of plan in free form text</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+			                <xs:element name="active_year" type="PlanActiveYearType"/>
 					<xs:element name="is_dental_only" type="xs:boolean"/>
 					<xs:element name="carrier" type="CarrierLinkType"/>
 					<xs:element name="market" type="AcaMarketPlaceNameType" minOccurs="0"/>

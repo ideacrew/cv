@@ -237,6 +237,7 @@
                                 <xs:sequence>
                                         <xs:element name="id" type="IdentifierType"/>
                                         <xs:element name="name" type="xs:string"/>
+			                <xs:element name="active_year" type="PlanActiveYearType"/>
                                         <xs:element name="is_dental_only" type="xs:boolean"/>
                                         <xs:element name="carrier" type="CarrierLinkType"/>
                                         <xs:element name="metal_level" type="PlanMetalLevelNameType"/>
