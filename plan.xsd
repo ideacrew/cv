@@ -268,4 +268,26 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollee_relationship#unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:complexType name="BenchmarkPlanRequestType">
+		<xs:sequence>
+			<xs:element name="coverage_start" type="SimpleDateType"/>
+			<xs:element name="rating_area" type="nonEmptyString">
+				<xs:annotation>
+					<xs:documentation>Rating area of the covered party.  This is exchange specific.  As an example, DC has only one area "DC0", and you should always pass "DC0".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="benchmark_plan_request" type="BenchmarkPlanRequestType">
+		<xs:annotation>
+			<xs:documentation>Element for requesting the second lowest cost silver plan (SLCSP).</xs:documentation>
+		</xs:annotation>	
+	</xs:element>
+	<xs:element name="benchmark_plan" type="PlanBaseType">
+		<xs:annotation>
+			<xs:documentation>Response element describing the SLCSP.</xs:documentation>
+		</xs:annotation>	
+	</xs:element>
 </xs:schema>
