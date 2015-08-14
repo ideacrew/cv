@@ -69,6 +69,12 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:complexType name="interactiveVerificationOverrideRequestType">
+		<xs:sequence>
+		   <xs:element name="transaction_id" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="interactiveVerificationResponseType">
 		<xs:sequence>
 			<xs:element name="response_code" type="interactiveVerificationResponseCodeType"/>
@@ -128,6 +134,9 @@
 			<xs:element name="session" type="verificationSessionResponseRequiredResponseType"/>
 		</xs:choice>
 	</xs:complexType>
+
+        <xs:element name="interactive_verification_override_request" type="interactiveVerificationOverrideRequestType"/>
+        <xs:element name="interactive_verification_override_result" type="interactiveVerificationCompletedResponseType"/>
 
 	<xs:element name="interactive_verification_start" type="interactiveVerificationSessionStartRequestBodyType"/>
 
