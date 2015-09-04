@@ -1674,6 +1674,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#court_appointed_guardian"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#collateral_dependent"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#life_partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#domestic_partner"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#annuitant"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#trustee"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:individual_relationship#other_relationship"/>
