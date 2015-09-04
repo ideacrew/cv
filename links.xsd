@@ -122,7 +122,6 @@
 			<xs:element name="carrier" type="CarrierLinkType"/>
 			<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
 			<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
-			<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
 			<xs:element name="ehb_percent" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Essential Health Benefit factor</xs:documentation>
