@@ -1900,4 +1900,40 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:citizen_status#undocumented_immigrant"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+        <xs:complexType name="HouseholdType">
+		<xs:annotation>
+			<xs:documentation>A household unit.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="irs_group_id" type="xs:anyType"/>
+			<xs:element name="coverage_households" type="xs:anyType"/>
+			<xs:element ref="tax_households" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="HouseholdsListType">
+		<xs:sequence>
+			<xs:element name="household" type="HouseholdType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+        <xs:complexType name="FamilyMembersListType">
+		<xs:sequence>
+			<xs:element name="family_member" type="ApplicantType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="FamilyType">
+		<xs:annotation>
+			<xs:documentation>Describes a family unit.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="family_members" type="FamilyMembersListType"/>
+			<xs:element name="households" type="HouseholdsListType" minOccurs="0"/>
+			<xs:element ref="irs_groups" minOccurs="0"/>
+			<xs:element name="broker_agency_accounts" type="xs:anyType"/>
+			<xs:element name="special_enrollment_periods" type="xs:anyType"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
