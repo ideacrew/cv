@@ -221,6 +221,7 @@
 			<xs:element name="submitted_date" type="xs:dateTime"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="ApplicationGroupType">
 		<xs:annotation>
 			<xs:documentation>A family or group of people who apply for health insurance coverage</xs:documentation>
@@ -263,13 +264,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="submitted_at" type="xs:dateTime"/>
-			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Indicates this Application Group is operative on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="comments" minOccurs="0"/>
+			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -548,13 +543,9 @@
 							<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="is_active" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element ref="comments" minOccurs="0"/>
-					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+			                <xs:element name="verifications" type="xs:anyType" minOccurs="0"/>
+					<xs:group ref="CommentedActiveResourceGroup"/>
+					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -1076,13 +1067,9 @@
 					<xs:documentation>Income, expenses and tax filing status for this Individual</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Indicator this person is operative on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="comments" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+			<xs:element name="verifications" type="xs:anyType" minOccurs="0"/>
+			<xs:group ref="CommentedActiveResourceGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IrsGroupType">
@@ -1236,12 +1223,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="approval" type="ApprovalType" minOccurs="0"/>
-			<xs:element name="is_active" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>This QLE is in process on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="comments" minOccurs="0"/>
+			<xs:group ref="CommentedActiveResourceGroup"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -1273,14 +1255,8 @@
 			<xs:element ref="tax_household_size" minOccurs="0"/>
 			<xs:element name="total_incomes_by_year" type="TotalIncomesByYearType" minOccurs="0"/>
 			<xs:element ref="eligibility_determinations" minOccurs="0"/>
-			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>This tax household is operative on the HBX</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="comments" minOccurs="0"/>
-			<xs:element name="submitted_at" type="xs:dateTime"/>
-			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdMemberType">
@@ -1314,14 +1290,8 @@
 					<xs:element ref="tax_household_size" minOccurs="0"/>
 					<xs:element name="total_incomes_by_year" type="TotalIncomesByYearType" minOccurs="0"/>
 					<xs:element ref="eligibility_determinations" minOccurs="0"/>
-					<xs:element name="is_active" type="xs:boolean" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>This tax household is operative on the HBX</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element ref="comments" minOccurs="0"/>
-					<xs:element name="submitted_at" type="xs:dateTime"/>
-					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+					<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
+					<xs:group ref="ResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -1901,7 +1871,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-        <xs:complexType name="HouseholdType">
+	<xs:complexType name="HouseholdType">
 		<xs:annotation>
 			<xs:documentation>A household unit.</xs:documentation>
 		</xs:annotation>
@@ -1918,7 +1888,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-        <xs:complexType name="FamilyMembersListType">
+	<xs:complexType name="FamilyMembersListType">
 		<xs:sequence>
 			<xs:element name="family_member" type="ApplicantType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -1929,11 +1899,41 @@
 			<xs:documentation>Describes a family unit.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
 			<xs:element name="family_members" type="FamilyMembersListType"/>
+			<xs:element name="primary_family_member_id" type="IdentifierSimpleType"/>
+			<xs:element name="renewal_consent_family_member_id" type="IdentifierSimpleType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Applicant who approved automatic renewal/eligibilty check</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="households" type="HouseholdsListType" minOccurs="0"/>
 			<xs:element ref="irs_groups" minOccurs="0"/>
 			<xs:element name="broker_agency_accounts" type="xs:anyType"/>
-			<xs:element name="special_enrollment_periods" type="xs:anyType"/>
+			<xs:element name="qualifying_life_events" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="renewal_consent_through_year" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Calendar year through which automatic renewal check is approved</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="2014"/>
+						<xs:maxInclusive value="2025"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
+			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
