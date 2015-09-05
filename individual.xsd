@@ -243,27 +243,8 @@
 			<xs:element ref="irs_groups" minOccurs="0"/>
 			<xs:element ref="tax_households" minOccurs="0"/>
 			<xs:element ref="hbx_enrollments" minOccurs="0"/>
-			<xs:element name="qualifying_life_events" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="renewal_consent_through_year" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Calendar year through which automatic renewal check is approved</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:integer">
-						<xs:minInclusive value="2014"/>
-						<xs:maxInclusive value="2025"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element ref="qualifying_life_events" minOccurs="0"/>
+			<xs:element ref="renewal_consent_through_year" minOccurs="0"/>
 			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
@@ -1894,46 +1875,50 @@
 		</xs:sequence>
 	</xs:complexType>
 
+	<xs:element name="renewal_consent_through_year">
+		<xs:annotation>
+			<xs:documentation>Calendar year through which automatic renewal check is approved</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="2014"/>
+				<xs:maxInclusive value="2025"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="qualifying_life_events">
+		<xs:annotation>
+			<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="renewal_consent_family_member_id" type="IdentifierSimpleType">
+		<xs:annotation>
+			<xs:documentation>Applicant who approved automatic renewal/eligibilty check</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:group name="FamilySharedElementsGroup">
+		<xs:sequence>
+                        <xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>                                       <xs:element name="primary_family_member_id" type="IdentifierSimpleType"/>
+                        <xs:element ref="renewal_consent_family_member_id" minOccurs="0"/>                                                  <xs:element name="households" type="HouseholdsListType" minOccurs="0"/>                                             <xs:element ref="irs_groups" minOccurs="0"/>    
+                        <xs:element name="broker_agency_accounts" type="xs:anyType"/>                                                       <xs:element ref="qualifying_life_events" minOccurs="0"/>                                                            <xs:element ref="renewal_consent_through_year" minOccurs="0"/>                                                      <xs:group ref="SubmittedCommentedActiveResourceGroup"/>
+                        <xs:group ref="ResourceTimestampGroup"/>
+		</xs:sequence>
+	</xs:group>
+
 	<xs:complexType name="FamilyType">
 		<xs:annotation>
 			<xs:documentation>Describes a family unit.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
 			<xs:element name="family_members" type="FamilyMembersListType"/>
-			<xs:element name="primary_family_member_id" type="IdentifierSimpleType"/>
-			<xs:element name="renewal_consent_family_member_id" type="IdentifierSimpleType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Applicant who approved automatic renewal/eligibilty check</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="households" type="HouseholdsListType" minOccurs="0"/>
-			<xs:element ref="irs_groups" minOccurs="0"/>
-			<xs:element name="broker_agency_accounts" type="xs:anyType"/>
-			<xs:element name="qualifying_life_events" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Open and Special Enrollment Periods (SEPs) that this Application Group participated in</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="qualifying_life_event" type="QualifyingLifeEventType" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="renewal_consent_through_year" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Calendar year through which automatic renewal check is approved</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:integer">
-						<xs:minInclusive value="2014"/>
-						<xs:maxInclusive value="2025"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+                        <xs:group ref="FamilySharedElementsGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
