@@ -206,6 +206,7 @@
 			</xs:element>
 			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
 			<xs:element name="npn" type="NpnIdType" minOccurs="0"/>
+			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

@@ -16,22 +16,6 @@
                 </xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="OfficeLocationType">
-		<xs:sequence>
-			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
-			<xs:element name="name" type="xs:string" minOccurs="0"/>
-			<xs:element name="primary" type="xs:boolean"/>
-			<xs:element name="address" type="AddressType" minOccurs="0"/>
-			<xs:element name="phone" type="PhoneType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="OfficeLocationListType">
-		<xs:sequence>
-			<xs:element name="office_location" minOccurs="0" maxOccurs="unbounded" type="OfficeLocationType"/>
-		</xs:sequence>
-	</xs:complexType>
-
 	<xs:element name="organization" type="OrganizationWithRolesType">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
