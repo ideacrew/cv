@@ -1805,6 +1805,16 @@
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#termination_of_domestic_partnership"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#drop_self_due_to_new_eligibility"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#drop_family_member_due_to_new_eligibility"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#new_employment">
+				<xs:annotation>
+					<xs:documentation>A change in employment circumstances.  This is not the same as new_hire, which indicates the event of employment by a specific employer.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#new_hire">
+				<xs:annotation>
+					<xs:documentation>Began work with a specific employer, and will now be eligible to shop and be covered according to the rules of that employer.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TaxFilerNameType">
