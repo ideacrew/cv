@@ -11,6 +11,17 @@
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+
+	<xs:complexType name="EligibilityEventType">
+          <xs:annotation>
+		  <xs:documentation>Describes the circumstances which made enrollment possible.</xs:documentation>
+	  </xs:annotation>
+	  <xs:sequence>
+		  <xs:element name="event_kind" type="QualifyingLifeEventNameType"/>
+		  <xs:element name="event_date" type="SimpleDateType" minOccurs="0"/>
+	  </xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="EnrolleeIndividualType">
 		<xs:annotation>
 			<xs:documentation>An individual enrolled under a policy</xs:documentation>
@@ -380,6 +391,7 @@
 						</xs:choice>
 						<xs:element name="premium_total_amount" type="CurrencyType"/>
 						<xs:element name="total_responsible_amount" type="CurrencyType"/>
+						<xs:element name="eligibility_event" type="EligibilityEventType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
