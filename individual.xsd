@@ -1815,6 +1815,11 @@
 					<xs:documentation>Began work with a specific employer, and will now be eligible to shop and be covered according to the rules of that employer.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#passive_renewal">
+				<xs:annotation>
+					<xs:documentation>Passive renewal period for employers and individuals.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TaxFilerNameType">
