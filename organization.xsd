@@ -538,7 +538,7 @@
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
 				<xs:sequence>
-					<xs:element name="organization" type="OrganizationType"/>
+					<xs:element name="organization" type="OrganizationWithRolesType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
