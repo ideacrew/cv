@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Dan Thomas (private) -->
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by Dan Thomas (Private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="plan.xsd"/>
-        <xs:simpleType name="BusinessEntityKindType">
-                <xs:restriction base="xs:anyURI">
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#s_corporation"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#partnership"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#tax_exempt_organization"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_corporation"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_partnership"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#household_employer"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#governmental_employer"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employers#foreign_embassy_or_consulate"/>
-                </xs:restriction>
-	</xs:simpleType>
-
-	<xs:element name="organization" type="OrganizationWithRolesType">
+	<xs:element name="organization" type="OrganizationWithRolesType"/>
+	<xs:complexType name="OrganizationServiceEventType">
 		<xs:annotation>
-			<xs:documentation>Comment describing your root element</xs:documentation>
+			<xs:documentation>A notification event for employer organizations</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-
+		<xs:complexContent>
+			<xs:restriction base="ServiceEventType">
+				<xs:sequence>
+					<xs:element name="event_name" type="OrganizationEventNameType"/>
+					<xs:element name="qualifying_reason" type="OrganizationEventReasonType"/>
+					<xs:element ref="resource_instance_uri" maxOccurs="unbounded"/>
+					<xs:element name="body" type="OrganizationServiceEventBodyType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="BusinessEntityKindType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#s_corporation"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#partnership"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#tax_exempt_organization"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_corporation"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#limited_liability_partnership"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#household_employer"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#governmental_employer"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employers#foreign_embassy_or_consulate"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:group name="OrganizationTypeCommonElementsGroup">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
@@ -52,7 +61,7 @@
 			<xs:documentation>Base class for companies and agencies</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-		        <xs:group ref="OrganizationTypeCommonElementsGroup"/>
+			<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
 			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
@@ -68,14 +77,14 @@
 	</xs:complexType>
 	<xs:complexType name="CarrierType">
 		<xs:annotation>
-			<xs:documentation>A health insurance company</xs:documentation>
+			<xs:documentation>A benefit provider</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="OrganizationType">
 				<xs:sequence>
 					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-			                <xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
+					<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
@@ -88,22 +97,19 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:complexType name="BrokerAgencyAttributesType">
 		<xs:sequence>
 			<xs:element name="npn" type="NpnIdType"/>
 			<xs:element name="primary_broker" type="BrokerType"/>
-			<xs:element name="brokers" type="BrokerAgencyBrokersListType" />
+			<xs:element name="brokers" type="BrokerAgencyBrokersListType"/>
 			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="BrokerAgencyBrokersListType">
 		<xs:sequence>
-			<xs:element name="broker" minOccurs="0" maxOccurs="unbounded" type="BrokerType"/>
+			<xs:element name="broker" type="BrokerType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="BrokerType">
 		<xs:annotation>
 			<xs:documentation>An insurance specialist who provides advice and sells insurance to businesses and consumers</xs:documentation>
@@ -115,7 +121,6 @@
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="BrokerRoleType">
 		<xs:annotation>
 			<xs:documentation>An individual playing the role of a broker.</xs:documentation>
@@ -127,7 +132,6 @@
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="HbxType">
 		<xs:annotation>
 			<xs:documentation>Health Benefit Exchange organization</xs:documentation>
@@ -137,7 +141,7 @@
 				<xs:sequence>
 					<xs:group ref="OrganizationTypeCommonElementsGroup"/>
 					<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-			                <xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
+					<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 					<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 					<xs:element ref="contacts" minOccurs="0"/>
 					<xs:element name="is_active" type="xs:boolean">
@@ -181,7 +185,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:complexType name="BrokerAccountType">
 		<xs:sequence>
 			<xs:element name="broker_agency" type="BrokerAgencyLinkType"/>
@@ -190,60 +193,54 @@
 			<xs:element name="end_on" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="BrokerAccountListType">
 		<xs:sequence>
 			<xs:element name="broker_account" type="BrokerAccountType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="BrokerAgencyProfileType">
 		<xs:sequence>
 			<xs:element name="npn" type="NpnIdType" minOccurs="0"/>
 			<xs:element name="primary_broker" type="BrokerType"/>
-			<xs:element name="brokers" type="BrokerAgencyBrokersListType" />
+			<xs:element name="brokers" type="BrokerAgencyBrokersListType"/>
 			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="PlanYearListType">
 		<xs:sequence>
 			<xs:element name="plan_year" type="PlanYearType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
-        <xs:complexType name="EmployerPlanListType">
-                <xs:annotation>
-                        <xs:documentation>SHOP employer-selected benefits model</xs:documentation>
-                </xs:annotation>
-                <xs:complexContent>
-                        <xs:restriction base="PlanType">
-                                <xs:sequence>
-                                        <xs:element name="id" type="IdentifierType"/>
-                                        <xs:element name="name" type="xs:string"/>
-			                <xs:element name="active_year" type="PlanActiveYearType"/>
-                                        <xs:element name="is_dental_only" type="xs:boolean"/>
-                                        <xs:element name="carrier" type="CarrierLinkType"/>
-                                        <xs:element name="metal_level" type="PlanMetalLevelNameType"/>
-                                        <xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
-                                        <xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
-                                </xs:sequence>
-                        </xs:restriction>
-                </xs:complexContent>
+	<xs:complexType name="EmployerPlanListType">
+		<xs:annotation>
+			<xs:documentation>SHOP employer-selected benefits model</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="PlanType">
+				<xs:sequence>
+					<xs:element name="id" type="IdentifierType"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="active_year" type="PlanActiveYearType"/>
+					<xs:element name="is_dental_only" type="xs:boolean"/>
+					<xs:element name="carrier" type="CarrierLinkType"/>
+					<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
+					<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
+					<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:simpleType name="RelationshipBenefitRelationshipType">
 		<xs:restriction base="xs:anyURI">
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#employee"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#spouse"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#domestic_partner"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#child_under_26"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#child_26_and_over"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#disable_child_26_and_over"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#employee"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#spouse"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#domestic_partner"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#child_under_26"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#child_26_and_over"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#disable_child_26_and_over"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#spouse"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:complexType name="RelationshipBenefitType">
 		<xs:sequence>
 			<xs:element name="relationship" type="RelationshipBenefitRelationshipType"/>
@@ -259,13 +256,11 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="RelationshipBenefitsListType">
 		<xs:sequence>
-			<xs:element name="relationship_benefit" minOccurs="0" maxOccurs="unbounded" type="RelationshipBenefitType"/>
+			<xs:element name="relationship_benefit" type="RelationshipBenefitType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="BenefitGroupType">
 		<xs:sequence>
 			<xs:element name="name" type="xs:string"/>
@@ -283,7 +278,6 @@
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="EmployerElectedPlanType">
 		<xs:complexContent>
 			<xs:extension base="EmployerPlanListType">
@@ -302,7 +296,6 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:complexType name="PlanYearType">
 		<xs:sequence>
 			<xs:element name="plan_year_start" type="SimpleDateType">
@@ -338,14 +331,13 @@
 			<xs:element name="benefit_groups">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="benefit_group" minOccurs="0" maxOccurs="unbounded" type="BenefitGroupType"/>
+						<xs:element name="benefit_group" type="BenefitGroupType" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:simpleType name="EmployerCensusFamilyRelationshipNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#self"/>
@@ -355,8 +347,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#child_26_and_over"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#disabled_child_26_and_over"/>
 		</xs:restriction>
-	</xs:simpleType>	
-
+	</xs:simpleType>
 	<xs:complexType name="EmployerCensusFamilyMemberType" abstract="true">
 		<xs:sequence>
 			<xs:element name="name" type="PersonNameType"/>
@@ -378,7 +369,6 @@
 			<xs:element name="date_of_termination" type="SimpleDateType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="EmployerCensusFamilyEmployeeType">
 		<xs:complexContent>
 			<xs:restriction base="EmployerCensusFamilyMemberType">
@@ -415,7 +405,6 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:complexType name="EmployerCensusFamilyType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierSimpleType"/>
@@ -429,25 +418,23 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:element name="employer_census_families">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded" minOccurs="0"/>
+				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
 	<xs:complexType name="EmployerProfileType">
 		<xs:sequence>
 			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
 			<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
 			<xs:element name="plan_years" type="PlanYearListType"/>
+			<xs:element name="shop_transfer" type="ShopTransferType" minOccurs="0"/>
 			<xs:element ref="employer_census_families" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="OrganizationWithRolesType">
 		<xs:annotation>
 			<xs:documentation>Container that encompasses different roles which may be played by an organization</xs:documentation>
@@ -492,7 +479,6 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:complexType name="EmployerOrganizationType">
 		<xs:annotation>
 			<xs:documentation>An organization specializing in advice about and sale of insurance products to businesses and consumers</xs:documentation>
@@ -517,23 +503,33 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:simpleType name="OrganizationEventNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:organization#created"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#updated"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#deleted"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#create"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#update"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#delete"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:simpleType name="OrganizationEventReasonType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="urn:openhbx:events:v1:organization#broker_changed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:organization#terminated_from_exchange"/>
-			<!-- Anything else you want to see boss -->
+			<xs:enumeration value="urn:openhbx:events:v1:organization#correct_fein"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#renew_benefit"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#update_point_of_contact"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#update_broker"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#update_general_agent"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#moving_out_of_state"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#non_payment"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#acquired"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#going_out_of_reasons"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#loss_of_eligibility"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#voluntary__withdrawal"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#application_change"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#renewal"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#other"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:complexType name="OrganizationServiceEventBodyType">
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
@@ -543,18 +539,10 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
-	<xs:complexType name="OrganizationServiceEventType">
-		<xs:complexContent>
-			<xs:restriction base="ServiceEventType">
-				<xs:sequence>
-					<xs:element name="event_name" type="OrganizationEventNameType"/>
-					<xs:element name="qualifying_reason" type="OrganizationEventReasonType"/>
-					<xs:element ref="resource_instance_uri" maxOccurs="unbounded"/>
-					<xs:element name="body" type="OrganizationServiceEventBodyType" />
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
+	<xs:complexType name="ShopTransferType">
+		<xs:sequence>
+			<xs:element name="source_carrier" type="CarrierType"/>
+			<xs:element name="hbx_active_on" type="xs:date"/>
+		</xs:sequence>
 	</xs:complexType>
-
 </xs:schema>
