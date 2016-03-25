@@ -517,4 +517,44 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+
+	<xs:simpleType name="OrganizationEventNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:organization#created"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#updated"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#deleted"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OrganizationEventReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="urn:openhbx:events:v1:organization#broker_changed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#terminated_from_exchange"/>
+			<!-- Anything else you want to see boss -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="OrganizationServiceEventBodyType">
+		<xs:complexContent>
+			<xs:restriction base="ServiceBodyType">
+				<xs:sequence>
+					<xs:element name="organization" type="OrganizationType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="OrganizationServiceEventType">
+		<xs:complexContent>
+			<xs:restriction base="ServiceEventType">
+				<xs:sequence>
+					<xs:element name="event_name" type="OrganizationEventNameType"/>
+					<xs:element name="qualifying_reason" type="OrganizationEventReasonType"/>
+					<xs:element ref="resource_instance_uri" maxOccurs="unbounded"/>
+					<xs:element name="body" type="OrganizationServiceEventBodyType" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
 </xs:schema>
