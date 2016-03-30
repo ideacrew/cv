@@ -3,21 +3,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="plan.xsd"/>
 	<xs:element name="organization" type="OrganizationWithRolesType"/>
-	<xs:complexType name="OrganizationServiceEventType">
-		<xs:annotation>
-			<xs:documentation>A notification event for employer organizations</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="ServiceEventType">
-				<xs:sequence>
-					<xs:element name="event_name" type="OrganizationEventNameType"/>
-					<xs:element name="qualifying_reason" type="OrganizationEventReasonType"/>
-					<xs:element ref="resource_instance_uri" maxOccurs="unbounded"/>
-					<xs:element name="body" type="OrganizationServiceEventBodyType"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
 	<xs:simpleType name="BusinessEntityKindType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:employers#c_corporation"/>
@@ -516,31 +501,23 @@
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:simpleType name="OrganizationEventNameType">
+	<xs:simpleType name="CarrierEmployerEventNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:events:v1:organization#create"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#update"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#delete"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="OrganizationEventReasonType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="urn:openhbx:events:v1:organization#broker_changed"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#terminated_from_exchange"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#correct_fein"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#renew_benefit"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#update_point_of_contact"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#update_broker"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#update_general_agent"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#moving_out_of_state"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#non_payment"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#acquired"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#going_out_of_reasons"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#loss_of_eligibility"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#voluntary_withdrawal"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#application_change"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#renewal"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#other"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#broker_changed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#terminated_from_exchange"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#renew_benefit"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#update_broker"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#update_general_agent"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#moving_out_of_state"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#non_payment"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#acquired"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#going_out_of_reasons"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#loss_of_eligibility"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#voluntary_withdrawal"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#application_change"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#renewal"/>
+		        <xs:enumeration value="urn:openhbx:events:v1:organization#correct_fein"/>
+            		<xs:enumeration value="urn:openhbx:events:v1:organization#update_point_of_contact"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -561,6 +538,27 @@
 		<xs:sequence>
 			<xs:element name="source_carrier" type="CarrierLinkType"/>
 			<xs:element name="hbx_active_on" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PartnerEmployerChangedServiceEventType">
+		<xs:annotation>
+			<xs:documentation>A notification event for employer organizations, submitted to carrier partners.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ServiceEventType">
+				<xs:sequence>
+					<xs:element name="event_name" type="CarrierEmployerEventNameType"/>
+					<xs:element ref="resource_instance_uri" maxOccurs="unbounded"/>
+					<xs:element name="body" type="OrganizationServiceEventBodyType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EmployerUpdateCarrierDigestEvent">
+		<xs:sequence>
+			<xs:element name="employer_change_event" type="PartnerEmployerChangedServiceEventType"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
