@@ -105,7 +105,7 @@
 			<xs:group ref="ResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="PlanLinkType">
+	<xs:group name="PlanCommonElementsGroup">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType">
 				<xs:annotation>
@@ -120,6 +120,11 @@
 			<xs:element name="active_year" type="PlanActiveYearType"/>
 			<xs:element name="is_dental_only" type="xs:boolean"/>
 			<xs:element name="carrier" type="CarrierLinkType"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="PlanLinkType">
+		<xs:sequence>
+			<xs:group ref="PlanCommonElementsGroup"/>
 			<xs:element name="metal_level" type="PlanMetalLevelNameType"/>
 			<xs:element name="coverage_type" type="QhpBenefitCoverageNameType"/>
 			<xs:element name="ehb_percent" minOccurs="0">
