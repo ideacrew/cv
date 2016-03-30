@@ -32,6 +32,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:group name="OrganizationTypeCommonElementsGroup">
+		<xs:annotation>
+			<xs:documentation>Information common to all organization types</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="name" type="nonEmptyString">
@@ -262,6 +265,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="BenefitGroupType">
+		<xs:annotation>
+			<xs:documentation>A named set of benefits applicable to a particular group.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="reference_plan" type="PlanLinkType"/>
@@ -297,6 +303,9 @@
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="PlanYearType">
+		<xs:annotation>
+			<xs:documentation>A period of benefits availble to an entity.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="plan_year_start" type="SimpleDateType">
 				<xs:annotation>
@@ -426,6 +435,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="EmployerProfileType">
+		<xs:annotation>
+                        <xs:documentation>Information Specific to an organization operating as an Employer.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
@@ -503,6 +515,7 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+
 	<xs:simpleType name="OrganizationEventNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:organization#create"/>
@@ -539,7 +552,11 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+
 	<xs:complexType name="ShopTransferType">
+		<xs:annotation>
+			<xs:documentation>Information about employers converted from remote carriers to the exchange.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="source_carrier" type="CarrierType"/>
 			<xs:element name="hbx_active_on" type="xs:date"/>
