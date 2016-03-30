@@ -537,12 +537,13 @@
 			<xs:enumeration value="urn:openhbx:events:v1:organization#acquired"/>
 			<xs:enumeration value="urn:openhbx:events:v1:organization#going_out_of_reasons"/>
 			<xs:enumeration value="urn:openhbx:events:v1:organization#loss_of_eligibility"/>
-			<xs:enumeration value="urn:openhbx:events:v1:organization#voluntary__withdrawal"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#voluntary_withdrawal"/>
 			<xs:enumeration value="urn:openhbx:events:v1:organization#application_change"/>
 			<xs:enumeration value="urn:openhbx:events:v1:organization#renewal"/>
 			<xs:enumeration value="urn:openhbx:events:v1:organization#other"/>
 		</xs:restriction>
 	</xs:simpleType>
+
 	<xs:complexType name="OrganizationServiceEventBodyType">
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
