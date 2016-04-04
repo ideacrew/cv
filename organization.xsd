@@ -503,6 +503,7 @@
 
 	<xs:simpleType name="CarrierEmployerEventNameType">
 		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:employer#binder_paid"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#broker_changed"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#terminated_from_exchange"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#renew_benefit"/>
@@ -518,6 +519,7 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employer#renewal"/>
 		        <xs:enumeration value="urn:openhbx:events:v1:organization#correct_fein"/>
             		<xs:enumeration value="urn:openhbx:events:v1:organization#update_point_of_contact"/>
+            		<xs:enumeration value="urn:openhbx:events:v1:organization#update_location"/>
             		<xs:enumeration value="urn:openhbx:events:v1:organization#other"/>
 		</xs:restriction>
 	</xs:simpleType>
