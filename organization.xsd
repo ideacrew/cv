@@ -576,7 +576,7 @@
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
 				<xs:sequence>
-					<xs:element name="employer_digest" type="PartnerEmployerChangedServiceEventListType"/>
+					<xs:element name="employer_changes" type="PartnerEmployerChangedServiceEventListType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
