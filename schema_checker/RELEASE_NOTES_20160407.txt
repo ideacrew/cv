@@ -1,0 +1,34 @@
+Schema Release Notes - 2016.04.07
+-----------------------------------
+
+common.xsd:
+
+  - The documentation for the DateRangeType has been updated to clarify
+    the usage and precision of the type
+
+  - A new type, DateTimeRangeType, has been added to allow time ranges
+
+organization.xsd:
+
+  - For the purposes of clarity, the following types have been renamed:
+    + PartnerEmployerChangedServiceEventType -> EmployerEventType
+    + EmployerDigestCarrierNotificationEventNameType -> EmployerDigestEventNameType
+    + PartnerEmployerChangedServiceEventListType -> EmployerServiceEventListType
+    + EmployerUpdateCarrierDigestEventBodyType -> EmployerDigestServiceEventBodyType
+    + EmployerUpdateDigestCarrierNotificationEventType -> EmployerDigestEventType
+
+  - To reduce confusion on usage, the following elements have been renamed:
+    + employer_digest (root element) -> employer_digest_event : This now communicates
+      the usage of this element as a root event type, which may occur by itself and
+      denotes a transmitted event
+    + employer_digest (in the context of a digest event) -> employer_events :
+      This rename reduces confusion and indicates the purpose of the event being to
+      act as a container for multiple employer events.
+    + employer_change -> employer_event
+
+  - The base EmployerEvent type has been extended to allow multiple ways to reference
+    the resource contained in the event
+
+  - Documentation for the following structures has been updated:
+    + employer_digest_event element
+    + EmployerOrganizationType type
