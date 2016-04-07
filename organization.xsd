@@ -421,7 +421,7 @@
 	</xs:element>
 	<xs:complexType name="EmployerProfileType">
 		<xs:annotation>
-                        <xs:documentation>Information Specific to an organization operating as an Employer.</xs:documentation>
+			<xs:documentation>Information Specific to an organization operating as an Employer.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
@@ -478,7 +478,7 @@
 	</xs:complexType>
 	<xs:complexType name="EmployerOrganizationType">
 		<xs:annotation>
-			<xs:documentation>An organization specializing in advice about and sale of insurance products to businesses and consumers</xs:documentation>
+			<xs:documentation>An organization that sponsors benefit coverage for its employees</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="OrganizationWithRolesType">
@@ -500,7 +500,6 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:simpleType name="CarrierEmployerEventNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:employer#binder_paid"/>
@@ -517,13 +516,12 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employer#voluntary_withdrawal"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#application_change"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#renewal"/>
-		        <xs:enumeration value="urn:openhbx:events:v1:organization#correct_fein"/>
-            		<xs:enumeration value="urn:openhbx:events:v1:organization#update_point_of_contact"/>
-            		<xs:enumeration value="urn:openhbx:events:v1:organization#update_location"/>
-            		<xs:enumeration value="urn:openhbx:events:v1:organization#other"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#correct_fein"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#update_point_of_contact"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#update_location"/>
+			<xs:enumeration value="urn:openhbx:events:v1:organization#other"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:complexType name="OrganizationServiceEventBodyType">
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
@@ -533,7 +531,6 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
 	<xs:complexType name="ShopTransferType">
 		<xs:annotation>
 			<xs:documentation>Information about employers converted from remote carriers to the exchange.</xs:documentation>
@@ -543,8 +540,7 @@
 			<xs:element name="hbx_active_on" type="xs:date"/>
 		</xs:sequence>
 	</xs:complexType>
-
-	<xs:complexType name="PartnerEmployerChangedServiceEventType">
+	<xs:complexType name="EmployerEventType">
 		<xs:annotation>
 			<xs:documentation>A notification event for employer organizations, submitted to carrier partners.</xs:documentation>
 		</xs:annotation>
@@ -558,52 +554,93 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
-	<xs:simpleType name="EmployerDigestCarrierNotificationEventNameType">
+	<xs:simpleType name="EmployerDigestEventNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:carrier#employer_digest"/>
 		</xs:restriction>
 	</xs:simpleType>
-
-	<xs:complexType name="PartnerEmployerChangedServiceEventListType">
+	<xs:complexType name="EmployerServiceEventListType">
 		<xs:sequence>
-			<xs:element name="employer_change" type="PartnerEmployerChangedServiceEventType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="employer_event" type="EmployerEventType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
-
-	<xs:complexType name="EmployerUpdateCarrierDigestEventBodyType">
+	<xs:complexType name="EmployerDigestServiceEventBodyType">
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
 				<xs:sequence>
-					<xs:element name="employer_changes" type="PartnerEmployerChangedServiceEventListType"/>
+					<xs:element name="employer_events" type="EmployerEventType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
-	<xs:complexType name="EmployerUpdateDigestCarrierNotificationEventType">
+	<xs:complexType name="EmployerDigestEventType">
 		<xs:annotation>
 			<xs:documentation>A full digest of employer changes, submitted to Carrier partners as a batch.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="ServiceEventType">
 				<xs:sequence>
-					<xs:element name="event_name" type="EmployerDigestCarrierNotificationEventNameType"/>
+					<xs:element name="event_name" type="EmployerDigestEventNameType"/>
 					<xs:element ref="resource_instance_uri">
 						<xs:annotation>
 							<xs:documentation>A URI uniquely referencing the carrier receiving the notification.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="body" type="EmployerUpdateCarrierDigestEventBodyType"/>
+					<xs:element name="body" type="EmployerDigestServiceEventBodyType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-
-	<xs:element name="employer_digest" type="EmployerUpdateDigestCarrierNotificationEventType">
+	<xs:element name="employer_digest_event" type="EmployerDigestEventType">
 		<xs:annotation>
-			<xs:documentation>Root element of an employer digest set transmitted to carriers.</xs:documentation>
+			<xs:documentation>A compilation of employer events</xs:documentation>
 		</xs:annotation>
-        </xs:element>
+	</xs:element>
+	<xs:element name="er_digest">
+		<xs:annotation>
+			<xs:documentation>A compilation of employer events over a period of time</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="coverage_period" type="DateTimeRangeType"/>
+				<xs:element name="er_events">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="er_event">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:restriction base="ServiceEventType">
+											<xs:sequence>
+												<xs:element name="event_name" type="xs:anyURI">
+													<xs:annotation>
+														<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="qualifying_reason" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element ref="resource_instance_uri" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>URN(s) for the resource instance that is subject of this event</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element ref="extended_resource_instance_uri" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>URN(s) for other resource instances assocated with this event</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="body" type="ServiceBodyType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:restriction>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
