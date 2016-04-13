@@ -501,6 +501,9 @@
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:simpleType name="EmployerEventNameType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of event notification kinds published for Employers</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:employer#created"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#address_changed"/>
@@ -521,6 +524,7 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_voluntary"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_ineligible"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_expired"/>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_reinstated"/>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#other"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -538,7 +542,7 @@
 			<xs:documentation>Information about employers converted from remote carriers to the exchange.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="source_carrier" type="CarrierLinkType"/>
+			<xs:element name="source_carrier" type="CarrierLinkType" minOccurs="0"/>
 			<xs:element name="hbx_active_on" type="xs:date"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -572,8 +576,8 @@
 	</xs:simpleType>
 	<xs:complexType name="EmployerServiceEventListType">
 		<xs:sequence>
-      <xs:element name="coverage_period" type="DateTimeRangeType"/>
-			<xs:element name="employer_event" type="EmployerEventType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="coverage_period" type="DateTimeRangeType"/>
+			<xs:element name="employer_event" type="EmployerEventType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerDigestServiceEventBodyType">
@@ -587,12 +591,16 @@
 	</xs:complexType>
 	<xs:complexType name="EmployerDigestEventType">
 		<xs:annotation>
-			<xs:documentation>A full digest of employer changes, submitted to Carrier partners as a batch.</xs:documentation>
+			<xs:documentation>A compilation of Employer events</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="ServiceEventType">
 				<xs:sequence>
-					<xs:element name="event_name" type="EmployerDigestEventNameType"/>
+					<xs:element name="event_name" type="EmployerDigestEventNameType">
+						<xs:annotation>
+							<xs:documentation>The kind of Employer Digest Event for this instance</xs:documentation>
+						</xs:annotation>
+					</xs:element>
 					<xs:element ref="resource_instance_uri">
 						<xs:annotation>
 							<xs:documentation>A URI uniquely referencing the carrier receiving the notification.</xs:documentation>
@@ -605,7 +613,7 @@
 	</xs:complexType>
 	<xs:element name="employer_digest_event" type="EmployerDigestEventType">
 		<xs:annotation>
-			<xs:documentation>A compilation of employer events</xs:documentation>
+			<xs:documentation>A compilation of Employer events within a specific date_time period</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 </xs:schema>
