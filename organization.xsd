@@ -572,6 +572,7 @@
 	</xs:simpleType>
 	<xs:complexType name="EmployerServiceEventListType">
 		<xs:sequence>
+      <xs:element name="coverage_period" type="DateTimeRangeType"/>
 			<xs:element name="employer_event" type="EmployerEventType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -598,7 +599,6 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="body" type="EmployerDigestServiceEventBodyType"/>
-					<xs:element name="coverage_period" type="DateTimeRangeType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
