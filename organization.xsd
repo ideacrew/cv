@@ -502,26 +502,106 @@
   </xs:complexType>
   <xs:simpleType name="EmployerEventNameType">
     <xs:restriction base="xs:anyURI">
-      <xs:enumeration value="urn:openhbx:events:v1:employer#created"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#address_changed"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#contact_changed"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#fein_corrected"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#name_changed"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#broker_added"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#broker_terminated"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#general_agent_added"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#general_agent_terminated"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_open_enrollment_ended"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_binder_paid"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_approved"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_voluntary"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_nonpayment"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_relocated"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_open_enrollment_ended"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_voluntary"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_ineligible"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_expired"/>
-      <xs:enumeration value="urn:openhbx:events:v1:employer#other"/>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#created">
+        <xs:annotation>
+	  <xs:documentation>An employer has been created, for the first time, on the exchange.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#address_changed">
+        <xs:annotation>
+	  <xs:documentation>This employer or its organization has changed addresses.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#contact_changed">
+        <xs:annotation>
+	  <xs:documentation>This employer or its organization has changed contact information.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#fein_corrected">
+        <xs:annotation>
+	  <xs:documentation>The FEIN of an employer or its organization is being corrected.  This is not used to signal a change or merger of employers or organizations.  This is used only when initial FEIN provided was always incorrect.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#name_changed">
+        <xs:annotation>
+	  <xs:documentation>The name of an employer or its organization has changed.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#broker_added">
+        <xs:annotation>
+	  <xs:documentation>This employer has added a broker.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#broker_terminated">
+        <xs:annotation>
+	  <xs:documentation>This employer has removed a broker.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#general_agent_added">
+        <xs:annotation>
+	  <xs:documentation>This employer has added a general agent.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#general_agent_terminated">
+        <xs:annotation>
+	  <xs:documentation>This employer has removed a general agent.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_open_enrollment_ended">
+        <xs:annotation>
+	  <xs:documentation>The first open enrollment period has ended for an employer which is new to the exchange.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_binder_paid">
+        <xs:annotation>
+	  <xs:documentation>This employer has paid the initial binder payment.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_approved">
+        <xs:annotation>
+	  <xs:documentation>The initial application of this employer for benefits has been approved by the exchange.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_voluntary">
+        <xs:annotation>
+	  <xs:documentation>This employer left the exchange during the benefit year.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_nonpayment">
+        <xs:annotation>
+	  <xs:documentation>This employer has been terminated from the exchange due to non-payment.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_relocated">
+        <xs:annotation>
+	  <xs:documentation>This employer has been terminated from the exchange due to relocation.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_open_enrollment_ended">
+        <xs:annotation>
+	  <xs:documentation>This renewing employer completed the open enrollment period.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_voluntary">
+        <xs:annotation>
+	  <xs:documentation>This employer has chosen not to renew on the exchange.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_ineligible">
+        <xs:annotation>
+	  <xs:documentation>This employer has been removed from the exchange and will not be renewed for failure to meet eligibility requirements.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_expired">
+        <xs:annotation>
+	  <xs:documentation>This employer has expired from the exchange and has not yet selected a new set of benefits.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="urn:openhbx:events:v1:employer#other">
+        <xs:annotation>
+	  <xs:documentation>All other changes.  Examine the full resource, as any portion of it may have changed.</xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="OrganizationServiceEventBodyType">
