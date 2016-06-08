@@ -95,7 +95,7 @@
 	</xs:complexType>
 	<xs:complexType name="BrokerAgencyBrokersListType">
 		<xs:sequence>
-			<xs:element name="broker" type="BrokerType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="broker" type="BrokerType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="BrokerType">
@@ -104,8 +104,16 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType"/>
-			<xs:element name="person" type="PersonType"/>
-			<xs:element name="npn" type="NpnIdType"/>
+			<xs:element name="person" type="PersonType">
+				<xs:annotation>
+					<xs:documentation>Name and contact information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="npn" type="NpnIdType">
+				<xs:annotation>
+					<xs:documentation>Broker's National Producer Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -176,9 +184,22 @@
 	<xs:complexType name="BrokerAccountType">
 		<xs:sequence>
 			<xs:element name="broker_agency" type="BrokerAgencyLinkType"/>
-			<xs:element name="writing_agent" type="BrokerType"/>
-			<xs:element name="start_on" type="SimpleDateType"/>
-			<xs:element name="end_on" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="writing_agent" type="BrokerType">
+				<xs:annotation>
+					<xs:documentation>Broker representative for this organization</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
+			<xs:element name="start_on" type="SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>The effective date this broker began representing this organization</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end_on" type="SimpleDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The effective date this broker was terminated by this organization</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="BrokerAccountListType">
@@ -190,13 +211,13 @@
 		<xs:sequence>
 			<xs:element name="npn" type="NpnIdType" minOccurs="0"/>
 			<xs:element name="primary_broker" type="BrokerType"/>
-			<xs:element name="brokers" type="BrokerAgencyBrokersListType"/>
+			<xs:element name="brokers" type="BrokerAgencyBrokersListType" minOccurs="0"/>
 			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PlanYearListType">
 		<xs:sequence>
-			<xs:element name="plan_year" type="PlanYearType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="plan_year" type="PlanYearType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerPlanListType">
@@ -294,12 +315,12 @@
 		<xs:sequence>
 			<xs:element name="plan_year_start" type="SimpleDateType">
 				<xs:annotation>
-					<xs:documentation>Date employer plan eligibility begins</xs:documentation>
+					<xs:documentation>Date when employer-sponsored benefit eligibility begins</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="plan_year_end" type="SimpleDateType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Date employer plan eligibility ends</xs:documentation>
+					<xs:documentation>Date when employer-sponsored benefit eligibility ends</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="fte_count" type="xs:integer">
@@ -322,10 +343,10 @@
 					<xs:documentation>Open enrollment period end date</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="benefit_groups">
+			<xs:element name="benefit_groups" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="benefit_group" type="BenefitGroupType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="benefit_group" type="BenefitGroupType" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -415,7 +436,7 @@
 	<xs:element name="employer_census_families">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="employer_census_family" type="EmployerCensusFamilyType" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -424,12 +445,28 @@
 			<xs:documentation>Information Specific to an organization operating as an Employer.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="business_entity_kind" type="BusinessEntityKindType"/>
+			<xs:element name="business_entity_kind" type="BusinessEntityKindType">
+				<xs:annotation>
+					<xs:documentation>Entity legal form from enumerated list</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="sic_code" type="SicCodeType" minOccurs="0"/>
 			<xs:element name="brokers" type="BrokerAccountListType" minOccurs="0"/>
-			<xs:element name="plan_years" type="PlanYearListType"/>
-			<xs:element name="shop_transfer" type="ShopTransferType" minOccurs="0"/>
-			<xs:element ref="employer_census_families" minOccurs="0"/>
+			<xs:element name="plan_years" type="PlanYearListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collection of time periods when this employer sponsored benefits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shop_transfer" type="ShopTransferType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Present for SHOP employers transferred to HBX from issuers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="employer_census_families" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collection of rostered employees, their dependents and identifying information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OrganizationWithRolesType">
@@ -438,16 +475,32 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:group ref="OrganizationTypeCommonElementsGroup"/>
-			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0"/>
-			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
-			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Federal Employer Identification Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collection of places where this organization operates</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="website" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URL to home page on the World Wide Web</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element ref="contacts" minOccurs="0"/>
 			<xs:element name="is_active" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="broker_agency_profile" type="BrokerAgencyProfileType" minOccurs="0"/>
+			<xs:element name="broker_agency_profile" type="BrokerAgencyProfileType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional identifying information if this entity is a Broker on the HBX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="employer_profile" type="EmployerProfileType" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
 		</xs:sequence>
@@ -619,7 +672,11 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="source_carrier" type="CarrierLinkType"/>
-			<xs:element name="hbx_active_on" type="xs:date"/>
+			<xs:element name="hbx_active_on" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date when transferred employer profile is initially published on the HBX.  Typically three months prior to first effective date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmployerEventType">
@@ -655,9 +712,16 @@
 			<xs:restriction base="ServiceBodyType">
 				<xs:sequence>
 					<xs:element name="employer_events">
+						<xs:annotation>
+							<xs:documentation>Collection of employer profile event messages</xs:documentation>
+						</xs:annotation>
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="coverage_period" type="DateTimeRangeType"/>
+								<xs:element name="coverage_period" type="DateTimeRangeType">
+									<xs:annotation>
+										<xs:documentation>The start and end timestamps for events listed in this digest instance</xs:documentation>
+									</xs:annotation>
+								</xs:element>
 								<xs:element name="employer_event" type="EmployerEventType" minOccurs="0" maxOccurs="unbounded"/>
 							</xs:sequence>
 						</xs:complexType>
