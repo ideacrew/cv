@@ -246,7 +246,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#domestic_partner"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#child_under_26"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#child_26_and_over"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#disable_child_26_and_over"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#disabled_child_26_and_over"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#spouse"/>
 		</xs:restriction>
 	</xs:simpleType>
