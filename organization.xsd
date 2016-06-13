@@ -671,7 +671,7 @@
 			<xs:documentation>Information about employers converted from remote carriers to the exchange.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="source_carrier" type="CarrierLinkType"/>
+			<xs:element name="source_carrier" type="CarrierLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="hbx_active_on" type="xs:date">
 				<xs:annotation>
 					<xs:documentation>Date when transferred employer profile is initially published on the HBX.  Typically three months prior to first effective date</xs:documentation>
