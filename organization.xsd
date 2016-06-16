@@ -153,7 +153,7 @@
 	</xs:complexType>
 	<xs:complexType name="ResponsibleEntityType">
 		<xs:annotation>
-			<xs:documentation>An Entitity's HBX activity associated with sponsoring insurance coverage for others</xs:documentation>
+			<xs:documentation>An Entity's HBX activity associated with sponsoring insurance coverage for others</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="entity_identifier" type="EntityNameType"/>
@@ -582,32 +582,32 @@
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:employer#created">
 				<xs:annotation>
-					<xs:documentation>A benefit sponsor has successfully registered on the exchange.</xs:documentation>
+					<xs:documentation>A new employer has successfully registered on the exchange.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#address_changed">
 				<xs:annotation>
-					<xs:documentation>A benefit sponsor's office address has changed</xs:documentation>
+					<xs:documentation>An employer's office address has changed</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#contact_changed">
 				<xs:annotation>
-					<xs:documentation>A benefit sponsor has changed designated point-of-contact (POC) or that contact's information.</xs:documentation>
+					<xs:documentation>An employer has changed designated point-of-contact (POC) or that contact's information.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#fein_corrected">
 				<xs:annotation>
-					<xs:documentation>Correcting a benefit sponsor's previously provided, erroneous Federal Employer Identification Number (FEIN) </xs:documentation>
+					<xs:documentation>Correcting an employer's previously provided, erroneous Federal Employer Identification Number (FEIN) </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#name_changed">
 				<xs:annotation>
-					<xs:documentation>The name of a benefit sponsor has changed.</xs:documentation>
+					<xs:documentation>The legal name or DBA of an employer  has changed.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#broker_added">
 				<xs:annotation>
-					<xs:documentation>A benefit sponsor has designated a new broker representative</xs:documentation>
+					<xs:documentation>An employer has designated a new broker representative</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#broker_terminated">
@@ -627,17 +627,22 @@
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_open_enrollment_ended">
 				<xs:annotation>
-					<xs:documentation>A new sponsor's first open enrollment period on the HBX has ended</xs:documentation>
+					<xs:documentation>A new employer's first open enrollment period on the HBX has ended</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_binder_paid">
 				<xs:annotation>
-					<xs:documentation>A new sponsor has submitted payment-in-full for first premium.</xs:documentation>
+					<xs:documentation>A new employer has submitted payment-in-full for first premium.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_approved">
 				<xs:annotation>
-					<xs:documentation>A new sponsor has met eligibility requirements to offer benefit coverage through the HBX.</xs:documentation>
+					<xs:documentation>A new employer has met requirements to enroll employees through the HBX.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_eligible">
+				<xs:annotation>
+					<xs:documentation>A new employer has met both eligibility and enrollment requirements to offer benefit coverage through the HBX.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_terminated_voluntary">
@@ -660,26 +665,32 @@
 					<xs:documentation>A returning sponsor's open enrollment period for has ended</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_carrier_dropped">
+				<xs:annotation>
+					<xs:documentation>A returning employer has discontinued offering an incumbent carrier's benefits for the renewal coverage period</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_voluntary">
 				<xs:annotation>
-					<xs:documentation>A returning sponsor has elected to discontinue offering benefits through the HBX</xs:documentation>
+					<xs:documentation>A returning employer has elected to discontinue offering benefits through the HBX</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_terminated_ineligible">
 				<xs:annotation>
-					<xs:documentation>A returning sponsor has failed to meet eligbility requirements to continue  to offer benefits through the HBX</xs:documentation>
+					<xs:documentation>A returning employer has failed to meet eligibility and/or enrollment requirements to offer benefits for the renewal coverage period</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_eligible">
+				<xs:annotation>
+					<xs:documentation>A returning employer has met both eligibility and enrollment requirements to offer benefits for the renewal coverage period</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>			
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_expired">
 				<xs:annotation>
-					<xs:documentation>An applicant sponsor is ineligible to offer benefits through the HBX due to not completing requirements in a timely manner</xs:documentation>
+					<xs:documentation>An new or returning employer is ineligible to offer benefits through the HBX due to not meeting eligibility and/or enrollment requirements in a timely manner</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:events:v1:employer#other">
-				<xs:annotation>
-					<xs:documentation>All other changes.  Examine the full resource, as any portion of it may have changed.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
+
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="OrganizationServiceEventBodyType">
