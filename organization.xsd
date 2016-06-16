@@ -301,7 +301,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name" type="xs:string"/>
-			<xs:element name="reference_plan" type="PlanLinkType"/>
+			<xs:element name="reference_plan" type="PlanLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="elected_plans">
 				<xs:complexType>
 					<xs:sequence>
