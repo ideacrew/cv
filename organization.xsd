@@ -680,7 +680,7 @@
 					<xs:documentation>A returning employer has failed to meet eligibility and/or enrollment requirements to offer benefits for the renewal coverage period</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_eligible">
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_application_eligible">
 				<xs:annotation>
 					<xs:documentation>A returning employer has met both eligibility and enrollment requirements to offer benefits for the renewal coverage period</xs:documentation>
 				</xs:annotation>
