@@ -78,6 +78,9 @@ The CV model embodies knowledge gained and lessions learned by DCHBX and project
   * polling program that periodically queries authority event source
 
 
-### Documentation
+### Contributors
+* [Dan Thomas](https://github.com/ipublic) &nbsp;[![LinkedIn](https://static.licdn.com/scds/common/u/img/webpromo/btn_in_20x15.png)](https://www.linkedin.com/in/danjthomas)&nbsp;[IdeaCrew, Inc](http://ideacrew.com/)
+* [Trey Evans](https://github.com/TreyE)
+&nbsp;[![LinkedIn](https://static.licdn.com/scds/common/u/img/webpromo/btn_in_20x15.png)](https://www.linkedin.com/in/lewis-evans-b9b5209)&nbsp;[IdeaCrew, Inc](http://ideacrew.com/) 
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Health Benefit Exchange Canonical Vocabulary</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://dchealthlink.com/" property="cc:attributionName" rel="cc:attributionURL">District of Columbia Health Benefit Authority</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Health Benefit Exchange Canonical Vocabulary</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://dchealthlink.com/" property="cc:attributionName" rel="cc:attributionURL">District of Columbia Health Benefit Exchange Authority</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.

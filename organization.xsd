@@ -181,6 +181,26 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:entity#other_insured"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="GAAssignmentType">
+		<xs:sequence>
+			<xs:element name="general_agency" type="GeneralAgencyLinkType"/>
+			<xs:element name="start_on" type="SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>The effective date this agency was permitted to begin managing this organization</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end_on" type="SimpleDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The effective date this agency was no longer allowed to manage this organization.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GAAssignmentListType">
+		<xs:sequence>
+			<xs:element name="ga_assignment" type="GAAssignmentType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="BrokerAccountType">
 		<xs:sequence>
 			<xs:element name="broker_agency" type="BrokerAgencyLinkType"/>
@@ -198,6 +218,11 @@
 			<xs:element name="end_on" type="SimpleDateType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The effective date this broker was terminated by this organization</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ga_assignments" type="GAAssignmentListType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>General Agencies selected by a broker to manage this account</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -276,7 +301,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="name" type="xs:string"/>
-			<xs:element name="reference_plan" type="PlanLinkType"/>
+			<xs:element name="reference_plan" type="PlanLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="elected_plans">
 				<xs:complexType>
 					<xs:sequence>
@@ -699,7 +724,7 @@
 					<xs:documentation>A returning employer has failed to meet eligibility and/or enrollment requirements to offer benefits for the renewal coverage period</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_initial_application_eligible">
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_renewal_application_eligible">
 				<xs:annotation>
 					<xs:documentation>A returning employer has met both eligibility and enrollment requirements to offer benefits for the renewal coverage period</xs:documentation>
 				</xs:annotation>
