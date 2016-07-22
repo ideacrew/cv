@@ -1027,4 +1027,7 @@
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:element name="employer_request" type="EmployerRequestType"/>
+	<xs:element name="employer_response" type="EmployerResponseType"/>
 </xs:schema>
