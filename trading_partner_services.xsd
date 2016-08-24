@@ -2,6 +2,45 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="policy.xsd"/>
 
+	<xs:simpleType name="CoverageActionNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#create"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#add"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#cancel"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#terminate"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#effectuate"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#update"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#plan_change"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#reinstate"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage#audit"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CoverageActionReasonNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#qualifying_event">
+				<xs:annotation>
+					<xs:documentation>
+						The reason for the coverage change is a qualifying event, such as a SEP.
+						This reason is specified by the enrollment itself.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#identifying_information_changed"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#coverage_declined"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#voluntary_withdrawl"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#death"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#non_payment"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#location_change"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#notification"/>
+			<xs:enumeration value="urn:openhbx:events:v1:coverage_action_reason#other">
+				<xs:annotation>
+					<xs:documentation>A reason which falls under no other category.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="AffectedIndividualType">
 		<xs:sequence>
 			<xs:element name="individual_id" type="xs:anyURI"/>
@@ -31,7 +70,12 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="marketplace_type" type="AcaMarketPlaceNameType"/>
-			<xs:element name="coverage_action" type="PolicyEventNameType">
+			<xs:element name="coverage_action" type="CoverageActionNameType">
+				<xs:annotation>
+					<xs:documentation>Which action is to be taken on the specified coverage?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coverage_action_reason" type="CoverageActionReasonNameType">
 				<xs:annotation>
 					<xs:documentation>Which action is to be taken on the specified coverage?</xs:documentation>
 				</xs:annotation>
