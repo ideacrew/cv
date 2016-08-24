@@ -54,6 +54,11 @@ public class SchemaCheckerTest {
   }
 
   @Test
+  public void CheckTradingPartnerServicesTest() throws Exception {
+    checkSchema("trading_partner_services.xsd");
+  }
+
+  @Test
   public void CheckVocabularyTest() throws Exception {
     checkSchema("vocabulary.xsd");
   }
