@@ -2,6 +2,20 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="policy.xsd"/>
 
+	<xs:complexType name="PreviousIndividualInformationType">
+		<xs:sequence>
+			<xs:element name="name_prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_first" type="xs:string"/>
+			<xs:element name="name_middle" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_last" type="xs:string"/>
+			<xs:element name="name_suffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="name_full" type="xs:string" minOccurs="0"/>
+			<xs:element name="gender" type="GenderNameType" minOccurs="0"/>
+			<xs:element name="dob" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="ssn" type="FederalTaxIdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:simpleType name="CoverageActionNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:events:v1:coverage#create"/>
@@ -44,7 +58,7 @@
 	<xs:complexType name="AffectedIndividualType">
 		<xs:sequence>
 			<xs:element name="individual_id" type="xs:anyURI"/>
-			<xs:element name="previous_individual_information" type="PreviousIndividualType" minOccurs="0"/>
+			<xs:element name="previous_individual_information" type="PreviousIndividualInformationType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
