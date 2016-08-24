@@ -50,7 +50,7 @@
 
 	<xs:complexType name="AffectedIndividualListType">
 		<xs:sequence>
-			<xs:element name="affected_individual" type="AffectedIndividualType"/>
+			<xs:element name="affected_individual" type="AffectedIndividualType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
