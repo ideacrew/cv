@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
-	<xs:include schemaLocation="common.xsd"/>
-	<xs:include schemaLocation="links.xsd"/>
-	<xs:include schemaLocation="plan.xsd"/>
-	<xs:include schemaLocation="individual.xsd"/>
+	<xs:include schemaLocation="policy.xsd"/>
+
+	<xs:complexType name="AffectedIndividualType">
+		<xs:sequence>
+			<xs:element name="individual_id" type="xs:anyURI"/>
+			<xs:element name="previous_individual_information" type="PreviousIndividualType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AffectedIndividualListType">
+		<xs:sequence>
+			<xs:element name="affected_individual" type="AffectedIndividualType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TradingPartnerCoverageEventContextType">
+		<xs:annotation>
+			<xs:documentation>Describes the context in which this coverage change will take place.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="transaction_id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Transaction Identifier. Establishes transaction ordering. Used in X12 as the BGN02.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="trading_partner_id" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Trading partner for which this event is intended.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="marketplace_type" type="AcaMarketPlaceNameType"/>
+			<xs:element name="coverage_action" type="PolicyEventNameType">
+				<xs:annotation>
+					<xs:documentation>Which action is to be taken on the specified coverage?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="affected_individuals" type="AffectedIndividualListType">
+				<xs:annotation>
+					<xs:documentation>Describes which individuals in the enrollment are affected by the coverage change.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TradingPartnerCoverageEventType">
+		<xs:sequence>
+			<xs:element name="event_context" type="TradingPartnerCoverageEventContextType"/>
+			<xs:element name="policy" type="PolicyType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="trading_partner_coverage_event" type="TradingPartnerCoverageEventType"/>
 </xs:schema>
