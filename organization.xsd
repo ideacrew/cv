@@ -492,7 +492,7 @@
 	<xs:complexType name="EmployerCensusFamilyType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierSimpleType"/>
-			<xs:element name="employee" type="EmployerCensusFamilyMemberType"/>
+			<xs:element name="employee" type="EmployerCensusFamilyEmployeeType"/>
 			<xs:element name="dependents" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -731,7 +731,12 @@
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_expired">
 				<xs:annotation>
-					<xs:documentation>An new or returning employer is ineligible to offer benefits through the HBX due to not meeting eligibility and/or enrollment requirements in a timely manner</xs:documentation>
+					<xs:documentation>A new or returning employer is ineligible to offer benefits through the HBX due to not meeting eligibility and/or enrollment requirements in a timely manner</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_reinstated">
+				<xs:annotation>
+					<xs:documentation>A new or returning employer is being re-activated after previously being terminated from the exchange in the middle of their coverage year.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
