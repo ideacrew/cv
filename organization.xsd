@@ -991,13 +991,7 @@
 					<xs:complexContent>
 						<xs:restriction base="ServiceBodyType">
 							<xs:sequence>
-								<xs:element name="employers">
-									<xs:complexType>
-										<xs:sequence>
-											<xs:element name="employer" type="EmployerProfileType" minOccurs="0"/>
-										</xs:sequence>
-									</xs:complexType>
-								</xs:element>
+								<xs:element ref="employers" />
 							</xs:sequence>
 						</xs:restriction>
 					</xs:complexContent>
@@ -1032,6 +1026,14 @@
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:element name="employers" type="EmployerProfilesListType"/>
+
+	<xs:complexType name="EmployerProfilesListType">
+		<xs:sequence>
+			<xs:element name="employer" type="EmployerProfileType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 
 	<xs:element name="employer_request" type="EmployerRequestType"/>
 	<xs:element name="employer_response" type="EmployerResponseType"/>
