@@ -448,7 +448,7 @@
 	<xs:complexType name="EmployerCensusFamilyType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierSimpleType"/>
-			<xs:element name="employee" type="EmployerCensusFamilyMemberType"/>
+			<xs:element name="employee" type="EmployerCensusFamilyEmployeeType"/>
 			<xs:element name="dependents" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
