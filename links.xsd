@@ -120,6 +120,7 @@
 	<xs:complexType name="EnrolleeBenefitType">
 		<xs:sequence>
 			<xs:element name="premium_amount" type="CurrencyType"/>
+			<xs:element name="eligibility_begin_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="begin_date" type="SimpleDateType"/>
 			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="carrier_assigned_policy_id" type="xs:string" minOccurs="0"/>
