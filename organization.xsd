@@ -300,6 +300,7 @@
 			<xs:documentation>A named set of benefits applicable to a particular group.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="reference_plan" type="PlanLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="elected_plans">
@@ -338,6 +339,7 @@
 			<xs:documentation>A period of benefits availble to an entity.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="plan_year_start" type="SimpleDateType">
 				<xs:annotation>
 					<xs:documentation>Date when employer-sponsored benefit eligibility begins</xs:documentation>
@@ -737,6 +739,11 @@
 			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_period_reinstated">
 				<xs:annotation>
 					<xs:documentation>A new or returning employer is being re-activated after previously being terminated from the exchange in the middle of their coverage year.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#benefit_coverage_carrier_group_id_assigned">
+				<xs:annotation>
+					<xs:documentation>A carrier has assigned a group ID to the benefit group of an employer.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
