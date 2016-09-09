@@ -115,6 +115,11 @@
 			<xs:element name="id" type="IdentifierType"/>
 			<xs:element name="name" type="nonEmptyString"/>
 			<xs:element name="dba" minOccurs="0"/>
+			<xs:element name="fein" type="FederalTaxIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Federal Employer Identifier Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EnrolleeBenefitType">
@@ -258,6 +263,16 @@
 			</xs:element>
 			<xs:element name="office_locations" type="OfficeLocationListType" minOccurs="0"/>
 			<xs:group ref="ResourceTimestampGroup" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BenefitGroupLinkType">
+		<xs:annotation>
+			<xs:documentation>A reference to a named benefit group.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="IdentifierType"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="employer" type="EmployerLinkType" />
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
