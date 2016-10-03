@@ -1073,7 +1073,7 @@
 
 	<xs:complexType name="EmployerProfilesListType">
 		<xs:sequence>
-			<xs:element name="employer" type="EmployerProfileType" minOccurs="0"/>
+			<xs:element name="employer" type="EmployerOrganizationType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
