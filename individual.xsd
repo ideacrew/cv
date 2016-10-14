@@ -2004,4 +2004,5 @@
 			<xs:group ref="FamilySharedElementsGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="family" type="FamilyType"/>
 </xs:schema>
