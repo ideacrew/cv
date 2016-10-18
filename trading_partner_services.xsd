@@ -78,6 +78,11 @@
 					<xs:documentation>Transaction Identifier. Establishes transaction ordering. Used in X12 as the BGN02.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="effective_date" type="SimpleDateType">
+				<xs:annotation>
+					<xs:documentation>Date on when the transaction should be considered effective.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="trading_partner_id" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>Trading partner for which this event is intended.</xs:documentation>

@@ -391,18 +391,7 @@
 			<xs:restriction base="PersonType">
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType"/>
-					<xs:element name="person_name">
-						<xs:complexType>
-							<xs:complexContent>
-								<xs:restriction base="PersonNameType">
-									<xs:sequence>
-										<xs:element name="person_surname" type="nonEmptyString"/>
-										<xs:element name="person_given_name" type="nonEmptyString"/>
-									</xs:sequence>
-								</xs:restriction>
-							</xs:complexContent>
-						</xs:complexType>
-					</xs:element>
+					<xs:element name="person_name" type="PersonNameType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
