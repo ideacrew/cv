@@ -400,7 +400,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element ref="policy_state"/>
+			<xs:element ref="policy_state" minOccurs="0"/>
 			<xs:element name="request_submitted_timestamp" type="xs:dateTime">
 				<xs:annotation>
 					<xs:documentation>UTC date and time when benefit enrollment application is initiated by consumer</xs:documentation>
@@ -414,7 +414,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="BenefitStatusNameType">
@@ -426,6 +426,14 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#cobra"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#surviving_insured"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#tefra"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnrollmentNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#initial_enrollment"/>
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#special_enrollment"/>
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#renewal"/>
+			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#maintenance"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EnrollmentEventNameType">

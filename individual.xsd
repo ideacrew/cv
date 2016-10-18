@@ -1130,7 +1130,7 @@
 			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="subject_individual" type="IdentifierSimpleType">
+			<xs:element name="subject_individual" type="IdentifierSimpleType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This individual's ID</xs:documentation>
 				</xs:annotation>
@@ -1235,7 +1235,7 @@
 			<xs:element name="start_date" type="SimpleDateType"/>
 			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdMemberType">
