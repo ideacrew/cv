@@ -560,7 +560,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmergencyMedicaidEnrollmentType">
@@ -1067,8 +1067,8 @@
 			</xs:element>
 			<xs:element name="effective_start_date" type="SimpleDateType"/>
 			<xs:element name="effective_end_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element ref="comments"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element ref="comments" minOccurs="0"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="MinimumEssentialCoverageType">
