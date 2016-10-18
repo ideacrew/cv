@@ -11,17 +11,15 @@
 			<xs:documentation>Dereferenceable identifier for employer instance, e.g. http://dchealthlink.com/api/services/employer/_id</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-
 	<xs:complexType name="EligibilityEventType">
-          <xs:annotation>
-		  <xs:documentation>Describes the circumstances which made enrollment possible.</xs:documentation>
-	  </xs:annotation>
-	  <xs:sequence>
-		  <xs:element name="event_kind" type="QualifyingLifeEventNameType"/>
-		  <xs:element name="event_date" type="SimpleDateType" minOccurs="0"/>
-	  </xs:sequence>
+		<xs:annotation>
+			<xs:documentation>Describes the circumstances which made enrollment possible.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="event_kind" type="QualifyingLifeEventNameType"/>
+			<xs:element name="event_date" type="SimpleDateType" minOccurs="0"/>
+		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="EnrolleeIndividualType">
 		<xs:annotation>
 			<xs:documentation>An individual enrolled under a policy</xs:documentation>
@@ -122,10 +120,17 @@
 			<xs:element name="benefit" type="EnrolleeBenefitType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="enrollment" type="EnrollmentType"/>
-	<xs:complexType name="EnrollmentType">
+	<xs:element name="enrollment" type="DeprecatedEnrollmentType"/>
+	<xs:complexType name="DeprecatedEnrollmentType">
 		<xs:sequence>
 			<xs:element name="type" type="EnrollmentNameType"/>
+			<xs:element name="market"/>
+			<xs:element ref="policy" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnrollmentEventType">
+		<xs:sequence>
+			<xs:element name="type" type="EnrollmentEventNameType"/>
 			<xs:element name="market"/>
 			<xs:element ref="policy" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -423,12 +428,20 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_status#tefra"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="EnrollmentNameType">
+	<xs:simpleType name="EnrollmentEventNameType">
 		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#initial_enrollment"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#special_enrollment"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#renewal"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#maintenance"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#initial"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#renew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#audit"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_identifier"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_demographic"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_address"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_disability"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_product"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_reenroll"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#terminate"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EnrollmentStatusNameType">
@@ -533,6 +546,4 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-
-
 </xs:schema>
