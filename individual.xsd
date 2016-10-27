@@ -4,10 +4,15 @@
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
-	<xs:element name="affected_members">
+			<xs:complexType name="AffectedMemberType">
+		<xs:sequence>
+			<xs:element name="member_before_changes" type="PersonType"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:element name="affected_members_deprecated">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="affected_member" type="ApplicantLinkType" maxOccurs="unbounded"/>
+				<xs:element name="affected_member" type="ApplicantLinkType"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -477,6 +482,7 @@
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType"/>
 					<xs:element name="person" type="PersonLinkType"/>
+					<xs:element name="person_demographics" type="PersonDemographicsType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -1182,7 +1188,7 @@
 					<xs:documentation>Qualifying Life Event kind</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="affected_members"/>
+			<xs:element name="affected_members" type="AffectedMemberType"/>
 			<xs:element name="event_date" type="SimpleDateType">
 				<xs:annotation>
 					<xs:documentation>Date QLE occured</xs:documentation>

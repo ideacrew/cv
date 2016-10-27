@@ -533,7 +533,7 @@
 			<xs:element name="body" type="ServiceBodyType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-        <xs:complexType name="EnvelopeHeaderType">
+	<xs:complexType name="EnvelopeHeaderType">
 		<xs:annotation>
 			<xs:documentation>Base type of header component properties for all messages.</xs:documentation>
 		</xs:annotation>
@@ -590,7 +590,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-
 	<xs:complexType name="ServiceHeaderType">
 		<xs:annotation>
 			<xs:documentation>Base type of header component properties for SOA service call or response</xs:documentation>
@@ -831,6 +830,7 @@
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:aca_marketplace#individual"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:aca_marketplace#shop"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:aca_marketplace#coverall"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="CalendarYearType">
