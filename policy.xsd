@@ -547,17 +547,26 @@
 	<xs:simpleType name="EnrollmentEventNameType">
 		<xs:restriction base="xs:anyURI">
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#initial"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#renew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#auto_renew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#active_renew"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#audit"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_identifier"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_demographic"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_address"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_disability"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_communication_numbers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_handicap_status"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_product"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_reenroll"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#terminate"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_enrollment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_member"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#terminate_enrollment"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_add"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_terminate"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name_deprecated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_initial"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_renew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_reinstate"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name_or_demographic"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_demographic_deprecated"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EnrollmentNameType">
