@@ -127,7 +127,26 @@
 	</xs:complexType>
 	<xs:complexType name="EnrollmentEventBodyType">
 		<xs:sequence>
-			<xs:element name="affected_members" type="AffectedMemberType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="affected_members">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="affected_member" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:restriction base="EnrolleeType">
+										<xs:sequence>
+											<xs:element name="member" type="EnrolleeMemberType"/>
+											<xs:element name="is_subscriber" type="xs:boolean"/>
+											<xs:element name="benefit_status" type="BenefitStatusNameType" minOccurs="0"/>
+											<xs:element name="benefit" type="EnrolleeBenefitType"/>
+										</xs:sequence>
+									</xs:restriction>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="transaction_id"/>
 			<xs:element name="is_trading_partner_publishable" type="xs:boolean"/>
 			<xs:element ref="enrollment"/>
