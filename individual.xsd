@@ -4,10 +4,15 @@
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:include schemaLocation="organization.xsd"/>
 	<xs:include schemaLocation="plan.xsd"/>
-	<xs:element name="affected_members">
+			<xs:complexType name="AffectedMemberType">
+		<xs:sequence>
+			<xs:element name="member_before_changes" type="PersonType"/>
+		</xs:sequence>
+	</xs:complexType>
+<xs:element name="affected_members_deprecated">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="affected_member" type="ApplicantLinkType" maxOccurs="unbounded"/>
+				<xs:element name="affected_member" type="ApplicantLinkType"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -477,6 +482,7 @@
 				<xs:sequence>
 					<xs:element name="id" type="IdentifierType"/>
 					<xs:element name="person" type="PersonLinkType"/>
+					<xs:element name="person_demographics" type="PersonDemographicsType"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -504,7 +510,7 @@
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="person" type="PersonType"/>
-					<xs:element ref="person_relationships"/>
+					<xs:element ref="person_relationships" minOccurs="0"/>
 					<xs:element name="person_demographics" type="PersonDemographicsType"/>
 					<xs:element name="is_primary_applicant" type="xs:boolean"/>
 					<xs:element name="is_consent_applicant" type="xs:boolean" minOccurs="0"/>
@@ -525,7 +531,7 @@
 					</xs:element>
 					<xs:element name="verifications" type="xs:anyType" minOccurs="0"/>
 					<xs:group ref="CommentedActiveResourceGroup"/>
-					<xs:group ref="ResourceTimestampGroup"/>
+					<xs:group ref="OptionalResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -560,7 +566,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element ref="comments" minOccurs="0"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="EmergencyMedicaidEnrollmentType">
@@ -1051,7 +1057,7 @@
 	<xs:complexType name="IrsGroupType">
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierSimpleType"/>
-			<xs:element name="tax_households_ids">
+			<xs:element name="tax_household_ids">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="tax_household_id" type="IdentifierSimpleType" maxOccurs="unbounded"/>
@@ -1067,8 +1073,8 @@
 			</xs:element>
 			<xs:element name="effective_start_date" type="SimpleDateType"/>
 			<xs:element name="effective_end_date" type="SimpleDateType" minOccurs="0"/>
-			<xs:element ref="comments"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:element ref="comments" minOccurs="0"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="MinimumEssentialCoverageType">
@@ -1122,7 +1128,7 @@
 					<xs:documentation>Person is resident of HBX state</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonRelationshipType">
@@ -1130,7 +1136,7 @@
 			<xs:documentation>Interpersonal relationship between one or more individuals in Resource Description Framework notation (Subject-predicate-object)</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="subject_individual" type="IdentifierSimpleType">
+			<xs:element name="subject_individual" type="IdentifierSimpleType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>This individual's ID</xs:documentation>
 				</xs:annotation>
@@ -1182,7 +1188,7 @@
 					<xs:documentation>Qualifying Life Event kind</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element ref="affected_members"/>
+			<xs:element name="affected_members" type="AffectedMemberType"/>
 			<xs:element name="event_date" type="SimpleDateType">
 				<xs:annotation>
 					<xs:documentation>Date QLE occured</xs:documentation>
@@ -1235,7 +1241,7 @@
 			<xs:element name="start_date" type="SimpleDateType"/>
 			<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TaxHouseholdMemberType">
@@ -1273,7 +1279,7 @@
 					<xs:element name="start_date" type="SimpleDateType"/>
 					<xs:element name="end_date" type="SimpleDateType" minOccurs="0"/>
 					<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-					<xs:group ref="ResourceTimestampGroup"/>
+					<xs:group ref="OptionalResourceTimestampGroup"/>
 				</xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
@@ -1904,7 +1910,7 @@
 			<xs:element name="primary_member_id" type="IdentifierType"/>
 			<xs:element name="broker_assignments" type="CoverageHouseholdBrokerAssignmentsType" minOccurs="0"/>
 			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CoverageHouseholdBrokerAssignmentType">
@@ -1937,7 +1943,7 @@
 			<xs:element name="coverage_households" type="CoverageHouseholdsListType"/>
 			<xs:element ref="tax_households" minOccurs="0"/>
 			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="HouseholdsListType">
@@ -1993,13 +1999,14 @@
 			<xs:element name="application_type" type="HbxServiceNameType" minOccurs="0"/>
 			<xs:element name="primary_family_member_id" type="IdentifierSimpleType"/>
 			<xs:element ref="renewal_consent_family_member_id" minOccurs="0"/>
+			<xs:element name="e_case_id" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="households" type="HouseholdsListType" minOccurs="0"/>
 			<xs:element name="broker_accounts" type="FamilyBrokerAccountListType" minOccurs="0"/>
 			<xs:element ref="irs_groups" minOccurs="0"/>
 			<xs:element ref="qualifying_life_events" minOccurs="0"/>
 			<xs:element ref="renewal_consent_through_year" minOccurs="0"/>
 			<xs:group ref="SubmittedCommentedActiveResourceGroup"/>
-			<xs:group ref="ResourceTimestampGroup"/>
+			<xs:group ref="OptionalResourceTimestampGroup"/>
 		</xs:sequence>
 	</xs:group>
 	<xs:complexType name="FamilyType">
@@ -2012,4 +2019,5 @@
 			<xs:group ref="FamilySharedElementsGroup"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="family" type="FamilyType"/>
 </xs:schema>
