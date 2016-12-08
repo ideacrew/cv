@@ -230,6 +230,8 @@
 			<xs:element name="transaction_id" type="IdentifierSimpleType"/>
 			<xs:element name="type" type="EnrollmentEventNameType"/>
 			<xs:element name="market" type="AcaMarketPlaceNameType"/>
+			<xs:element name="premium_effective_date" type="SimpleDateType" minOccurs="0"/>
+			<xs:element name="assistance_election_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element ref="policy" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
