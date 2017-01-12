@@ -570,6 +570,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#initial"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#auto_renew"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#active_renew"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#active_renew_member_add"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#audit"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_identifier"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_address"/>
@@ -577,6 +578,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_handicap_status"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_financial_assistance"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_product"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_product_member_add"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_reenroll"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_enrollment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_member"/>
