@@ -1791,7 +1791,7 @@
 					<xs:documentation>Exceptional circumstance for start or end of service with AmeriCorps State and National, VISTA, or NCCC service</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="urn:cms:terms:v1:qualifying_life_event#exceptional_circumstances"/>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#exceptional_circumstances"/>
 			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#medical_coverage_order">
 				<xs:annotation>
 					<xs:documentation>Mandated medical coverage order</xs:documentation>
