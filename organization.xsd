@@ -360,6 +360,7 @@
 					<xs:documentation>Number of part-time employees</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="composite_rating_details" type="CompositeRatingDetailsType"/>
 			<xs:element name="open_enrollment_start" type="SimpleDateType">
 				<xs:annotation>
 					<xs:documentation>Open enrollment period start date</xs:documentation>
@@ -1079,4 +1080,40 @@
 
 	<xs:element name="employer_request" type="EmployerRequestType"/>
 	<xs:element name="employer_response" type="EmployerResponseType"/>
+
+	<xs:complexType name="CompositeRatingTierType">
+		<xs:sequence>
+			<xs:element name="tier_name" type="xs:string"/>
+			<xs:element name="premium" type="CurrencyType"/>
+			<xs:element name="contribution_factor" type="ContributionFactorType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="EnrollmentFactorType">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="1.0"/>
+			<xs:minInclusive value="0.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ContributionFactorType">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="1.0"/>
+			<xs:minExclusive value="0.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="CompositeRatingTierListType">
+		<xs:sequence>
+			<xs:element name="composite_rating_tier" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CompositeRatingDetailsType">
+		<xs:sequence>
+			<xs:element name="group_size" type="xs:integer"/>
+			<xs:element name="enrollment_factor" type="EnrollmentFactorType"/>
+			<xs:element name="composite_rating_tiers" type="CompositeRatingTierListType"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
