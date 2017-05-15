@@ -1105,7 +1105,7 @@
 
 	<xs:complexType name="CompositeRatingTierListType">
 		<xs:sequence>
-			<xs:element name="composite_rating_tier" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="composite_rating_tier" type="CompositeRatingTierType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
