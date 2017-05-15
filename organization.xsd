@@ -360,7 +360,7 @@
 					<xs:documentation>Number of part-time employees</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="composite_rating_details" type="CompositeRatingDetailsType"/>
+			<xs:element name="composite_rating_details" type="CompositeRatingDetailsType" minOccurs="0" />
 			<xs:element name="open_enrollment_start" type="SimpleDateType">
 				<xs:annotation>
 					<xs:documentation>Open enrollment period start date</xs:documentation>
