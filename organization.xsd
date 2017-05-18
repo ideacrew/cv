@@ -275,21 +275,23 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:employee_census_relationship#spouse"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:simpleType name="ContributionPercentType">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="100"/>
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="RelationshipBenefitType">
 		<xs:sequence>
 			<xs:element name="relationship" type="RelationshipBenefitRelationshipType"/>
 			<xs:element name="offered" type="xs:boolean"/>
-			<xs:element name="contribution_percent">
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:maxInclusive value="100"/>
-						<xs:minInclusive value="0"/>
-						<xs:fractionDigits value="2"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="contribution_percent" type="ContributionPercentType"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="RelationshipBenefitsListType">
 		<xs:sequence>
 			<xs:element name="relationship_benefit" type="RelationshipBenefitType" minOccurs="0" maxOccurs="unbounded"/>
@@ -1087,7 +1089,7 @@
 		<xs:sequence>
 			<xs:element name="tier_name" type="xs:string"/>
 			<xs:element name="premium" type="CurrencyType"/>
-			<xs:element name="contribution_factor" type="ContributionFactorType"/>
+			<xs:element name="contribution_percent" type="ContributionPercentType"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -1095,13 +1097,6 @@
 		<xs:restriction base="xs:decimal">
 			<xs:maxInclusive value="1.0"/>
 			<xs:minInclusive value="0.0"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="ContributionFactorType">
-		<xs:restriction base="xs:decimal">
-			<xs:maxInclusive value="1.0"/>
-			<xs:minExclusive value="0.0"/>
 		</xs:restriction>
 	</xs:simpleType>
 
