@@ -302,6 +302,8 @@
 		<xs:sequence>
 			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="name" type="xs:string"/>
+			<xs:element name="group_size" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="enrollment_factor" type="EnrollmentFactorType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="reference_plan" type="PlanLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="elected_plans">
 				<xs:complexType>
@@ -313,6 +315,7 @@
 			<xs:choice>
 				<xs:element name="federal_contributions" type="xs:anyType"/>
 				<xs:element name="relationship_benefits" type="RelationshipBenefitsListType"/>
+				<xs:element name="composite_rating_tiers" type="CompositeRatingTierListType"/>
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -370,7 +373,6 @@
 					<xs:documentation>Open enrollment period end date</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="composite_rating_details" type="CompositeRatingDetailsType" minOccurs="0" />
 			<xs:element name="benefit_groups" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -1106,21 +1108,6 @@
 	<xs:complexType name="CompositeRatingTierListType">
 		<xs:sequence>
 			<xs:element name="composite_rating_tier" type="CompositeRatingTierType" minOccurs="1" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="CompositeRatingDetailsType">
-		<xs:sequence>
-			<xs:element name="group_size" type="xs:integer"/>
-			<xs:element name="enrollment_factor" type="EnrollmentFactorType"/>
-			<xs:element name="composite_rating_tiers" type="CompositeRatingTierListType"/>
-			<xs:element name="elected_plans">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="elected_plan" type="PlanLinkType" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
