@@ -305,7 +305,8 @@
 			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="group_size" type="xs:integer" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="enrollment_factor" type="EnrollmentFactorType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="participation_rate" type="EnrollmentFactorType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="rating_area" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="reference_plan" type="PlanLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="elected_plans">
 				<xs:complexType>
@@ -1085,9 +1086,34 @@
 	<xs:element name="employer_request" type="EmployerRequestType"/>
 	<xs:element name="employer_response" type="EmployerResponseType"/>
 
+	<xs:simpleType name="CompositeRatingTierNameType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:openhbx:terms:v1:composite_rating_tier#EMP">
+				<xs:annotation>
+					<xs:documentation>Employee Only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:terms:v1:composite_rating_tier#ESP">
+				<xs:annotation>
+					<xs:documentation>Employee and spouse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:terms:v1:composite_rating_tier#E5D">
+				<xs:annotation>
+					<xs:documentation>Employee and one or more dependents</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:terms:v1:composite_rating_tier#FAM">
+				<xs:annotation>
+					<xs:documentation>Family</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="CompositeRatingTierType">
 		<xs:sequence>
-			<xs:element name="tier_name" type="xs:string"/>
+			<xs:element name="tier_name" type="CompositeRatingTierNameType"/>
 			<xs:element name="premium" type="CurrencyType"/>
 			<xs:element name="contribution_percent" type="ContributionPercentType"/>
 		</xs:sequence>
