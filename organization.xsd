@@ -305,7 +305,7 @@
 			<xs:element name="id" type="IdentifierType" minOccurs="0"/>
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="group_size" type="xs:integer" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="participation_rate" type="EnrollmentFactorType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="participation_rate" type="ParticipationRateType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="rating_area" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="reference_plan" type="PlanLinkType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="elected_plans">
@@ -1119,7 +1119,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:simpleType name="EnrollmentFactorType">
+	<xs:simpleType name="ParticipationRateType">
 		<xs:restriction base="xs:decimal">
 			<xs:maxInclusive value="1.0"/>
 			<xs:minInclusive value="0.0"/>
