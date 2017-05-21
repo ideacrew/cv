@@ -752,6 +752,11 @@
 					<xs:documentation>A carrier has assigned a group ID to the benefit group of an employer.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="urn:openhbx:events:v1:employer#plan_year_corrected">
+				<xs:annotation>
+					<xs:documentation>Via either the exchange or an appeal by an employer, plan year offerings and contribution models have been corrected.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 
