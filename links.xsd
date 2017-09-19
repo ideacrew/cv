@@ -76,7 +76,7 @@
 			</xs:element>
 			<xs:element name="website" type="xs:anyURI" minOccurs="0"/>
 			<xs:element name="tpa" type="TpaType" minOccurs="0"/>
-			<xs:element name="is_active" type="xs:boolean">
+			<xs:element name="is_active" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Indicator that organization  is operative on the HBX</xs:documentation>
 				</xs:annotation>
