@@ -776,10 +776,12 @@
 	<xs:complexType name="OrganizationServiceEventBodyType">
 		<xs:complexContent>
 			<xs:restriction base="ServiceBodyType">
+				<xs:sequence>
 				<xs:choice>
 					<xs:element name="organization" type="OrganizationWithRolesType"/>
 					<xs:element name="organization_identifiers_assigned" type="EmployerInformationAssignmentResponseType" />
 				</xs:choice>
+			        </xs:sequence>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
