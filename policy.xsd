@@ -192,7 +192,7 @@
 										<xs:documentation>Uniform Resource Name (URN) for this event, e.g.; urn:openhbx:events:v1:individual#added</xs:documentation>
 									</xs:annotation>
 								</xs:element>
-								<xs:element name="qualifying_reason" type="EligibilityNameType" minOccurs="0">
+								<xs:element name="qualifying_reason" type="BenefitMaintenanceNameType" minOccurs="0">
 									<xs:annotation>
 										<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
 									</xs:annotation>
@@ -605,6 +605,7 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_reenroll"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_enrollment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_member"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cancel_enrollment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#terminate_enrollment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_add"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_terminate"/>
@@ -614,24 +615,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_reinstate"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name_or_demographic"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_demographic_deprecated"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="EnrollmentNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#initial_enrollment"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#special_enrollment"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#renewal"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#cobra"/>
-			<xs:enumeration value="urn:openhbx:enrollment:v1:policies#maintenance"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="EligibilityNameType">
-		<xs:restriction base="xs:anyURI">
-			<xs:enumeration value="urn:openhbx:terms:v1:eligibility#open_enrollment"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:eligibility#special_enrollment"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:eligibility#new_hire"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:eligibility#cobra"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:eligibility#non_enrollment_maintenance"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EnrollmentStatusNameType">
