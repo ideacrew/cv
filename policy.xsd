@@ -286,6 +286,7 @@
                                                 </xs:annotation>
 						<xs:complexType>
 							<xs:sequence>
+								<xs:element name="event_effective_date" type="SimpleDateType" minOccurs="0"/>
 								<xs:element name="hbx_enrollment_ids" type="HbxEnrollmentIdsList" minOccurs="0"/>
 							</xs:sequence>
 						</xs:complexType>
