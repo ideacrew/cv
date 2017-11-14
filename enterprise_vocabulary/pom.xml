@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.openhbx</groupId>
-  <artifactId>schema_checker</artifactId>
+  <artifactId>enterprise_vocabulary</artifactId>
   <version>0.1.0</version>
   <packaging>jar</packaging>
 
-  <name>schema_checker</name>
+  <name>enterprise_vocabulary</name>
 
   <developers>
     <developer>
@@ -22,11 +22,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.10</version>
@@ -38,7 +33,7 @@
     <resources>
       <resource>
         <directory>../</directory>
-        <targetPath>org/openhbx</targetPath>
+        <targetPath>org/openhbx/enterprise_vocabulary/xsds</targetPath>
         <includes>
           <include>*.xsd</include>
         </includes>
@@ -46,19 +41,6 @@
     </resources>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <configuration>
-            <archive>
-              <manifestEntries>
-                <Extension-Name>schema_validator</Extension-Name>
-              </manifestEntries>
-            </archive>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-          </configuration>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
