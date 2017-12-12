@@ -508,6 +508,7 @@
 									<xs:sequence>
 										<xs:element name="employer_link" type="EmployerLinkType"/>
 										<xs:element name="total_employer_responsible_amount" type="CurrencyType"/>
+										<xs:element name="cobra_eligibility_date" type="SimpleDateType" minOccurs="0"/>
 										<xs:element name="composite_rating_tier_name" type="CompositeRatingTierNameType" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>This element indicates the existance of a composite rated policy/enrollment.  If this element is present, individual level premiums should be ignored.</xs:documentation>
