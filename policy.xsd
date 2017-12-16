@@ -640,11 +640,15 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_add"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_terminate"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name_deprecated"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_initial"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_renew"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cobra_reinstate"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_name_or_demographic"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_demographic_deprecated"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_relationship">
+				<xs:annotation>
+					<xs:documentation>
+						Change of relationship between the covered members.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="EnrollmentStatusNameType">
