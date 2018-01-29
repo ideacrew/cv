@@ -1,5 +1,7 @@
 package org.openhbx.enterprise_vocabulary.xml;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.Test;
@@ -44,5 +46,15 @@ public class XmlValidatorTest {
     ValidationResult vresult = validator.validateXML(xml);
     Assert.assertFalse(vresult.isValid());
     Assert.assertEquals(vresult.getErrors().get(0).getFullErrorMessage(), "1, 178: cvc-complex-type.2.4.b: The content of element 'policy' is not complete. One of '{\"http://openhbx.org/api/terms/1.0\":id}' is expected.");
+  }
+  
+  @Test
+  public void incompleteXMLJsonResultTest() throws JsonProcessingException {
+    InputStream xml = new ByteArrayInputStream(INCOMPLETE_XML_EXAMPLE.getBytes());
+    XmlValidator validator = new XmlValidator();
+    ValidationResult vresult = validator.validateXML(xml);
+    ObjectMapper om = new ObjectMapper();
+    Assert.assertFalse(vresult.isValid());
+    Assert.assertEquals("{\"result\":\"error\",\"errors\":[{\"full_error_message\":\"1, 59: cvc-complex-type.2.4.b: The content of element 'policy' is not complete. One of '{\\\"http://openhbx.org/api/terms/1.0\\\":id}' is expected.\",\"error_message\":\"cvc-complex-type.2.4.b: The content of element 'policy' is not complete. One of '{\\\"http://openhbx.org/api/terms/1.0\\\":id}' is expected.\",\"line_number\":1,\"column_number\":59}]}", om.writeValueAsString(vresult));
   }
 }
