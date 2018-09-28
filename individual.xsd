@@ -1839,6 +1839,16 @@
 					<xs:documentation>Passive renewal period for employers and individuals.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#eligibility_failed_or_documents_not_received_by_due_date">
+				<xs:annotation>
+					<xs:documentation>Not eligible for marketplace coverage due to citizenship or immigration status</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urn:dc0:terms:v1:qualifying_life_event#eligibility_documents_provided">
+				<xs:annotation>
+					<xs:documentation>Provided documents proving eligibility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TaxFilerNameType">

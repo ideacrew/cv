@@ -1,0 +1,23 @@
+<qualifying_life_events xmlns="http://openhbx.org/api/terms/1.0">
+	<qualifying_life_event>
+		<id><id>some_event_id</id></id>
+		<type>urn:dc0:terms:v1:qualifying_life_event#eligibility_failed_or_documents_not_received_by_due_date</type>
+    <affected_members>
+      <member_before_changes>
+        <id>
+          <id>person ID</id>
+        </id>
+        <person_name>
+          <person_surname>OfEventSubject</person_surname>
+          <person_given_name>Name</person_given_name>
+        </person_name>
+      </member_before_changes>
+    </affected_members>
+		<event_date>20180101</event_date>
+		<special_enrollment_period>
+      <begin_date>20180101</begin_date>
+      <end_date>20180101</end_date>
+		</special_enrollment_period>
+		<created_at>2018-01-01T00:00:00</created_at>
+	</qualifying_life_event>
+</qualifying_life_events>
