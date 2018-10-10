@@ -19,11 +19,11 @@ public class XmlValidationError implements ValidationError {
   }
   
   public XmlValidationError(IOException e) {
-    this(1, 0, e.getMessage());
+    this(1, 1, e.getMessage());
   }
   
   public XmlValidationError(SAXException e) {
-    this(1, 0, e.getMessage());
+    this(1, 1, e.getMessage());
   }
   
   public XmlValidationError(Integer lineNo, Integer colNo, String msg) {

@@ -20,7 +20,7 @@ public class XmlValidatorTest {
     XmlValidator validator = new XmlValidator();
     ValidationResult vresult = validator.validateXML(xml);
     Assert.assertFalse(vresult.isValid());
-    Assert.assertEquals(vresult.getErrors().get(0).getFullErrorMessage(), "1, 0: Premature end of file.");
+    Assert.assertEquals(vresult.getErrors().get(0).getFullErrorMessage(), "1, 1: Premature end of file.");
   }
   
   private static String INCOMPLETE_XML_EXAMPLE = "<policy xmlns=\"http://openhbx.org/api/terms/1.0\"></policy>";
