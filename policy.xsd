@@ -624,7 +624,14 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#audit"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_identifier"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_address"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_communication_numbers"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_communication_numbers">
+			  <xs:annotation>
+			    <xs:documentation>
+				    Change member communication numbers maps to EDI INS03/04 01/033.  As such it is also used as
+						a 'catch-all' for changes in communication or other non-identifying/non-coverage information.  
+				  </xs:documentation>
+			  </xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_member_handicap_status"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_financial_assistance"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_product"/>
