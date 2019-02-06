@@ -379,6 +379,14 @@
 		</xs:sequence>
 	</xs:complexType>
 
+	<xs:simpleType name="QualifiedNonCitizenCodeType">
+		<xs:annotation>
+			<xs:documentation>FDSH Provided Qualified Non-Citizen Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="LawfulPresenceResponseType">
 		<xs:sequence>
 			<xs:element name="case_number" type="xs:string"/>
@@ -400,6 +408,7 @@
 							<xs:element name="employment_authorized" type="LawfulPresenceEmploymentAuthorizedCodeType"/>
 							<xs:element name="document_results" type="LawfulPresenceDocumentResultsType"/>
 							<xs:element name="five_year_bar_results" type="LawfulPresenceFiveYearBarResultsType"/>
+							<xs:element name="qualified_non_citizen_code" type="QualifiedNonCitizenCodeType" minOccurs="0"/>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
