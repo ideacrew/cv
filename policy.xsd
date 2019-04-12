@@ -230,6 +230,11 @@
 		<xs:sequence>
 			<xs:element name="transaction_id" type="IdentifierSimpleType"/>
 			<xs:element name="type" type="EnrollmentEventNameType"/>
+			<xs:element name="qualifying_reason" type="BenefitMaintenanceNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>URN for the regulatory or policy basis enabling this change </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="market" type="AcaMarketPlaceNameType"/>
 			<xs:element name="premium_effective_date" type="SimpleDateType" minOccurs="0"/>
 			<xs:element name="assistance_election_date" type="SimpleDateType" minOccurs="0"/>
