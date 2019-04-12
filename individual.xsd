@@ -1447,6 +1447,8 @@
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#special_enrollment"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#new_hire"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#cobra"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#voluntary_withdrawl"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#alternate_benefit_available"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="HbxEnrollmentExemptionNameType">
