@@ -1438,7 +1438,6 @@
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#adoption"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#birth"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#death"/>
-			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#non_payment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#legal_separation"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#surviving_spouse"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#divorce"/>
@@ -1447,7 +1446,7 @@
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#special_enrollment"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#new_hire"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#cobra"/>
-                        <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#voluntary_withdrawl"/>
+                        <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#voluntary_withdrawal"/>
                         <xs:enumeration value="urn:openhbx:terms:v1:benefit_maintenance#alternate_benefit_available"/>
 		</xs:restriction>
 	</xs:simpleType>
