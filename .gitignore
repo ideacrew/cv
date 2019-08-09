@@ -2,7 +2,7 @@
 *.spp
 /enterprise_vocabulary/target/
 
-# Make sure no sensitive data is accidentally commited
+# Make sure no sensitive data is accidentally committed
 # add w/ git add --force if actually docs
 *.csv
 *.txt
