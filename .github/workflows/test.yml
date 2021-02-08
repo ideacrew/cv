@@ -13,4 +13,4 @@ jobs:
       - name: Build with Maven
         run: |
           cd enterprise_vocabulary
-          mvn test
+          mvn --batch-mode test
