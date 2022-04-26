@@ -2,6 +2,9 @@
 *.spp
 /enterprise_vocabulary/target/
 
+# Vim
+*.swp
+
 # Make sure no sensitive data is accidentally committed
 # add w/ git add --force if actually docs
 *.csv
