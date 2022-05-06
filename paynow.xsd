@@ -25,6 +25,7 @@
           <xs:element name="exchange_assigned_member_id" type="ExchangeAssignedMemberIDType"/>
           <xs:element name="member_name" type="PersonNameType"/>
           <xs:element name="birth_date" type="SimpleDateType"/>
+          <xs:element name="ssn" type="FederalTaxIdType" minOccurs="0"/>
           <xs:element name="is_subscriber" type="xs:boolean">
               <xs:annotation>
                   <xs:documentation>
@@ -61,57 +62,8 @@
       </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="PaynowCoverageType">
-      <xs:annotation>
-          <xs:documentation>
-              The coverage and product provided to the members.
-          </xs:documentation>
-      </xs:annotation>
-      <xs:sequence>
-          <xs:element name="benefit_begin" type="SimpleDateType">
-              <xs:annotation>
-                  <xs:documentation>
-                      The date on which coverage is expected to begin.
-                  </xs:documentation>
-              </xs:annotation>
-          </xs:element>
-          <xs:element name="product_hios" type="xs:string">
-              <xs:annotation>
-                  <xs:documentation>
-                      The HIOS ID of the product providing coverage.
-                  </xs:documentation>
-              </xs:annotation>
-          </xs:element>
-          <xs:element name="total_cost" type="CurrencyType">
-              <xs:annotation>
-                  <xs:documentation>
-                      The total cost per coverage period of the coverage.
-                  </xs:documentation>
-              </xs:annotation>
-          </xs:element>
-          <xs:element name="assistance_amount" type="CurrencyType">
-              <xs:annotation>
-                  <xs:documentation>
-                      Assistance amount provided to the covered group.
-                      
-                      This assistance can take many forms, such as employer
-                      contribution or Advanced Premium Tax Credit (APTC).
-                  </xs:documentation>
-              </xs:annotation>
-          </xs:element>
-          <xs:element name="responsible_cost" type="CurrencyType">
-              <xs:annotation>
-                  <xs:documentation>
-                      Cost per coverage period of the coverage, less any assistance or offsets.
-                  </xs:documentation>
-              </xs:annotation>
-          </xs:element>
-      </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="PaynowTransferPayloadType">
       <xs:sequence>
-          <xs:element name="coverage" type="PaynowCoverageType"/>
           <xs:element name="primary" type="PaynowPrimary"/>
           <xs:element name="members" type="PaynowMembersListType"/>
       </xs:sequence>
