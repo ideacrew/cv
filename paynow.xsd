@@ -25,6 +25,7 @@
           <xs:element name="exchange_assigned_member_id" type="ExchangeAssignedMemberIDType"/>
           <xs:element name="member_name" type="PersonNameType"/>
           <xs:element name="birth_date" type="SimpleDateType"/>
+          <xs:element name="sex" type="SexofIndividualTerminologyType"/>
           <xs:element name="ssn" type="FederalTaxIdType" minOccurs="0"/>
           <xs:element name="is_subscriber" type="xs:boolean">
               <xs:annotation>
