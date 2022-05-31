@@ -2030,7 +2030,7 @@
                 </xs:documentation>
                 <xs:appinfo>CDISC:SEX</xs:appinfo>
                 <xs:appinfo>NCI:C66731</xs:appinfo>
-                <xs:appinfo>X12:V5010:1068</xs:appinfo>
+                <xs:appinfo>X12:005010X220:1068</xs:appinfo>
             </xs:annotation>
             <xs:restriction base="xs:string">
                 <xs:enumeration value="F">
@@ -2042,7 +2042,7 @@
                         </xs:documentation>
                         <xs:appinfo>CDISC:F</xs:appinfo>
                         <xs:appinfo>NCI:C16576</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:F</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:F</xs:appinfo>
                     </xs:annotation>
                 </xs:enumeration>
                 <xs:enumeration value="M">
@@ -2054,7 +2054,7 @@
                         </xs:documentation>
                         <xs:appinfo>CDISC:M</xs:appinfo>
                         <xs:appinfo>NCI:C20197</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:M</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:M</xs:appinfo>
                     </xs:annotation>
                 </xs:enumeration>
                 <xs:enumeration value="UNDIFFERENTIATED">
@@ -2066,10 +2066,10 @@
                         </xs:documentation>
                         <xs:appinfo>CDISC:UNDIFFERENTIATED</xs:appinfo>
                         <xs:appinfo>NCI:C1704620</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:U</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:B</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:N</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:X</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:U</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:B</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:N</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:X</xs:appinfo>
                     </xs:annotation>
                 </xs:enumeration>
                 <xs:enumeration value="U">
@@ -2081,7 +2081,7 @@
                         </xs:documentation>
                         <xs:appinfo>CDISC:U</xs:appinfo>
                         <xs:appinfo>NCI:C17998</xs:appinfo>
-                        <xs:appinfo>X12:V5010:1068:U</xs:appinfo>
+                        <xs:appinfo>X12:005010X220:1068:U</xs:appinfo>
                     </xs:annotation>
                 </xs:enumeration>
             </xs:restriction>

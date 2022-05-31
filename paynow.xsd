@@ -62,20 +62,45 @@
           <xs:element name="member_name" type="PersonNameType"/>
       </xs:sequence>
   </xs:complexType>
+  
+  <xs:simpleType name="PaynowCoverageKindType">
+      <xs:annotation>
+          <xs:documentation>Set of codes indicating the type of insurance policy or program that pays for the cost of benefits provided to covered parties.</xs:documentation>
+          <xs:appinfo>NCI:C3244106</xs:appinfo>
+          <xs:appinfo>HL7:OID:2.16.840.1.113883.1.11.19855</xs:appinfo>
+          <xs:appinfo>X12:005010X220:1205</xs:appinfo>
+      </xs:annotation>
+      <xs:restriction base="xs:anyURI">
+          <xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#health">
+              <xs:annotation>
+                  <xs:documentation>Health Coverage</xs:documentation>
+                  <xs:appinfo>NCI:C3244234</xs:appinfo>
+                  <xs:appinfo>HL7:OID:2.16.840.1.113883.1.11.19855:HIP</xs:appinfo>
+                  <xs:appinfo>X12:005010X220:1205:HLT</xs:appinfo>
+              </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="urn:openhbx:terms:v1:qhp_benefit_coverage#dental">
+              <xs:annotation>
+                  <xs:documentation>Dental Coverage</xs:documentation>
+                  <xs:appinfo>NCI:C3244232</xs:appinfo>
+                  <xs:appinfo>HL7:OID:2.16.840.1.113883.1.11.19855:DENTAL</xs:appinfo>
+                  <xs:appinfo>X12:005010X220:1205:DEN</xs:appinfo>
+              </xs:annotation>
+          </xs:enumeration>
+      </xs:restriction>
+  </xs:simpleType>
 
   <xs:complexType name="PaynowTransferPayloadType">
-      <xs:sequence>
-          <xs:element name="primary" type="PaynowPrimary"/>
-          <xs:element name="members" type="PaynowMembersListType"/>
-      </xs:sequence>
-  </xs:complexType>
-
-  <xs:element name="paynow_transfer" type="PaynowTransferPayloadType">
       <xs:annotation>
           <xs:documentation>
               A transfer representing information needed to enroll a group under
               a given product and make payment.
           </xs:documentation>
       </xs:annotation>
-  </xs:element>
+      <xs:sequence>
+          <xs:element name="coverage_kind" type="PaynowCoverageKindType"/>
+          <xs:element name="primary" type="PaynowPrimary"/>
+          <xs:element name="members" type="PaynowMembersListType"/>
+      </xs:sequence>
+  </xs:complexType>
 </xs:schema>
