@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
   <xs:include schemaLocation="common.xsd"/>
+  <xs:include schemaLocation="individual.xsd"/>
 
   <xs:simpleType name="ExchangeAssignedMemberIDType">
       <xs:annotation>
@@ -12,6 +13,36 @@
           </xs:documentation>
       </xs:annotation>
       <xs:restriction base="xs:string">
+      </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="PaynowMemberRelationshipCode">
+      <xs:restriction base="xs:string">
+          <xs:enumeration value="18">
+              <xs:annotation>
+                  <xs:documentation>Self</xs:documentation>
+              </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="01">
+              <xs:annotation>
+                  <xs:documentation>Spouse</xs:documentation>
+              </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="53">
+              <xs:annotation>
+                  <xs:documentation>Life Partner</xs:documentation>
+              </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="15">
+              <xs:annotation>
+                  <xs:documentation>Ward</xs:documentation>
+              </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="19">
+              <xs:annotation>
+                  <xs:documentation>Child/other dependent</xs:documentation>
+              </xs:annotation>
+          </xs:enumeration>
       </xs:restriction>
   </xs:simpleType>
 
@@ -27,6 +58,11 @@
           <xs:element name="birth_date" type="SimpleDateType"/>
           <xs:element name="sex" type="SexofIndividualTerminologyType"/>
           <xs:element name="ssn" type="FederalTaxIdType" minOccurs="0"/>
+          <xs:element name="relationship" type="PaynowMemberRelationshipCode">
+              <xs:annotation>
+                  <xs:documentation>Describes the relationship to the subscriber.</xs:documentation>
+              </xs:annotation>
+          </xs:element>
           <xs:element name="is_subscriber" type="xs:boolean">
               <xs:annotation>
                   <xs:documentation>
