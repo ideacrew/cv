@@ -2,6 +2,7 @@
 <!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by Dan Thomas (Private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://openhbx.org/api/terms/1.0" targetNamespace="http://openhbx.org/api/terms/1.0" elementFormDefault="qualified">
 	<xs:include schemaLocation="individual.xsd"/>
+        <xs:include schemaLocation="credits.xsd"/>
 	<xs:element name="allocated_aptc_amount" type="CurrencyType"/>
 	<xs:element name="applied_aptc_amount" type="CurrencyType"/>
 	<xs:element name="coverage_quote" type="coverageQuoteResponseType"/>
@@ -542,6 +543,7 @@
 						</xs:choice>
 						<xs:element name="premium_total_amount" type="CurrencyType"/>
 						<xs:element name="total_responsible_amount" type="CurrencyType"/>
+                                                <xs:element name="premium_credits" type="PremiumCreditsListType" minOccurs="0"/>
 						<xs:element name="rating_area" type="xs:string" minOccurs="0"/>
 						<xs:element name="eligibility_event" type="EligibilityType" minOccurs="0"/>
 					</xs:sequence>
