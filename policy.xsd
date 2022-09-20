@@ -652,6 +652,7 @@
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_reenroll"/>
+			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#change_broker"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_enrollment"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#reinstate_member"/>
 			<xs:enumeration value="urn:openhbx:terms:v1:enrollment#cancel_enrollment"/>
