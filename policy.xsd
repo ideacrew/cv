@@ -500,6 +500,11 @@
 					<xs:documentation>Indicates previous ID for purpose of Continunity of Coverage.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="is_reinstate_canceled_policy" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates if this is the result of reinstating canceled enrollment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="broker" type="BrokerLinkType" minOccurs="0"/>
 			<xs:element name="enrollees">
 				<xs:complexType>
